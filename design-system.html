@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design System - Sanduba</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#edcd2c",
+                        "accent": "#f26522",
+                        "background-light": "#f8f8f6",
+                        "background-dark": "#131313",
+                        "surface-dark": "#1e1e1e",
+                        "surface-dark-alt": "#2a2a2a"
+                    },
+                    fontFamily: {
+                        "display": ["Poppins", "sans-serif"],
+                        "body": ["Inter", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-body antialiased">
+
+    <!-- Nav -->
+    <nav class="sticky top-0 bg-surface-dark p-4 flex gap-4 border-b border-surface-dark-alt z-50">
+        <a href="#hero" class="text-sm font-semibold text-primary">Hero</a>
+        <a href="#typography" class="text-sm font-semibold">Typography</a>
+        <a href="#colors" class="text-sm font-semibold">Colors</a>
+        <a href="#components" class="text-sm font-semibold">Components</a>
+    </nav>
+
+    <main class="p-8 max-w-4xl mx-auto space-y-12">
+        
+        <!-- Hero Section -->
+        <section id="hero" class="border border-surface-dark-alt p-8 rounded-xl bg-surface-dark">
+            <h1 class="font-display font-bold text-[22px] text-primary">Design System - Sanduba</h1>
+            <p class="text-slate-400">Documentation for the Sanduba ordering interface.</p>
+        </section>
+
+        <!-- Typography -->
+        <section id="typography">
+            <h2 class="text-2xl font-bold mb-6">Typography</h2>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between border-b border-surface-dark-alt pb-4">
+                    <span class="text-sm text-slate-500">Header Logo</span>
+                    <h1 class="font-display font-bold text-[22px] text-primary">Sanduba (22px/Poppins)</h1>
+                </div>
+                <div class="flex items-center justify-between border-b border-surface-dark-alt pb-4">
+                    <span class="text-sm text-slate-500">Section Header</span>
+                    <h2 class="font-display font-semibold text-lg">Popular Choices (18px/Poppins)</h2>
+                </div>
+                <div class="flex items-center justify-between border-b border-surface-dark-alt pb-4">
+                    <span class="text-sm text-slate-500">Body Text</span>
+                    <p class="font-body text-[13px]">Paragraph description text (13px/Inter)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Colors -->
+        <section id="colors">
+            <h2 class="text-2xl font-bold mb-6">Colors</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-primary p-4 rounded text-background-dark font-bold text-center">Primary #edcd2c</div>
+                <div class="bg-accent p-4 rounded text-white font-bold text-center">Accent #f26522</div>
+                <div class="bg-surface-dark p-4 rounded border border-surface-dark-alt text-white text-center">Surface #1e1e1e</div>
+                <div class="bg-background-dark p-4 rounded border border-surface-dark-alt text-white text-center">Dark BG #131313</div>
+            </div>
+        </section>
+
+        <!-- Components -->
+        <section id="components">
+            <h2 class="text-2xl font-bold mb-6">Components</h2>
+            <div class="space-y-8">
+                <div>
+                    <h3 class="text-lg font-medium mb-4 text-slate-400">Buttons</h3>
+                    <div class="flex gap-4">
+                        <button class="h-10 px-6 rounded-full bg-primary text-background-dark font-semibold">Active Filter</button>
+                        <button class="h-10 px-6 rounded-full bg-surface-dark border border-surface-dark-alt text-slate-300">Inactive Filter</button>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-medium mb-4 text-slate-400">Cards</h3>
+                    <div class="p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20 w-80">
+                        <div class="flex items-center gap-4">
+                            <div class="w-16 h-16 rounded-xl bg-surface-dark-alt flex items-center justify-center">
+                                <span class="material-symbols-outlined text-[32px]">lunch_dining</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Sample Item</h4>
+                                <div class="font-bold text-accent">$12.90</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</body>
+</html>

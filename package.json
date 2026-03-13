@@ -1,0 +1,13 @@
+{
+  "name": "sabordemel",
+  "version": "0.1.0",
+  "description": "Sanduba - Sandwich Ordering App MVP",
+  "private": true,
+  "scripts": {
+    "dev": "npx -y serve .",
+    "start": "npx -y serve ."
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

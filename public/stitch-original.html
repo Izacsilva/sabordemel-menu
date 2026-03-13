@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sanduba - Sandwich Ordering App</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Poppins:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#edcd2c",
+                        "accent": "#f26522",
+                        "background-light": "#f8f8f6",
+                        "background-dark": "#131313",
+                        "surface-dark": "#1e1e1e",
+                        "surface-dark-alt": "#2a2a2a"
+                    },
+                    fontFamily: {
+                        "display": ["Poppins", "sans-serif"],
+                        "body": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "md": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            min-height: 100dvh;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-body antialiased min-h-screen">
+<header class="flex items-center justify-center px-4 h-[72px] sticky top-0 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md z-50">
+<h1 class="font-display font-bold text-[22px] text-primary">Sanduba</h1>
+</header>
+<main class="flex flex-col gap-10 pt-6 pb-20">
+<div class="px-4">
+<div class="relative flex items-center h-[48px] bg-surface-dark rounded-xl overflow-hidden border border-surface-dark-alt/50 focus-within:border-primary transition-colors">
+<div class="flex items-center justify-center pl-4 text-slate-400">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full h-full bg-transparent border-none text-slate-100 placeholder:text-slate-500 text-[15px] focus:ring-0 font-body" placeholder="Search sandwiches..." type="text"/>
+</div>
+</div>
+<div class="px-4">
+<div class="flex gap-4 overflow-x-auto pb-2 [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden">
+<button class="flex h-10 shrink-0 items-center justify-center rounded-full bg-primary px-6 text-background-dark font-semibold text-sm transition-colors">All</button>
+<button class="flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 hover:text-slate-100 font-medium text-sm transition-colors">Burgers</button>
+<button class="flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 hover:text-slate-100 font-medium text-sm transition-colors">Chicken</button>
+<button class="flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 hover:text-slate-100 font-medium text-sm transition-colors">Veggie</button>
+<button class="flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 hover:text-slate-100 font-medium text-sm transition-colors">Combos</button>
+<button class="flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 hover:text-slate-100 font-medium text-sm transition-colors">Drinks</button>
+</div>
+</div>
+<div class="pl-4">
+<div class="flex gap-6 overflow-x-auto pb-2 pr-4 [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden">
+<div class="flex flex-col justify-between w-[280px] h-[130px] shrink-0 rounded-2xl bg-gradient-to-r from-primary to-accent p-5 text-background-dark shadow-lg shadow-accent/5 relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 opacity-20 transform rotate-12">
+<span class="material-symbols-outlined text-[100px]">lunch_dining</span>
+</div>
+<div class="relative z-10">
+<h3 class="font-display font-bold text-lg leading-tight">Combo Especial</h3>
+<p class="font-body text-sm font-medium opacity-90 mt-1">Burger + Fries + Drink</p>
+</div>
+<button class="relative z-10 self-start text-[10px] font-bold uppercase tracking-wider bg-background-dark text-slate-100 px-4 py-2 rounded-lg mt-2 flex items-center gap-1">
+                        Order now <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+<div class="flex flex-col justify-between w-[280px] h-[130px] shrink-0 rounded-2xl bg-gradient-to-r from-surface-dark-alt to-surface-dark p-5 border border-surface-dark-alt shadow-lg relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 opacity-10 transform -rotate-12 text-primary">
+<span class="material-symbols-outlined text-[100px]">local_pizza</span>
+</div>
+<div class="relative z-10">
+<h3 class="font-display font-bold text-lg leading-tight text-slate-100">Weekend Deals</h3>
+<p class="font-body text-sm text-slate-400 mt-1">Get 20% off on all items</p>
+</div>
+<button class="relative z-10 self-start text-[10px] font-bold uppercase tracking-wider bg-primary/20 text-primary px-4 py-2 rounded-lg mt-2 flex items-center gap-1">
+                        View Deals
+                    </button>
+</div>
+</div>
+</div>
+<div class="px-4">
+<h2 class="font-display font-semibold text-lg mb-6 px-1">Popular Choices</h2>
+<div class="flex flex-col gap-6">
+<div class="flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20">
+<div class="w-[72px] h-[72px] rounded-xl bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-500 overflow-hidden" data-alt="Classic beef burger with lettuce">
+<span class="material-symbols-outlined text-[32px]">lunch_dining</span>
+</div>
+<div class="flex-1 min-w-0 flex flex-col justify-center">
+<h4 class="font-display font-semibold text-[15px] truncate">Classic Burger</h4>
+<p class="font-body text-[13px] text-slate-400 truncate mt-1">Beef patty, lettuce, tomato, cheese</p>
+<div class="font-display font-bold text-accent text-[15px] mt-2">$12.90</div>
+</div>
+<button class="w-9 h-9 shrink-0 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-lg shadow-primary/10 hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]">add</span>
+</button>
+</div>
+<div class="flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20">
+<div class="w-[72px] h-[72px] rounded-xl bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-500 overflow-hidden" data-alt="Crispy chicken sandwich with mayo">
+<span class="material-symbols-outlined text-[32px]">lunch_dining</span>
+</div>
+<div class="flex-1 min-w-0 flex flex-col justify-center">
+<h4 class="font-display font-semibold text-[15px] truncate">Crispy Chicken</h4>
+<p class="font-body text-[13px] text-slate-400 truncate mt-1">Fried chicken, spicy mayo, pickles</p>
+<div class="font-display font-bold text-accent text-[15px] mt-2">$14.50</div>
+</div>
+<button class="w-9 h-9 shrink-0 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-lg shadow-primary/10 hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]">add</span>
+</button>
+</div>
+<div class="flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20">
+<div class="w-[72px] h-[72px] rounded-xl bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-500 overflow-hidden" data-alt="Vegetarian sandwich with grilled vegetables">
+<span class="material-symbols-outlined text-[32px]">eco</span>
+</div>
+<div class="flex-1 min-w-0 flex flex-col justify-center">
+<h4 class="font-display font-semibold text-[15px] truncate">Veggie Supreme</h4>
+<p class="font-body text-[13px] text-slate-400 truncate mt-1">Grilled portobello, avocado, aioli</p>
+<div class="font-display font-bold text-accent text-[15px] mt-2">$11.20</div>
+</div>
+<button class="w-9 h-9 shrink-0 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-lg shadow-primary/10 hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]">add</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+
+</body></html>

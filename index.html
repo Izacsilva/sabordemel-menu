@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html class="dark" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sanduba - Peça seu sanduíche favorito com facilidade e rapidez.">
+    <title>Sanduba - Sandwich Ordering App</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Fonts: Barlow Condensed (display) + Lato (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Config – Design System tokens -->
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#edcd2c",
+                        "accent": "#f26522",
+                        "background-light": "#f8f8f6",
+                        "background-dark": "#131313",
+                        "surface-dark": "#1e1e1e",
+                        "surface-dark-alt": "#2a2a2a"
+                    },
+                    fontFamily: {
+                        "display": ["'Barlow Condensed'", "sans-serif"],
+                        "body": ["'Lato'", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "md": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "2xl": "1.25rem",
+                        "full": "9999px"
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            min-height: 100dvh;
+        }
+        /* Smooth scrollbar hide for carousels */
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-body antialiased min-h-screen">
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- HEADER                                      -->
+    <!-- ═══════════════════════════════════════════ -->
+    <header id="app-header" class="flex items-center justify-between px-5 h-[72px] sticky top-0 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md z-50">
+        <h1 class="font-display font-bold text-[24px] text-primary tracking-wide uppercase">Sanduba</h1>
+        <button id="btn-cart" class="relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-dark transition-colors" aria-label="Carrinho">
+            <span class="material-symbols-outlined text-[24px]">shopping_cart</span>
+            <!-- Badge do carrinho (oculto por padrão) -->
+            <span class="absolute -top-0.5 -right-0.5 w-5 h-5 bg-accent text-white text-[10px] font-bold rounded-full flex items-center justify-center hidden" id="cart-badge">0</span>
+        </button>
+    </header>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- MAIN CONTENT                                -->
+    <!-- ═══════════════════════════════════════════ -->
+    <main class="flex flex-col gap-8 pt-4 pb-24">
+
+        <!-- Search Bar -->
+        <div class="px-5">
+            <div id="search-wrapper" class="relative flex items-center h-[48px] bg-surface-dark rounded-xl overflow-hidden border border-surface-dark-alt/50 focus-within:border-primary transition-colors">
+                <div class="flex items-center justify-center pl-4 text-slate-400">
+                    <span class="material-symbols-outlined text-[20px]">search</span>
+                </div>
+                <input
+                    id="search-input"
+                    class="w-full h-full bg-transparent border-none text-slate-100 placeholder:text-slate-500 text-[15px] focus:ring-0 font-body"
+                    placeholder="Search sandwiches..."
+                    type="text"
+                    aria-label="Pesquisar sanduíches"
+                >
+            </div>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="px-5">
+            <div id="category-filters" class="flex gap-3 overflow-x-auto pb-2 hide-scrollbar">
+                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-primary px-6 text-background-dark font-semibold text-sm transition-all" data-category="all">All</button>
+                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 hover:text-slate-100 font-medium text-sm transition-all" data-category="burgers">Burgers</button>
+                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 hover:text-slate-100 font-medium text-sm transition-all" data-category="chicken">Chicken</button>
+                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 hover:text-slate-100 font-medium text-sm transition-all" data-category="veggie">Veggie</button>
+                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 hover:text-slate-100 font-medium text-sm transition-all" data-category="combos">Combos</button>
+                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 hover:text-slate-100 font-medium text-sm transition-all" data-category="drinks">Drinks</button>
+            </div>
+        </div>
+
+        <!-- Promo Banners Carousel -->
+        <div class="pl-5">
+            <div id="promo-carousel" class="flex gap-5 overflow-x-auto pb-2 pr-5 hide-scrollbar">
+
+                <!-- Banner: Combo Especial -->
+                <div class="flex flex-col justify-between w-[280px] h-[130px] shrink-0 rounded-2xl bg-gradient-to-r from-primary to-accent p-5 text-background-dark shadow-lg shadow-accent/5 relative overflow-hidden">
+                    <div class="absolute -right-4 -bottom-4 opacity-20 transform rotate-12">
+                        <span class="material-symbols-outlined text-[100px]">lunch_dining</span>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="font-display font-bold text-lg leading-tight">Combo Especial</h3>
+                        <p class="font-body text-sm font-medium opacity-90 mt-1">Burger + Fries + Drink</p>
+                    </div>
+                    <button class="relative z-10 self-start text-[10px] font-bold uppercase tracking-wider bg-background-dark text-slate-100 px-4 py-2 rounded-lg mt-2 flex items-center gap-1 hover:bg-surface-dark transition-colors">
+                        ORDER NOW <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                    </button>
+                </div>
+
+                <!-- Banner: Weekend Deals -->
+                <div class="flex flex-col justify-between w-[280px] h-[130px] shrink-0 rounded-2xl bg-gradient-to-r from-surface-dark-alt to-surface-dark p-5 border border-surface-dark-alt shadow-lg relative overflow-hidden">
+                    <div class="absolute -right-4 -bottom-4 opacity-10 transform -rotate-12 text-primary">
+                        <span class="material-symbols-outlined text-[100px]">local_pizza</span>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="font-display font-bold text-lg leading-tight text-slate-100">Weekend Deals</h3>
+                        <p class="font-body text-sm text-slate-400 mt-1">Get 20% off on all items</p>
+                    </div>
+                    <button class="relative z-10 self-start text-[10px] font-bold uppercase tracking-wider bg-primary/20 text-primary px-4 py-2 rounded-lg mt-2 flex items-center gap-1 hover:bg-primary/30 transition-colors">
+                        VIEW DEALS
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Popular Choices Section -->
+        <div class="px-5">
+            <h2 class="font-display font-semibold text-xl mb-5 uppercase tracking-wide">Popular Choices</h2>
+
+            <div id="product-list" class="flex flex-col gap-4">
+
+                <!-- Product Card: Classic Burger -->
+                <div class="product-card flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20 hover:border-surface-dark-alt/50 transition-colors" data-category="burgers">
+                    <div class="w-[72px] h-[72px] rounded-xl bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-500 overflow-hidden">
+                        <span class="material-symbols-outlined text-[32px]">lunch_dining</span>
+                    </div>
+                    <div class="flex-1 min-w-0 flex flex-col justify-center">
+                        <h4 class="font-display font-semibold text-[15px] truncate">Classic Burger</h4>
+                        <p class="font-body text-[13px] text-slate-400 truncate mt-1">Beef patty, lettuce, tomato, cheese</p>
+                        <div class="font-display font-bold text-accent text-[15px] mt-2">$12.90</div>
+                    </div>
+                    <button class="btn-add w-9 h-9 shrink-0 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-lg shadow-primary/10 hover:scale-110 active:scale-95 transition-transform" aria-label="Adicionar Classic Burger">
+                        <span class="material-symbols-outlined text-[22px]">add</span>
+                    </button>
+                </div>
+
+                <!-- Product Card: Crispy Chicken -->
+                <div class="product-card flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20 hover:border-surface-dark-alt/50 transition-colors" data-category="chicken">
+                    <div class="w-[72px] h-[72px] rounded-xl bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-500 overflow-hidden">
+                        <span class="material-symbols-outlined text-[32px]">lunch_dining</span>
+                    </div>
+                    <div class="flex-1 min-w-0 flex flex-col justify-center">
+                        <h4 class="font-display font-semibold text-[15px] truncate">Crispy Chicken</h4>
+                        <p class="font-body text-[13px] text-slate-400 truncate mt-1">Fried chicken, spicy mayo, pickles</p>
+                        <div class="font-display font-bold text-accent text-[15px] mt-2">$14.50</div>
+                    </div>
+                    <button class="btn-add w-9 h-9 shrink-0 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-lg shadow-primary/10 hover:scale-110 active:scale-95 transition-transform" aria-label="Adicionar Crispy Chicken">
+                        <span class="material-symbols-outlined text-[22px]">add</span>
+                    </button>
+                </div>
+
+                <!-- Product Card: Veggie Supreme -->
+                <div class="product-card flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20 hover:border-surface-dark-alt/50 transition-colors" data-category="veggie">
+                    <div class="w-[72px] h-[72px] rounded-xl bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-500 overflow-hidden">
+                        <span class="material-symbols-outlined text-[32px]">eco</span>
+                    </div>
+                    <div class="flex-1 min-w-0 flex flex-col justify-center">
+                        <h4 class="font-display font-semibold text-[15px] truncate">Veggie Supreme</h4>
+                        <p class="font-body text-[13px] text-slate-400 truncate mt-1">Grilled portobello, avocado, aioli</p>
+                        <div class="font-display font-bold text-accent text-[15px] mt-2">$11.20</div>
+                    </div>
+                    <button class="btn-add w-9 h-9 shrink-0 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-lg shadow-primary/10 hover:scale-110 active:scale-95 transition-transform" aria-label="Adicionar Veggie Supreme">
+                        <span class="material-symbols-outlined text-[22px]">add</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- BOTTOM NAVIGATION                           -->
+    <!-- ═══════════════════════════════════════════ -->
+    <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 h-[72px] bg-surface-dark/95 backdrop-blur-md border-t border-surface-dark-alt flex items-center justify-around z-50">
+        <a href="#" class="nav-item flex flex-col items-center gap-1 text-primary" aria-label="Home">
+            <span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1">home</span>
+            <span class="text-[11px] font-semibold">Home</span>
+        </a>
+        <a href="#" class="nav-item flex flex-col items-center gap-1 text-slate-500 hover:text-slate-300 transition-colors" aria-label="Menu">
+            <span class="material-symbols-outlined text-[24px]">restaurant_menu</span>
+            <span class="text-[11px] font-medium">Menu</span>
+        </a>
+        <a href="#" class="nav-item flex flex-col items-center gap-1 text-slate-500 hover:text-slate-300 transition-colors" aria-label="Orders">
+            <span class="material-symbols-outlined text-[24px]">receipt_long</span>
+            <span class="text-[11px] font-medium">Orders</span>
+        </a>
+        <a href="#" class="nav-item flex flex-col items-center gap-1 text-slate-500 hover:text-slate-300 transition-colors" aria-label="Profile">
+            <span class="material-symbols-outlined text-[24px]">person</span>
+            <span class="text-[11px] font-medium">Profile</span>
+        </a>
+    </nav>
+
+</body>
+</html>
