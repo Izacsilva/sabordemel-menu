@@ -60,6 +60,50 @@
         .hide-scrollbar::-webkit-scrollbar {
             display: none;
         }
+
+        /* ── Card animation ── */
+        .product-card {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .product-card.card-hidden {
+            opacity: 0;
+            transform: translateY(8px) scale(0.97);
+            pointer-events: none;
+            position: absolute;
+            visibility: hidden;
+        }
+        .product-card.card-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* ── Empty state ── */
+        .empty-state {
+            transition: opacity 0.3s ease;
+        }
+        .empty-state.hidden {
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+            visibility: hidden;
+        }
+
+        /* ── Staggered animation on filter ── */
+        .product-card.card-visible:nth-child(1) { transition-delay: 0ms; }
+        .product-card.card-visible:nth-child(2) { transition-delay: 50ms; }
+        .product-card.card-visible:nth-child(3) { transition-delay: 100ms; }
+        .product-card.card-visible:nth-child(4) { transition-delay: 150ms; }
+        .product-card.card-visible:nth-child(5) { transition-delay: 200ms; }
+        .product-card.card-visible:nth-child(6) { transition-delay: 250ms; }
+        .product-card.card-visible:nth-child(7) { transition-delay: 300ms; }
+
+        /* ── Active chip style ── */
+        .category-chip.active {
+            background-color: #edcd2c;
+            color: #131313;
+            font-weight: 600;
+            border-color: transparent;
+        }
     </style>
 </head>
 
@@ -152,7 +196,7 @@
             <div id="product-list" class="flex flex-col gap-4">
 
                 <!-- Product Card: Classic Burger -->
-                <div class="product-card flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20 hover:border-surface-dark-alt/50 transition-colors" data-category="burgers">
+                <div class="product-card card-visible flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20 hover:border-surface-dark-alt/50 transition-colors" data-category="burgers">
                     <div class="w-[72px] h-[72px] rounded-xl bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-500 overflow-hidden">
                         <span class="material-symbols-outlined text-[32px]">lunch_dining</span>
                     </div>
@@ -167,7 +211,7 @@
                 </div>
 
                 <!-- Product Card: Crispy Chicken -->
-                <div class="product-card flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20 hover:border-surface-dark-alt/50 transition-colors" data-category="chicken">
+                <div class="product-card card-visible flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20 hover:border-surface-dark-alt/50 transition-colors" data-category="chicken">
                     <div class="w-[72px] h-[72px] rounded-xl bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-500 overflow-hidden">
                         <span class="material-symbols-outlined text-[32px]">lunch_dining</span>
                     </div>
@@ -182,7 +226,7 @@
                 </div>
 
                 <!-- Product Card: Veggie Supreme -->
-                <div class="product-card flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20 hover:border-surface-dark-alt/50 transition-colors" data-category="veggie">
+                <div class="product-card card-visible flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20 hover:border-surface-dark-alt/50 transition-colors" data-category="veggie">
                     <div class="w-[72px] h-[72px] rounded-xl bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-500 overflow-hidden">
                         <span class="material-symbols-outlined text-[32px]">eco</span>
                     </div>
@@ -196,6 +240,73 @@
                     </button>
                 </div>
 
+                <!-- Product Card: Steak Deluxe -->
+                <div class="product-card card-visible flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20 hover:border-surface-dark-alt/50 transition-colors" data-category="burgers">
+                    <div class="w-[72px] h-[72px] rounded-xl bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-500 overflow-hidden">
+                        <span class="material-symbols-outlined text-[32px]">lunch_dining</span>
+                    </div>
+                    <div class="flex-1 min-w-0 flex flex-col justify-center">
+                        <h4 class="font-display font-semibold text-[15px] truncate">Steak Deluxe</h4>
+                        <p class="font-body text-[13px] text-slate-400 truncate mt-1">Grilled steak, onions, mushrooms</p>
+                        <div class="font-display font-bold text-accent text-[15px] mt-2">$16.80</div>
+                    </div>
+                    <button class="btn-add w-9 h-9 shrink-0 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-lg shadow-primary/10 hover:scale-110 active:scale-95 transition-transform" aria-label="Adicionar Steak Deluxe">
+                        <span class="material-symbols-outlined text-[22px]">add</span>
+                    </button>
+                </div>
+
+                <!-- Product Card: Garden Veggie -->
+                <div class="product-card card-visible flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20 hover:border-surface-dark-alt/50 transition-colors" data-category="veggie">
+                    <div class="w-[72px] h-[72px] rounded-xl bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-500 overflow-hidden">
+                        <span class="material-symbols-outlined text-[32px]">spa</span>
+                    </div>
+                    <div class="flex-1 min-w-0 flex flex-col justify-center">
+                        <h4 class="font-display font-semibold text-[15px] truncate">Garden Veggie</h4>
+                        <p class="font-body text-[13px] text-slate-400 truncate mt-1">Avocado, hummus, sprouts</p>
+                        <div class="font-display font-bold text-accent text-[15px] mt-2">$11.20</div>
+                    </div>
+                    <button class="btn-add w-9 h-9 shrink-0 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-lg shadow-primary/10 hover:scale-110 active:scale-95 transition-transform" aria-label="Adicionar Garden Veggie">
+                        <span class="material-symbols-outlined text-[22px]">add</span>
+                    </button>
+                </div>
+
+                <!-- Product Card: Combo Family -->
+                <div class="product-card card-visible flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20 hover:border-surface-dark-alt/50 transition-colors" data-category="combos">
+                    <div class="w-[72px] h-[72px] rounded-xl bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-500 overflow-hidden">
+                        <span class="material-symbols-outlined text-[32px]">group</span>
+                    </div>
+                    <div class="flex-1 min-w-0 flex flex-col justify-center">
+                        <h4 class="font-display font-semibold text-[15px] truncate">Combo Family</h4>
+                        <p class="font-body text-[13px] text-slate-400 truncate mt-1">4 burgers, 2 fries, 4 sodas</p>
+                        <div class="font-display font-bold text-accent text-[15px] mt-2">$39.90</div>
+                    </div>
+                    <button class="btn-add w-9 h-9 shrink-0 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-lg shadow-primary/10 hover:scale-110 active:scale-95 transition-transform" aria-label="Adicionar Combo Family">
+                        <span class="material-symbols-outlined text-[22px]">add</span>
+                    </button>
+                </div>
+
+                <!-- Product Card: Tropical Juice -->
+                <div class="product-card card-visible flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20 hover:border-surface-dark-alt/50 transition-colors" data-category="drinks">
+                    <div class="w-[72px] h-[72px] rounded-xl bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-500 overflow-hidden">
+                        <span class="material-symbols-outlined text-[32px]">local_cafe</span>
+                    </div>
+                    <div class="flex-1 min-w-0 flex flex-col justify-center">
+                        <h4 class="font-display font-semibold text-[15px] truncate">Tropical Juice</h4>
+                        <p class="font-body text-[13px] text-slate-400 truncate mt-1">Mango, passion fruit, orange</p>
+                        <div class="font-display font-bold text-accent text-[15px] mt-2">$6.50</div>
+                    </div>
+                    <button class="btn-add w-9 h-9 shrink-0 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-lg shadow-primary/10 hover:scale-110 active:scale-95 transition-transform" aria-label="Adicionar Tropical Juice">
+                        <span class="material-symbols-outlined text-[22px]">add</span>
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="empty-state hidden flex flex-col items-center justify-center py-16 text-center">
+                <span class="material-symbols-outlined text-[64px] text-slate-600 mb-4">search_off</span>
+                <h3 class="font-display font-semibold text-lg text-slate-400">Nenhum resultado encontrado</h3>
+                <p class="font-body text-sm text-slate-500 mt-2 max-w-[240px]">Tente buscar por outro nome ou selecione uma categoria diferente.</p>
             </div>
         </div>
 
@@ -222,6 +333,87 @@
             <span class="text-[11px] font-medium">Profile</span>
         </a>
     </nav>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- JAVASCRIPT: Search & Category Filter        -->
+    <!-- ═══════════════════════════════════════════ -->
+    <script>
+    (function () {
+        'use strict';
+
+        // ── DOM refs ──
+        const searchInput    = document.getElementById('search-input');
+        const productList    = document.getElementById('product-list');
+        const emptyState     = document.getElementById('empty-state');
+        const chips          = document.querySelectorAll('.category-chip');
+        const cards          = document.querySelectorAll('.product-card');
+
+        let activeCategory = 'all';
+        let debounceTimer  = null;
+
+        // ── Filter logic ──
+        function filterProducts() {
+            const query = searchInput.value.trim().toLowerCase();
+            let visibleCount = 0;
+
+            cards.forEach((card) => {
+                const category    = card.dataset.category;
+                const name        = card.querySelector('h4').textContent.toLowerCase();
+                const description = card.querySelector('p').textContent.toLowerCase();
+
+                const matchesCategory = activeCategory === 'all' || category === activeCategory;
+                const matchesSearch   = !query || name.includes(query) || description.includes(query);
+
+                if (matchesCategory && matchesSearch) {
+                    card.classList.remove('card-hidden');
+                    card.classList.add('card-visible');
+                    visibleCount++;
+                } else {
+                    card.classList.add('card-hidden');
+                    card.classList.remove('card-visible');
+                }
+            });
+
+            // Toggle empty state
+            if (visibleCount === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+            }
+        }
+
+        // ── Chip click handler ──
+        chips.forEach((chip) => {
+            chip.addEventListener('click', () => {
+                // Update active state
+                chips.forEach((c) => {
+                    c.classList.remove('active', 'bg-primary', 'text-background-dark', 'font-semibold');
+                    c.classList.add('bg-surface-dark', 'border', 'border-surface-dark-alt', 'text-slate-300', 'font-medium');
+                });
+                chip.classList.add('active', 'bg-primary', 'text-background-dark', 'font-semibold');
+                chip.classList.remove('bg-surface-dark', 'border-surface-dark-alt', 'text-slate-300', 'font-medium');
+
+                activeCategory = chip.dataset.category;
+                filterProducts();
+            });
+        });
+
+        // ── Search input handler (debounced) ──
+        searchInput.addEventListener('input', () => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(filterProducts, 200);
+        });
+
+        // ── Clear search on Escape ──
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                searchInput.value = '';
+                filterProducts();
+                searchInput.blur();
+            }
+        });
+    })();
+    </script>
 
 </body>
 </html>
