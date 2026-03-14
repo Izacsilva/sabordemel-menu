@@ -3,21 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Sanduba - Peça seu sanduíche favorito com facilidade e rapidez.">
-    <title>Sanduba - Sandwich Ordering App</title>
-
-    <!-- Tailwind CSS CDN -->
+    <meta name="description" content="Sabor de Mel - Peça seu lanche favorito com facilidade e rapidez.">
+    <title>Sabor de Mel - Cardápio Digital</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-
-    <!-- Fonts: Barlow Condensed (display) + Lato (body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
-
-    <!-- Material Symbols -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-
-    <!-- Tailwind Config – Design System tokens -->
     <script>
         tailwind.config = {
             darkMode: "class",
@@ -34,386 +26,366 @@
                     fontFamily: {
                         "display": ["'Barlow Condensed'", "sans-serif"],
                         "body": ["'Lato'", "sans-serif"]
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "md": "0.5rem",
-                        "lg": "0.75rem",
-                        "xl": "1rem",
-                        "2xl": "1.25rem",
-                        "full": "9999px"
                     }
                 }
             }
         }
     </script>
-
     <style>
-        body {
-            min-height: 100dvh;
-        }
-        /* Smooth scrollbar hide for carousels */
-        .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-
-        /* ── Card animation ── */
-        .product-card {
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-        .product-card.card-hidden {
-            opacity: 0;
-            transform: translateY(8px) scale(0.97);
-            pointer-events: none;
-            position: absolute;
-            visibility: hidden;
-        }
-        .product-card.card-visible {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        /* ── Empty state ── */
-        .empty-state {
-            transition: opacity 0.3s ease;
-        }
-        .empty-state.hidden {
-            opacity: 0;
-            pointer-events: none;
-            position: absolute;
-            visibility: hidden;
-        }
-
-        /* ── Staggered animation on filter ── */
-        .product-card.card-visible:nth-child(1) { transition-delay: 0ms; }
-        .product-card.card-visible:nth-child(2) { transition-delay: 50ms; }
-        .product-card.card-visible:nth-child(3) { transition-delay: 100ms; }
-        .product-card.card-visible:nth-child(4) { transition-delay: 150ms; }
-        .product-card.card-visible:nth-child(5) { transition-delay: 200ms; }
-        .product-card.card-visible:nth-child(6) { transition-delay: 250ms; }
-        .product-card.card-visible:nth-child(7) { transition-delay: 300ms; }
-
-        /* ── Active chip style ── */
-        .category-chip.active {
-            background-color: #edcd2c;
-            color: #131313;
-            font-weight: 600;
-            border-color: transparent;
-        }
+        body { min-height: 100dvh; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .product-card { transition: opacity 0.3s ease, transform 0.3s ease; }
+        .product-card.card-visible { opacity: 1; transform: translateY(0) scale(1); }
+        .category-chip.active { background-color: #edcd2c; color: #131313; font-weight: 600; border-color: transparent; }
     </style>
 </head>
-
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-body antialiased min-h-screen">
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- HEADER                                      -->
-    <!-- ═══════════════════════════════════════════ -->
-    <header id="app-header" class="flex items-center justify-between px-5 h-[72px] sticky top-0 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md z-50">
-        <h1 class="font-display font-bold text-[24px] text-primary tracking-wide uppercase">Sanduba</h1>
-        <button id="btn-cart" class="relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-dark transition-colors" aria-label="Carrinho">
+    <header class="flex items-center justify-between px-5 h-[72px] sticky top-0 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md z-50">
+        <h1 class="font-display font-bold text-[24px] text-primary tracking-wide uppercase">Sabor de Mel</h1>
+        <button class="relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-dark transition-colors">
             <span class="material-symbols-outlined text-[24px]">shopping_cart</span>
-            <!-- Badge do carrinho (oculto por padrão) -->
-            <span class="absolute -top-0.5 -right-0.5 w-5 h-5 bg-accent text-white text-[10px] font-bold rounded-full flex items-center justify-center hidden" id="cart-badge">0</span>
         </button>
     </header>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- MAIN CONTENT                                -->
-    <!-- ═══════════════════════════════════════════ -->
     <main class="flex flex-col gap-8 pt-4 pb-24">
-
-        <!-- Search Bar -->
         <div class="px-5">
-            <div id="search-wrapper" class="relative flex items-center h-[48px] bg-surface-dark rounded-xl overflow-hidden border border-surface-dark-alt/50 focus-within:border-primary transition-colors">
+            <div class="relative flex items-center h-[48px] bg-surface-dark rounded-xl overflow-hidden border border-surface-dark-alt/50 focus-within:border-primary transition-colors">
                 <div class="flex items-center justify-center pl-4 text-slate-400">
                     <span class="material-symbols-outlined text-[20px]">search</span>
                 </div>
-                <input
-                    id="search-input"
-                    class="w-full h-full bg-transparent border-none text-slate-100 placeholder:text-slate-500 text-[15px] focus:ring-0 font-body"
-                    placeholder="Search sandwiches..."
-                    type="text"
-                    aria-label="Pesquisar sanduíches"
-                >
+                <input id="search-input" class="w-full h-full bg-transparent border-none text-slate-100 placeholder:text-slate-500 text-[15px] focus:ring-0 font-body" placeholder="O que você quer comer hoje?" type="text">
             </div>
         </div>
 
-        <!-- Category Filters -->
         <div class="px-5">
             <div id="category-filters" class="flex gap-3 overflow-x-auto pb-2 hide-scrollbar">
-                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-primary px-6 text-background-dark font-semibold text-sm transition-all" data-category="all">All</button>
-                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 hover:text-slate-100 font-medium text-sm transition-all" data-category="burgers">Burgers</button>
-                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 hover:text-slate-100 font-medium text-sm transition-all" data-category="chicken">Chicken</button>
-                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 hover:text-slate-100 font-medium text-sm transition-all" data-category="veggie">Veggie</button>
-                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 hover:text-slate-100 font-medium text-sm transition-all" data-category="combos">Combos</button>
-                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 hover:text-slate-100 font-medium text-sm transition-all" data-category="drinks">Drinks</button>
+                <button class="category-chip active flex h-10 shrink-0 items-center justify-center rounded-full bg-primary px-6 text-background-dark font-semibold text-sm transition-all" data-category="all">Todos</button>
+                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 font-medium text-sm transition-all" data-category="pasteis">Pastéis</button>
+                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 font-medium text-sm transition-all" data-category="acai-sorvetes">Açaí &amp; Sorvetes</button>
+                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 font-medium text-sm transition-all" data-category="sanduiches">Sanduíches</button>
+                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 font-medium text-sm transition-all" data-category="salgados-outros">Salgados &amp; Outros</button>
+                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 font-medium text-sm transition-all" data-category="bebidas">Bebidas</button>
             </div>
         </div>
 
-        <!-- Promo Banners Carousel -->
-        <div class="pl-5">
-            <div id="promo-carousel" class="flex gap-5 overflow-x-auto pb-2 pr-5 hide-scrollbar">
-
-                <!-- Banner: Combo Especial -->
-                <div class="flex flex-col justify-between w-[280px] h-[130px] shrink-0 rounded-2xl bg-gradient-to-r from-primary to-accent p-5 text-background-dark shadow-lg shadow-accent/5 relative overflow-hidden">
-                    <div class="absolute -right-4 -bottom-4 opacity-20 transform rotate-12">
-                        <span class="material-symbols-outlined text-[100px]">lunch_dining</span>
-                    </div>
-                    <div class="relative z-10">
-                        <h3 class="font-display font-bold text-lg leading-tight">Combo Especial</h3>
-                        <p class="font-body text-sm font-medium opacity-90 mt-1">Burger + Fries + Drink</p>
-                    </div>
-                    <button class="relative z-10 self-start text-[10px] font-bold uppercase tracking-wider bg-background-dark text-slate-100 px-4 py-2 rounded-lg mt-2 flex items-center gap-1 hover:bg-surface-dark transition-colors">
-                        ORDER NOW <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
-                    </button>
-                </div>
-
-                <!-- Banner: Weekend Deals -->
-                <div class="flex flex-col justify-between w-[280px] h-[130px] shrink-0 rounded-2xl bg-gradient-to-r from-surface-dark-alt to-surface-dark p-5 border border-surface-dark-alt shadow-lg relative overflow-hidden">
-                    <div class="absolute -right-4 -bottom-4 opacity-10 transform -rotate-12 text-primary">
-                        <span class="material-symbols-outlined text-[100px]">local_pizza</span>
-                    </div>
-                    <div class="relative z-10">
-                        <h3 class="font-display font-bold text-lg leading-tight text-slate-100">Weekend Deals</h3>
-                        <p class="font-body text-sm text-slate-400 mt-1">Get 20% off on all items</p>
-                    </div>
-                    <button class="relative z-10 self-start text-[10px] font-bold uppercase tracking-wider bg-primary/20 text-primary px-4 py-2 rounded-lg mt-2 flex items-center gap-1 hover:bg-primary/30 transition-colors">
-                        VIEW DEALS
-                    </button>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- Popular Choices Section -->
         <div class="px-5">
-            <h2 class="font-display font-semibold text-xl mb-5 uppercase tracking-wide">Popular Choices</h2>
-
-            <div id="product-list" class="flex flex-col gap-4">
-
-                <!-- Product Card: Classic Burger -->
-                <div class="product-card card-visible flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20 hover:border-surface-dark-alt/50 transition-colors" data-category="burgers">
-                    <div class="w-[72px] h-[72px] rounded-xl bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-500 overflow-hidden">
-                        <span class="material-symbols-outlined text-[32px]">lunch_dining</span>
-                    </div>
-                    <div class="flex-1 min-w-0 flex flex-col justify-center">
-                        <h4 class="font-display font-semibold text-[15px] truncate">Classic Burger</h4>
-                        <p class="font-body text-[13px] text-slate-400 truncate mt-1">Beef patty, lettuce, tomato, cheese</p>
-                        <div class="font-display font-bold text-accent text-[15px] mt-2">$12.90</div>
-                    </div>
-                    <button class="btn-add w-9 h-9 shrink-0 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-lg shadow-primary/10 hover:scale-110 active:scale-95 transition-transform" aria-label="Adicionar Classic Burger">
-                        <span class="material-symbols-outlined text-[22px]">add</span>
-                    </button>
-                </div>
-
-                <!-- Product Card: Crispy Chicken -->
-                <div class="product-card card-visible flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20 hover:border-surface-dark-alt/50 transition-colors" data-category="chicken">
-                    <div class="w-[72px] h-[72px] rounded-xl bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-500 overflow-hidden">
-                        <span class="material-symbols-outlined text-[32px]">lunch_dining</span>
-                    </div>
-                    <div class="flex-1 min-w-0 flex flex-col justify-center">
-                        <h4 class="font-display font-semibold text-[15px] truncate">Crispy Chicken</h4>
-                        <p class="font-body text-[13px] text-slate-400 truncate mt-1">Fried chicken, spicy mayo, pickles</p>
-                        <div class="font-display font-bold text-accent text-[15px] mt-2">$14.50</div>
-                    </div>
-                    <button class="btn-add w-9 h-9 shrink-0 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-lg shadow-primary/10 hover:scale-110 active:scale-95 transition-transform" aria-label="Adicionar Crispy Chicken">
-                        <span class="material-symbols-outlined text-[22px]">add</span>
-                    </button>
-                </div>
-
-                <!-- Product Card: Veggie Supreme -->
-                <div class="product-card card-visible flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20 hover:border-surface-dark-alt/50 transition-colors" data-category="veggie">
-                    <div class="w-[72px] h-[72px] rounded-xl bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-500 overflow-hidden">
-                        <span class="material-symbols-outlined text-[32px]">eco</span>
-                    </div>
-                    <div class="flex-1 min-w-0 flex flex-col justify-center">
-                        <h4 class="font-display font-semibold text-[15px] truncate">Veggie Supreme</h4>
-                        <p class="font-body text-[13px] text-slate-400 truncate mt-1">Grilled portobello, avocado, aioli</p>
-                        <div class="font-display font-bold text-accent text-[15px] mt-2">$11.20</div>
-                    </div>
-                    <button class="btn-add w-9 h-9 shrink-0 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-lg shadow-primary/10 hover:scale-110 active:scale-95 transition-transform" aria-label="Adicionar Veggie Supreme">
-                        <span class="material-symbols-outlined text-[22px]">add</span>
-                    </button>
-                </div>
-
-                <!-- Product Card: Steak Deluxe -->
-                <div class="product-card card-visible flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20 hover:border-surface-dark-alt/50 transition-colors" data-category="burgers">
-                    <div class="w-[72px] h-[72px] rounded-xl bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-500 overflow-hidden">
-                        <span class="material-symbols-outlined text-[32px]">lunch_dining</span>
-                    </div>
-                    <div class="flex-1 min-w-0 flex flex-col justify-center">
-                        <h4 class="font-display font-semibold text-[15px] truncate">Steak Deluxe</h4>
-                        <p class="font-body text-[13px] text-slate-400 truncate mt-1">Grilled steak, onions, mushrooms</p>
-                        <div class="font-display font-bold text-accent text-[15px] mt-2">$16.80</div>
-                    </div>
-                    <button class="btn-add w-9 h-9 shrink-0 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-lg shadow-primary/10 hover:scale-110 active:scale-95 transition-transform" aria-label="Adicionar Steak Deluxe">
-                        <span class="material-symbols-outlined text-[22px]">add</span>
-                    </button>
-                </div>
-
-                <!-- Product Card: Garden Veggie -->
-                <div class="product-card card-visible flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20 hover:border-surface-dark-alt/50 transition-colors" data-category="veggie">
-                    <div class="w-[72px] h-[72px] rounded-xl bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-500 overflow-hidden">
-                        <span class="material-symbols-outlined text-[32px]">spa</span>
-                    </div>
-                    <div class="flex-1 min-w-0 flex flex-col justify-center">
-                        <h4 class="font-display font-semibold text-[15px] truncate">Garden Veggie</h4>
-                        <p class="font-body text-[13px] text-slate-400 truncate mt-1">Avocado, hummus, sprouts</p>
-                        <div class="font-display font-bold text-accent text-[15px] mt-2">$11.20</div>
-                    </div>
-                    <button class="btn-add w-9 h-9 shrink-0 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-lg shadow-primary/10 hover:scale-110 active:scale-95 transition-transform" aria-label="Adicionar Garden Veggie">
-                        <span class="material-symbols-outlined text-[22px]">add</span>
-                    </button>
-                </div>
-
-                <!-- Product Card: Combo Family -->
-                <div class="product-card card-visible flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20 hover:border-surface-dark-alt/50 transition-colors" data-category="combos">
-                    <div class="w-[72px] h-[72px] rounded-xl bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-500 overflow-hidden">
-                        <span class="material-symbols-outlined text-[32px]">group</span>
-                    </div>
-                    <div class="flex-1 min-w-0 flex flex-col justify-center">
-                        <h4 class="font-display font-semibold text-[15px] truncate">Combo Family</h4>
-                        <p class="font-body text-[13px] text-slate-400 truncate mt-1">4 burgers, 2 fries, 4 sodas</p>
-                        <div class="font-display font-bold text-accent text-[15px] mt-2">$39.90</div>
-                    </div>
-                    <button class="btn-add w-9 h-9 shrink-0 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-lg shadow-primary/10 hover:scale-110 active:scale-95 transition-transform" aria-label="Adicionar Combo Family">
-                        <span class="material-symbols-outlined text-[22px]">add</span>
-                    </button>
-                </div>
-
-                <!-- Product Card: Tropical Juice -->
-                <div class="product-card card-visible flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20 hover:border-surface-dark-alt/50 transition-colors" data-category="drinks">
-                    <div class="w-[72px] h-[72px] rounded-xl bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-500 overflow-hidden">
-                        <span class="material-symbols-outlined text-[32px]">local_cafe</span>
-                    </div>
-                    <div class="flex-1 min-w-0 flex flex-col justify-center">
-                        <h4 class="font-display font-semibold text-[15px] truncate">Tropical Juice</h4>
-                        <p class="font-body text-[13px] text-slate-400 truncate mt-1">Mango, passion fruit, orange</p>
-                        <div class="font-display font-bold text-accent text-[15px] mt-2">$6.50</div>
-                    </div>
-                    <button class="btn-add w-9 h-9 shrink-0 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-lg shadow-primary/10 hover:scale-110 active:scale-95 transition-transform" aria-label="Adicionar Tropical Juice">
-                        <span class="material-symbols-outlined text-[22px]">add</span>
-                    </button>
-                </div>
-
-            </div>
-
-            <!-- Empty State -->
-            <div id="empty-state" class="empty-state hidden flex flex-col items-center justify-center py-16 text-center">
+            <div id="product-list" class="flex flex-col gap-4"></div>
+            <div id="empty-state" class="hidden flex flex-col items-center justify-center py-16 text-center">
                 <span class="material-symbols-outlined text-[64px] text-slate-600 mb-4">search_off</span>
-                <h3 class="font-display font-semibold text-lg text-slate-400">Nenhum resultado encontrado</h3>
-                <p class="font-body text-sm text-slate-500 mt-2 max-w-[240px]">Tente buscar por outro nome ou selecione uma categoria diferente.</p>
+                <h3 class="font-display font-semibold text-lg text-slate-400">Ops! Nada encontrado</h3>
+                <p class="font-body text-sm text-slate-500 mt-2">Tente buscar por outro termo.</p>
             </div>
         </div>
-
     </main>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- BOTTOM NAVIGATION                           -->
-    <!-- ═══════════════════════════════════════════ -->
-    <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 h-[72px] bg-surface-dark/95 backdrop-blur-md border-t border-surface-dark-alt flex items-center justify-around z-50">
-        <a href="#" class="nav-item flex flex-col items-center gap-1 text-primary" aria-label="Home">
-            <span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1">home</span>
-            <span class="text-[11px] font-semibold">Home</span>
-        </a>
-        <a href="#" class="nav-item flex flex-col items-center gap-1 text-slate-500 hover:text-slate-300 transition-colors" aria-label="Menu">
-            <span class="material-symbols-outlined text-[24px]">restaurant_menu</span>
-            <span class="text-[11px] font-medium">Menu</span>
-        </a>
-        <a href="#" class="nav-item flex flex-col items-center gap-1 text-slate-500 hover:text-slate-300 transition-colors" aria-label="Orders">
-            <span class="material-symbols-outlined text-[24px]">receipt_long</span>
-            <span class="text-[11px] font-medium">Orders</span>
-        </a>
-        <a href="#" class="nav-item flex flex-col items-center gap-1 text-slate-500 hover:text-slate-300 transition-colors" aria-label="Profile">
-            <span class="material-symbols-outlined text-[24px]">person</span>
-            <span class="text-[11px] font-medium">Profile</span>
-        </a>
-    </nav>
+    <div id="product-modal" class="fixed inset-0 bg-background-dark/80 backdrop-blur-sm z-[100] flex items-center justify-center p-5 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-surface-dark w-full max-w-md rounded-3xl overflow-hidden border border-surface-dark-alt shadow-2xl transform scale-95 transition-transform duration-300" id="modal-content">
+            <div class="relative h-48 bg-surface-dark-alt flex items-center justify-center text-slate-600">
+                <span id="modal-icon" class="material-symbols-outlined text-[64px]">lunch_dining</span>
+                <button id="close-modal" class="absolute top-4 right-4 w-10 h-10 bg-background-dark/50 backdrop-blur-md rounded-full flex items-center justify-center text-white">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="p-6">
+                <h3 id="modal-title" class="font-display font-bold text-2xl text-primary uppercase">Produto</h3>
+                <p id="modal-description" class="font-body text-slate-400 text-sm mt-1"></p>
+                <div id="modal-options" class="mt-6 flex flex-col gap-4"></div>
+                <div class="mt-8 flex items-center justify-between border-t border-surface-dark-alt pt-6">
+                    <div class="flex flex-col">
+                        <span class="text-xs text-slate-500 uppercase font-bold tracking-wider">Total</span>
+                        <span id="modal-total-price" class="font-display font-bold text-2xl text-accent">R$ 0,00</span>
+                    </div>
+                    <button class="bg-primary text-background-dark font-display font-bold uppercase px-8 py-3 rounded-xl">Adicionar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- JAVASCRIPT: Search & Category Filter        -->
-    <!-- ═══════════════════════════════════════════ -->
     <script>
     (function () {
         'use strict';
 
-        // ── DOM refs ──
-        const searchInput    = document.getElementById('search-input');
-        const productList    = document.getElementById('product-list');
-        const emptyState     = document.getElementById('empty-state');
-        const chips          = document.querySelectorAll('.category-chip');
-        const cards          = document.querySelectorAll('.product-card');
+        var PRODUCTS = [
+            // ══════════════ PASTÉIS (11 itens) ══════════════
+            { id: 'p1', category: 'pasteis', name: 'Pastel de Queijo', price: 9.00, description: '2 fatias de queijo e orégano', icon: 'bakery_dining' },
+            { id: 'p2', category: 'pasteis', name: 'Pastel Misto', price: 9.00, description: 'Queijo e presunto', icon: 'bakery_dining' },
+            { id: 'p3', category: 'pasteis', name: 'Pastel de Charque', price: 14.00, description: 'Queijo, presunto e charque', icon: 'bakery_dining' },
+            { id: 'p4', category: 'pasteis', name: 'Pastel de Frango', price: 13.00, description: 'Queijo, presunto, frango e orégano', icon: 'bakery_dining' },
+            { id: 'p5', category: 'pasteis', name: 'Frango com Bacon', price: 16.00, description: '2 fatias de queijo, frango e bacon', icon: 'bakery_dining' },
+            { id: 'p6', category: 'pasteis', name: 'Frango Bacon Catupiry', price: 22.00, description: '2 fatias de queijo, frango, bacon e catupiry', icon: 'bakery_dining' },
+            { id: 'p7', category: 'pasteis', name: 'Frango com Catupiry', price: 18.00, description: '2 fatias de queijo, frango, catupiry e orégano', icon: 'bakery_dining' },
+            { id: 'p8', category: 'pasteis', name: 'Frango Bacon Cheddar', price: 20.00, description: '2 fatias de queijo, frango, bacon e cheddar', icon: 'bakery_dining' },
+            { id: 'p9', category: 'pasteis', name: 'Carne Sol com Catupiry', price: 20.00, description: '2 fatias de queijo, carne de sol e catupiry', icon: 'bakery_dining' },
+            { id: 'p10', category: 'pasteis', name: 'Carne Sol com Cheddar', price: 18.00, description: '2 fatias de queijo, carne de sol e cheddar', icon: 'bakery_dining' },
+            { id: 'p11', category: 'pasteis', name: 'Pastel Tudão', price: 20.00, description: 'Queijo, presunto, frango, charque, bacon, calabresa e milho', icon: 'bakery_dining' },
 
-        let activeCategory = 'all';
-        let debounceTimer  = null;
+            // ══════════════ AÇAÍ & SORVETES ══════════════
+            { id: 'acai-tigela', category: 'acai-sorvetes', name: 'Açaí na Tigela', prices: { '200ml': 9.00, '300ml': 12.00, '400ml': 14.00, '500ml': 16.00 }, description: 'Complementos, creme, fruta e cobertura', icon: 'icecream', hasCustomization: true },
+            { id: 'acai-copo', category: 'acai-sorvetes', name: 'Açaí no Copo', prices: { '330ml': 14.00, '400ml': 16.00, '500ml': 18.00 }, description: 'Para levar com complementos favoritos', icon: 'local_bar', hasCustomization: true },
+            { id: 'milk-shake', category: 'acai-sorvetes', name: 'Milk-shake Tradicional', prices: { '330ml': 12.00, '400ml': 14.00, '500ml': 16.00 }, description: 'Chocolate, Morango, Flocos, Nata Goiaba, Chiclete, Abacaxi, Ovomaltine, Paçoca', icon: 'coffee_maker' },
+            { id: 'milk-shake-especial', category: 'acai-sorvetes', name: 'Milk-shake Especial', prices: { '330ml': 14.00, '400ml': 16.00, '500ml': 18.00 }, description: 'Ninho c/ Nutella, Ninho c/ Oreo, Morango c/ Nutella, Chocolate c/ Nutella', icon: 'star_rate' },
+            { id: 'sorvete', category: 'acai-sorvetes', name: 'Sorvete no Copo', prices: { '200ml': 8.00, '300ml': 10.00, '400ml': 12.00, '500ml': 14.00 }, description: 'Chocolate, Morango, Toffee, Flocos, Nata Goiaba, Chiclete, Creme c/ Passas, Abacaxi', icon: 'icecream' },
+            { id: 'mousse-maracuja', category: 'acai-sorvetes', name: 'Mousse de Maracujá', price: 5.00, description: 'Mousse cremoso de maracujá', icon: 'icecream' },
+            { id: 'mousse-limao', category: 'acai-sorvetes', name: 'Mousse de Limão', price: 5.00, description: 'Mousse cremoso de limão', icon: 'icecream' },
 
-        // ── Filter logic ──
-        function filterProducts() {
-            const query = searchInput.value.trim().toLowerCase();
-            let visibleCount = 0;
+            // ══════════════ SANDUÍCHES (33 itens) ══════════════
+            { id: 's1', category: 'sanduiches', name: '1. Hot Dog Tradicional', price: 12.00, description: 'Carne moída ou frango, salsicha, tomate, milho verde, batata palha', icon: 'lunch_dining' },
+            { id: 's2', category: 'sanduiches', name: '2. Misto Quente', price: 12.00, description: '2 fatias de queijo, 2 fatias de presunto', icon: 'lunch_dining' },
+            { id: 's3', category: 'sanduiches', name: '3. Baurú', price: 13.00, description: '2 fatias de queijo, 2 fatias de presunto', icon: 'lunch_dining' },
+            { id: 's4', category: 'sanduiches', name: '4. Hot Dog na Chapa', price: 13.00, description: 'Pão bola, carne moída ou frango, salsicha, tomate, milho verde, batata palha', icon: 'lunch_dining' },
+            { id: 's5', category: 'sanduiches', name: '5. Americano', price: 12.00, description: 'Ovo, queijo, presunto, alface e tomate', icon: 'lunch_dining' },
+            { id: 's6', category: 'sanduiches', name: '6. Hambúrguer', price: 12.00, description: 'Hambúrguer, queijo, alface e tomate', icon: 'lunch_dining' },
+            { id: 's7', category: 'sanduiches', name: '7. X Calabar', price: 13.00, description: 'Hambúrguer, queijo, calabresa', icon: 'lunch_dining' },
+            { id: 's8', category: 'sanduiches', name: '8. X Salada', price: 13.00, description: 'Hambúrguer, queijo, presunto, alface e tomate', icon: 'lunch_dining' },
+            { id: 's9', category: 'sanduiches', name: '9. Eggs Burguer', price: 14.00, description: 'Hambúrguer, queijo, presunto, ovo, alface e tomate', icon: 'lunch_dining' },
+            { id: 's10', category: 'sanduiches', name: '10. X Brasil', price: 14.00, description: 'Hambúrguer, queijo, presunto, salsicha, alface e tomate', icon: 'lunch_dining' },
+            { id: 's11', category: 'sanduiches', name: '11. Salsibresa', price: 14.00, description: 'Salsicha, queijo, presunto, calabresa, alface e tomate', icon: 'lunch_dining' },
+            { id: 's12', category: 'sanduiches', name: '12. Minuano', price: 16.00, description: 'Hambúrguer, queijo, presunto, ovo, salsicha, alface e tomate', icon: 'lunch_dining' },
+            { id: 's13', category: 'sanduiches', name: '13. X Varadouro', price: 16.00, description: '2 hambúrguer, ovo, queijo', icon: 'lunch_dining' },
+            { id: 's14', category: 'sanduiches', name: '14. Salsibacon', price: 16.00, description: 'Salsicha, queijo, presunto, bacon, alface e tomate', icon: 'lunch_dining' },
+            { id: 's15', category: 'sanduiches', name: '15. X Calabresa', price: 17.00, description: 'Hambúrguer, queijo, presunto, ovo, calabresa, alface e tomate', icon: 'lunch_dining' },
+            { id: 's16', category: 'sanduiches', name: '16. X Qualquer Coisa', price: 16.00, description: 'Queijo, presunto, carne moída, alface e tomate', icon: 'lunch_dining' },
+            { id: 's17', category: 'sanduiches', name: '17. X Biss', price: 17.00, description: 'Calabresa, queijo, bacon, presunto, alface e tomate', icon: 'lunch_dining' },
+            { id: 's18', category: 'sanduiches', name: '18. X Bacon', price: 18.00, description: 'Hambúrguer, queijo, presunto, ovo, bacon, alface e tomate', icon: 'lunch_dining' },
+            { id: 's19', category: 'sanduiches', name: '19. X Dose Dupla', price: 18.00, description: '2 hambúrguer, queijo, presunto, alface e tomate', icon: 'lunch_dining' },
+            { id: 's20', category: 'sanduiches', name: '20. Passaburguer', price: 19.00, description: 'Carne moída, salsicha, milho verde, batata palha, queijo, hambúrguer, alface e tomate', icon: 'lunch_dining' },
+            { id: 's21', category: 'sanduiches', name: '21. Calabacon', price: 19.00, description: 'Hambúrguer, queijo, presunto, calabresa, bacon, alface e tomate', icon: 'lunch_dining' },
+            { id: 's22', category: 'sanduiches', name: '22. X Porto Calvo', price: 18.00, description: '2 hambúrguer, queijo, 2 ovos, alface e tomate', icon: 'lunch_dining' },
+            { id: 's23', category: 'sanduiches', name: '23. X Desfiadinho', price: 18.00, description: 'Frango desfiado, queijo, milho verde, batata palha, cheddar, bacon, alface e tomate', icon: 'lunch_dining' },
+            { id: 's24', category: 'sanduiches', name: '24. X Duplo', price: 20.00, description: '2 hambúrguer, queijo, presunto, 2 ovos, alface e tomate', icon: 'lunch_dining' },
+            { id: 's25', category: 'sanduiches', name: '25. X Cheddar', price: 21.00, description: '2 hambúrguer, queijo, bacon, batata palha, cheddar, alface e tomate', icon: 'lunch_dining' },
+            { id: 's26', category: 'sanduiches', name: '26. Chicken', price: 23.00, description: 'Frango em cubos, bacon, queijo, alface e tomate, porção de batatinha frita (cheddar à gosto)', icon: 'lunch_dining' },
+            { id: 's27', category: 'sanduiches', name: '27. X Yara', price: 22.00, description: '2 hambúrguer, queijo, presunto, bacon, porção de batatinha frita', icon: 'lunch_dining' },
+            { id: 's28', category: 'sanduiches', name: '28. X Delícia', price: 23.00, description: 'Hambúrguer artesanal 130g, bacon, cheddar, alface e tomate, porção de batatinha frita', icon: 'lunch_dining' },
+            { id: 's29', category: 'sanduiches', name: '29. X TUDO', price: 23.00, description: 'Hambúrguer, queijo, presunto, ovo, calabresa, bacon, salsicha, alface e tomate', icon: 'lunch_dining' },
+            { id: 's30', category: 'sanduiches', name: '30. X Especial', price: 22.00, description: 'Bacon, queijo, carne moída, calabresa, porção de batatinha frita', icon: 'lunch_dining' },
+            { id: 's31', category: 'sanduiches', name: '31. X Triplo', price: 29.00, description: '3 hambúrguer, 3 ovos, queijo, presunto, alface e tomate', icon: 'lunch_dining' },
+            { id: 's32', category: 'sanduiches', name: '32. Carne de Sol', price: 28.00, description: 'Carne de sol em cubos, bacon, cheddar, alface e tomate, porção de batatinha frita', icon: 'lunch_dining' },
+            { id: 's33', category: 'sanduiches', name: '33. X BIG', price: 45.00, description: '2 hambúrguer, queijo, presunto, 2 ovos, salsicha, calabresa, bacon, alface e tomate', icon: 'stars' },
 
-            cards.forEach((card) => {
-                const category    = card.dataset.category;
-                const name        = card.querySelector('h4').textContent.toLowerCase();
-                const description = card.querySelector('p').textContent.toLowerCase();
+            // ══════════════ SALGADOS & OUTROS ══════════════
+            { id: 'c1', category: 'salgados-outros', name: 'Cuscuz Tradicional', price: 12.00, description: 'Cuscuz com calabresa e vinagrete', icon: 'flatware' },
+            { id: 'c2', category: 'salgados-outros', name: 'Cuscuz Especial', price: 17.00, description: 'Carne de sol + mussarela + vinagrete', icon: 'flatware' },
+            { id: 'sal1', category: 'salgados-outros', name: 'Coxinhas / Enroladinhos', price: 5.00, description: 'Coxinhas e enroladinhos fritos na hora', icon: 'egg' },
+            { id: 'batata', category: 'salgados-outros', name: 'Batata Frita', prices: { 'P': 10.00, 'M': 12.00, 'G': 16.00 }, description: 'Porções de batatas fritas crocantes', icon: 'fastfood' },
+            { id: 'batata-recheada', category: 'salgados-outros', name: 'Batata G Recheada', price: 23.00, description: 'Recheio de bacon ou calabresa e cheddar', icon: 'fastfood' },
 
-                const matchesCategory = activeCategory === 'all' || category === activeCategory;
-                const matchesSearch   = !query || name.includes(query) || description.includes(query);
+            // ══════════════ BEBIDAS ══════════════
+            // Água Mineral
+            { id: 'b-agua1', category: 'bebidas', name: 'Água s/ gás 350ml', price: 2.00, description: 'Água mineral sem gás', icon: 'water_drop' },
+            { id: 'b-agua2', category: 'bebidas', name: 'Água s/ gás 500ml', price: 3.00, description: 'Água mineral sem gás', icon: 'water_drop' },
+            { id: 'b-agua3', category: 'bebidas', name: 'Água s/ gás 1.5L', price: 6.00, description: 'Água mineral sem gás', icon: 'water_drop' },
+            { id: 'b-agua4', category: 'bebidas', name: 'Água c/ gás 500ml', price: 3.50, description: 'Água mineral com gás', icon: 'water_drop' },
 
-                if (matchesCategory && matchesSearch) {
-                    card.classList.remove('card-hidden');
-                    card.classList.add('card-visible');
-                    visibleCount++;
-                } else {
-                    card.classList.add('card-hidden');
-                    card.classList.remove('card-visible');
-                }
+            // Sucos Del Valle
+            { id: 'b-dv', category: 'bebidas', name: 'Suco Del Valle 450ml', price: 5.00, description: 'Sabores: Uva, Laranja ou Frutas Cítricas', icon: 'local_cafe' },
+
+            // Sucos da Fruta
+            { id: 'b-suco-laranja', category: 'bebidas', name: 'Suco de Laranja', price: 8.00, description: 'Suco natural da fruta', icon: 'local_cafe' },
+            { id: 'b-suco-limao', category: 'bebidas', name: 'Suco de Limão', price: 8.00, description: 'Suco natural da fruta', icon: 'local_cafe' },
+
+            // Sucos de Polpa
+            { id: 'b-polpa', category: 'bebidas', name: 'Suco de Polpa 300ml (sem leite)', price: 5.00, description: 'Acerola, Abacaxi c/ Hortelã, Cajá, Graviola, Goiaba ou Maracujá', icon: 'local_cafe' },
+            { id: 'b-polpa-leite', category: 'bebidas', name: 'Suco de Polpa 300ml (com leite)', price: 6.00, description: 'Acerola, Abacaxi c/ Hortelã, Cajá, Graviola, Goiaba ou Maracujá', icon: 'local_cafe' },
+
+            // Refrigerantes NS
+            { id: 'b-coca-ns', category: 'bebidas', name: 'Coca-Cola NS', price: 4.00, description: 'Refrigerante não retornável', icon: 'liquor' },
+            { id: 'b-fanta-ns', category: 'bebidas', name: 'Fanta NS', price: 4.00, description: 'Refrigerante não retornável', icon: 'liquor' },
+
+            // Mini Pet
+            { id: 'b-coca-mini', category: 'bebidas', name: 'Coca-Cola Mini Pet', price: 4.00, description: 'Refrigerante mini pet', icon: 'liquor' },
+            { id: 'b-fanta-mini', category: 'bebidas', name: 'Fanta Mini Pet', price: 4.00, description: 'Refrigerante mini pet', icon: 'liquor' },
+
+            // KS 290ml
+            { id: 'b-coca-ks', category: 'bebidas', name: 'Coca-Cola KS 290ml', price: 5.00, description: 'Garrafa de vidro', icon: 'liquor' },
+            { id: 'b-fanta-ks', category: 'bebidas', name: 'Fanta KS 290ml', price: 5.00, description: 'Garrafa de vidro', icon: 'liquor' },
+
+            // Lata 350ml
+            { id: 'b-coca-lata', category: 'bebidas', name: 'Coca-Cola Lata 350ml', price: 5.00, description: 'Lata geladinha', icon: 'liquor' },
+            { id: 'b-fanta-lata', category: 'bebidas', name: 'Fanta Lata 350ml', price: 5.00, description: 'Lata geladinha', icon: 'liquor' },
+            { id: 'b-kuat-lata', category: 'bebidas', name: 'Kuat Lata 350ml', price: 5.00, description: 'Lata geladinha', icon: 'liquor' },
+            { id: 'b-sprite-lata', category: 'bebidas', name: 'Sprite Lata 350ml', price: 5.00, description: 'Lata geladinha', icon: 'liquor' },
+            { id: 'b-coca-zero-lata', category: 'bebidas', name: 'Coca-Cola Zero Lata 350ml', price: 5.00, description: 'Lata geladinha', icon: 'liquor' },
+            { id: 'b-schweppes-lata', category: 'bebidas', name: 'Schweppes Citrus Lata 350ml', price: 5.00, description: 'Lata geladinha', icon: 'liquor' },
+
+            // Pet 1L
+            { id: 'b-coca-1l', category: 'bebidas', name: 'Coca-Cola 1 Litro', price: 10.00, description: 'Pet 1 litro', icon: 'liquor' },
+            { id: 'b-fanta-1l', category: 'bebidas', name: 'Fanta 1 Litro', price: 9.00, description: 'Pet 1 litro', icon: 'liquor' },
+
+            // Pet 2L
+            { id: 'b-coca-2l', category: 'bebidas', name: 'Coca-Cola 2 Litros', price: 15.00, description: 'Pet 2 litros', icon: 'liquor' },
+            { id: 'b-fanta-2l', category: 'bebidas', name: 'Fanta 2 Litros', price: 12.00, description: 'Pet 2 litros', icon: 'liquor' },
+
+            // Outros tamanhos
+            { id: 'b-coca-500', category: 'bebidas', name: 'Coca-Cola 500ml', price: 6.00, description: 'Pet 500ml', icon: 'liquor' },
+            { id: 'b-sprite-fresh', category: 'bebidas', name: 'Sprite Fresh Limão 510ml', price: 6.00, description: 'Pet 510ml', icon: 'liquor' },
+
+            // LS Retornável
+            { id: 'b-coca-ls', category: 'bebidas', name: 'Coca-Cola LS Retornável', price: 7.50, description: 'Garrafa retornável', icon: 'liquor' },
+            { id: 'b-fanta-ls', category: 'bebidas', name: 'Fanta LS Retornável', price: 7.50, description: 'Garrafa retornável', icon: 'liquor' },
+
+            // Monster
+            { id: 'b-monster', category: 'bebidas', name: 'Monster Energy', price: 10.00, description: 'Lata 269ml', icon: 'bolt' }
+        ];
+
+        var searchInput = document.getElementById('search-input');
+        var productList = document.getElementById('product-list');
+        var emptyState = document.getElementById('empty-state');
+        var chips = document.querySelectorAll('.category-chip');
+        var modal = document.getElementById('product-modal');
+        var modalContent = document.getElementById('modal-content');
+        var closeBtn = document.getElementById('close-modal');
+        var activeCategory = 'all';
+
+        function renderProducts() {
+            var query = (searchInput.value || '').trim().toLowerCase();
+            productList.innerHTML = '';
+            var filtered = PRODUCTS.filter(function(p) {
+                var matchesCat = activeCategory === 'all' || p.category === activeCategory;
+                var matchesSearch = !query || p.name.toLowerCase().indexOf(query) !== -1 || p.description.toLowerCase().indexOf(query) !== -1;
+                return matchesCat && matchesSearch;
             });
 
-            // Toggle empty state
-            if (visibleCount === 0) {
+            if (filtered.length === 0) {
                 emptyState.classList.remove('hidden');
-            } else {
-                emptyState.classList.add('hidden');
+                return;
             }
+            emptyState.classList.add('hidden');
+
+            filtered.forEach(function(p) {
+                var card = document.createElement('div');
+                card.className = 'product-card card-visible flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20 hover:border-surface-dark-alt/50 transition-all cursor-pointer';
+                var isVariable = !!p.prices;
+                var price = isVariable ? Object.values(p.prices)[0] : p.price;
+                var sizeOptions = '';
+                if (isVariable) {
+                    sizeOptions = '<select class="size-sel bg-surface-dark-alt text-[10px] text-primary p-1 rounded uppercase border-none focus:ring-0">';
+                    Object.keys(p.prices).forEach(function(s) {
+                        sizeOptions += '<option value="' + s + '">' + s + '</option>';
+                    });
+                    sizeOptions += '</select>';
+                }
+                card.innerHTML = '<div class="w-[72px] h-[72px] rounded-xl bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-500 overflow-hidden">' +
+                    '<span class="material-symbols-outlined text-[32px]">' + p.icon + '</span>' +
+                    '</div>' +
+                    '<div class="flex-1 min-w-0">' +
+                    '<h4 class="font-display font-semibold text-[15px] truncate text-slate-100">' + p.name + '</h4>' +
+                    '<p class="font-body text-[13px] text-slate-400 truncate">' + p.description + '</p>' +
+                    '<div class="flex items-center gap-3 mt-2">' +
+                    '<div class="price font-display font-bold text-accent text-[16px]">R$ ' + price.toFixed(2) + '</div>' +
+                    sizeOptions +
+                    '</div>' +
+                    '</div>' +
+                    '<button class="add-btn w-9 h-9 rounded-full bg-primary text-background-dark flex items-center justify-center shrink-0">' +
+                    '<span class="material-symbols-outlined text-[20px]">add</span>' +
+                    '</button>';
+
+                if (isVariable) {
+                    var sel = card.querySelector('.size-sel');
+                    sel.addEventListener('change', function(e) {
+                        e.stopPropagation();
+                        card.querySelector('.price').textContent = 'R$ ' + p.prices[e.target.value].toFixed(2);
+                    });
+                    sel.addEventListener('click', function(e) { e.stopPropagation(); });
+                }
+                card.querySelector('.add-btn').addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (p.hasCustomization) { openModal(p); } else { alert('Adicionado: ' + p.name); }
+                });
+                card.addEventListener('click', function() {
+                    if (p.hasCustomization) openModal(p);
+                });
+                productList.appendChild(card);
+            });
         }
 
-        // ── Chip click handler ──
-        chips.forEach((chip) => {
-            chip.addEventListener('click', () => {
-                // Update active state
-                chips.forEach((c) => {
-                    c.classList.remove('active', 'bg-primary', 'text-background-dark', 'font-semibold');
-                    c.classList.add('bg-surface-dark', 'border', 'border-surface-dark-alt', 'text-slate-300', 'font-medium');
-                });
-                chip.classList.add('active', 'bg-primary', 'text-background-dark', 'font-semibold');
-                chip.classList.remove('bg-surface-dark', 'border-surface-dark-alt', 'text-slate-300', 'font-medium');
+        function openModal(p) {
+            document.getElementById('modal-title').textContent = p.name;
+            document.getElementById('modal-description').textContent = p.description;
+            document.getElementById('modal-icon').textContent = p.icon;
+            var opts = document.getElementById('modal-options');
+            opts.innerHTML = '';
 
-                activeCategory = chip.dataset.category;
-                filterProducts();
+            if (p.prices) {
+                var html = '<span class="text-[10px] font-bold text-slate-500 uppercase">Tamanhos</span><div class="flex gap-2 flex-wrap">';
+                Object.keys(p.prices).forEach(function(s) {
+                    html += '<button class="flex-1 p-2 rounded-lg bg-surface-dark-alt border border-primary/20 text-xs font-bold text-slate-200">' + s + '<br>R$ ' + p.prices[s].toFixed(2) + '</button>';
+                });
+                html += '</div>';
+                opts.innerHTML += html;
+            }
+
+            if (p.id.indexOf('acai') !== -1) {
+                var cremes = ['Cupuaçu', 'Ninho c/ Oreo', 'Ninho c/ Nutella', 'Ovomaltine'];
+                var coberturas = ['Chocolate', 'Morango', 'Leite Condensado'];
+                var frutas = ['Banana', 'Uva'];
+                var complementos = ['Gotas de Chocolate', 'Chocoball', 'Ovomaltine', 'Granola', 'Farinha Lacta', 'Leite em Pó', 'Amendoim', 'Paçoca', 'M&M', 'Bis', 'Sucrilhos', 'Cereal', 'Jujuba', 'Canudinhos Wafer', 'Marshmallow'];
+
+                var sections = [
+                    { title: 'Creme (1)', items: cremes },
+                    { title: 'Cobertura (1)', items: coberturas },
+                    { title: 'Fruta (1)', items: frutas },
+                    { title: 'Complementos', items: complementos }
+                ];
+
+                sections.forEach(function(sec) {
+                    var secHtml = '<div class="mt-3"><span class="text-[10px] font-bold text-slate-500 uppercase">' + sec.title + '</span><div class="grid grid-cols-2 gap-2 mt-1">';
+                    sec.items.forEach(function(item) {
+                        secHtml += '<div class="flex items-center gap-2 p-2 bg-surface-dark-alt rounded-lg text-[11px] text-slate-300"><input type="checkbox" class="rounded border-slate-700 bg-background-dark text-primary focus:ring-primary h-3 w-3">' + item + '</div>';
+                    });
+                    secHtml += '</div></div>';
+                    opts.innerHTML += secHtml;
+                });
+
+                // Adicionais com preço
+                var adicionais = [
+                    { nome: 'Morango', preco: 3 },
+                    { nome: 'Kiwi', preco: 3 },
+                    { nome: 'Nutella', preco: 3 },
+                    { nome: 'Kit Kat', preco: 3 },
+                    { nome: 'Mousse de Maracujá', preco: 5 }
+                ];
+                var adHtml = '<div class="mt-3"><span class="text-[10px] font-bold text-slate-500 uppercase">Adicionais (+R$)</span><div class="grid grid-cols-2 gap-2 mt-1">';
+                adicionais.forEach(function(a) {
+                    adHtml += '<div class="flex items-center gap-2 p-2 bg-surface-dark-alt rounded-lg text-[11px] text-slate-300"><input type="checkbox" class="rounded border-slate-700 bg-background-dark text-primary focus:ring-primary h-3 w-3">' + a.nome + ' +R$ ' + a.preco.toFixed(2) + '</div>';
+                });
+                adHtml += '</div></div>';
+                opts.innerHTML += adHtml;
+            }
+
+            var initialPrice = p.prices ? Object.values(p.prices)[0] : p.price;
+            document.getElementById('modal-total-price').textContent = 'R$ ' + initialPrice.toFixed(2);
+
+            modal.classList.remove('hidden');
+            setTimeout(function() { modal.classList.remove('opacity-0'); modalContent.classList.remove('scale-95'); }, 10);
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0');
+            modalContent.classList.add('scale-95');
+            setTimeout(function() { modal.classList.add('hidden'); }, 300);
+        }
+
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
+
+        chips.forEach(function(c) {
+            c.addEventListener('click', function() {
+                chips.forEach(function(x) {
+                    x.classList.remove('active', 'bg-primary', 'text-background-dark');
+                    x.classList.add('bg-surface-dark', 'text-slate-300');
+                });
+                c.classList.add('active', 'bg-primary', 'text-background-dark');
+                activeCategory = c.dataset.category;
+                renderProducts();
             });
         });
 
-        // ── Search input handler (debounced) ──
-        searchInput.addEventListener('input', () => {
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(filterProducts, 200);
-        });
-
-        // ── Clear search on Escape ──
-        searchInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                searchInput.value = '';
-                filterProducts();
-                searchInput.blur();
-            }
-        });
+        searchInput.addEventListener('input', function() { renderProducts(); });
+        renderProducts();
     })();
     </script>
-
 </body>
 </html>
