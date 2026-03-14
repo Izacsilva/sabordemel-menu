@@ -38,14 +38,87 @@
         .product-card { transition: opacity 0.3s ease, transform 0.3s ease; }
         .product-card.card-visible { opacity: 1; transform: translateY(0) scale(1); }
         .category-chip.active { background-color: #edcd2c; color: #131313; font-weight: 600; border-color: transparent; }
+
+        /* ── Cart Drawer ── */
+        #cart-drawer {
+            position: fixed; top: 0; right: 0; height: 100dvh;
+            width: min(400px, 100vw);
+            background: #1a1a1a;
+            border-left: 1px solid #2a2a2a;
+            z-index: 200;
+            transform: translateX(100%);
+            transition: transform 0.32s cubic-bezier(0.4,0,0.2,1);
+            display: flex; flex-direction: column;
+            box-shadow: -8px 0 32px rgba(0,0,0,0.5);
+        }
+        #cart-drawer.open { transform: translateX(0); }
+        #cart-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.65);
+            backdrop-filter: blur(3px);
+            z-index: 199;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.32s ease;
+        }
+        #cart-overlay.open { opacity: 1; pointer-events: auto; }
+
+        /* Badge do carrinho */
+        #cart-badge {
+            position: absolute; top: 2px; right: 2px;
+            width: 18px; height: 18px; border-radius: 50%;
+            background: #f26522; color: #fff;
+            font-size: 10px; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transform: scale(0);
+            transition: opacity 0.2s, transform 0.2s;
+            pointer-events: none;
+        }
+        #cart-badge.visible { opacity: 1; transform: scale(1); }
+
+        /* Animação de bounce ao adicionar */
+        @keyframes pop { 0%,100%{transform:scale(1)} 50%{transform:scale(1.35)} }
+        .cart-pop { animation: pop 0.25s ease; }
+
+        /* Itens do carrinho */
+        .cart-item {
+            display: flex; align-items: center; gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #2a2a2a;
+            animation: slideInRight 0.2s ease;
+        }
+        @keyframes slideInRight { from{opacity:0;transform:translateX(16px)} to{opacity:1;transform:translateX(0)} }
+        .qty-btn {
+            width: 28px; height: 28px; border-radius: 50%;
+            background: #2a2a2a; color: #edcd2c;
+            display: flex; align-items: center; justify-content: center;
+            border: none; cursor: pointer; font-size: 18px; font-weight: 700;
+            transition: background 0.15s, transform 0.1s;
+        }
+        .qty-btn:hover { background: #333; transform: scale(1.1); }
+
+        /* Input estilizado */
+        .cart-input {
+            width: 100%; background: #252525; border: 1px solid #333;
+            border-radius: 10px; padding: 10px 12px;
+            color: #e2e8f0; font-size: 14px;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+        .cart-input:focus { border-color: #edcd2c; }
+        .cart-input::placeholder { color: #555; }
+
+        /* Radio custom */
+        .delivery-option { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .delivery-option input[type=radio] { accent-color: #edcd2c; width: 16px; height: 16px; }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-body antialiased min-h-screen">
 
     <header class="flex items-center justify-between px-5 h-[72px] sticky top-0 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md z-50">
         <h1 class="font-display font-bold text-[24px] text-primary tracking-wide uppercase">Sabor de Mel</h1>
-        <button class="relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-dark transition-colors">
+        <button id="cart-btn" class="relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-dark transition-colors">
             <span class="material-symbols-outlined text-[24px]">shopping_cart</span>
+            <span id="cart-badge">0</span>
         </button>
     </header>
 
@@ -97,11 +170,70 @@
                         <span class="text-xs text-slate-500 uppercase font-bold tracking-wider">Total</span>
                         <span id="modal-total-price" class="font-display font-bold text-2xl text-accent">R$ 0,00</span>
                     </div>
-                    <button class="bg-primary text-background-dark font-display font-bold uppercase px-8 py-3 rounded-xl">Adicionar</button>
+                    <button id="modal-add-btn" class="bg-primary text-background-dark font-display font-bold uppercase px-8 py-3 rounded-xl hover:bg-yellow-300 active:scale-95 transition-all">Adicionar ao Carrinho</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Overlay do Carrinho -->
+    <div id="cart-overlay"></div>
+
+    <!-- Drawer do Carrinho -->
+    <aside id="cart-drawer">
+        <!-- Header -->
+        <div class="flex items-center justify-between px-5 py-4 border-b border-[#2a2a2a] shrink-0">
+            <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-primary text-[24px]">shopping_cart</span>
+                <h2 class="font-display font-bold text-lg text-slate-100 uppercase tracking-wide">Seu Pedido</h2>
+            </div>
+            <button id="close-cart-btn" class="w-9 h-9 flex items-center justify-center rounded-full bg-[#2a2a2a] text-slate-400 hover:text-slate-100 hover:bg-[#333] transition-colors">
+                <span class="material-symbols-outlined text-[20px]">close</span>
+            </button>
+        </div>
+
+        <!-- Lista de itens (scroll) -->
+        <div id="cart-items-list" class="flex-1 overflow-y-auto px-5 py-2"></div>
+
+        <!-- Estado vazio -->
+        <div id="cart-empty-state" class="flex flex-col items-center justify-center py-16 text-center px-5 flex-1">
+            <span class="material-symbols-outlined text-[56px] text-slate-600 mb-3">shopping_basket</span>
+            <p class="font-display font-semibold text-slate-400 text-base uppercase">Seu carrinho está vazio</p>
+            <p class="font-body text-sm text-slate-600 mt-1">Adicione itens do cardápio para começar</p>
+        </div>
+
+        <!-- Formulário e Checkout -->
+        <div id="cart-checkout-section" class="hidden shrink-0 px-5 py-4 border-t border-[#2a2a2a] bg-[#161616]">
+            <div class="flex items-center justify-between mb-4">
+                <span class="font-body text-slate-400 text-sm font-semibold uppercase tracking-wider">Total</span>
+                <span id="cart-total" class="font-display font-bold text-2xl text-accent">R$ 0,00</span>
+            </div>
+
+            <!-- Formulário -->
+            <div class="flex flex-col gap-3 mb-4">
+                <input id="cart-name" class="cart-input" type="text" placeholder="Seu nome *" autocomplete="name">
+                <div class="flex gap-4 py-1">
+                    <label class="delivery-option">
+                        <input type="radio" name="delivery-type" value="retirada" checked> <span class="text-sm text-slate-300">Retirada</span>
+                    </label>
+                    <label class="delivery-option">
+                        <input type="radio" name="delivery-type" value="delivery"> <span class="text-sm text-slate-300">Delivery</span>
+                    </label>
+                </div>
+                <div id="address-fields" class="hidden flex flex-col gap-3">
+                    <input id="cart-street" class="cart-input" type="text" placeholder="Rua e número">
+                    <input id="cart-neighborhood" class="cart-input" type="text" placeholder="Bairro">
+                    <input id="cart-reference" class="cart-input" type="text" placeholder="Ponto de referência">
+                </div>
+            </div>
+
+            <!-- Botão WhatsApp -->
+            <button id="whatsapp-btn" class="w-full flex items-center justify-center gap-2 bg-green-500 hover:bg-green-400 active:scale-95 text-white font-display font-bold uppercase text-base py-4 rounded-2xl transition-all shadow-lg shadow-green-900/30">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Enviar Pedido via WhatsApp
+            </button>
+        </div>
+    </aside>
 
     <script>
     (function () {
@@ -292,7 +424,13 @@
                 }
                 card.querySelector('.add-btn').addEventListener('click', function(e) {
                     e.stopPropagation();
-                    if (p.hasCustomization) { openModal(p); } else { alert('Adicionado: ' + p.name); }
+                    if (p.hasCustomization) {
+                        openModal(p);
+                    } else {
+                        var sel = card.querySelector('.size-sel');
+                        var size = sel ? sel.value : null;
+                        addToCart(p, size, []);
+                    }
                 });
                 card.addEventListener('click', function() {
                     if (p.hasCustomization) openModal(p);
@@ -385,7 +523,241 @@
 
         searchInput.addEventListener('input', function() { renderProducts(); });
         renderProducts();
+
+        // ══════════════════════════════════════════════════
+        //  MÓDULO DE CARRINHO
+        // ══════════════════════════════════════════════════
+
+        var WHATSAPP_NUMBER = '5582999999999'; // ← Troque pelo número real
+
+        // --- Estado ---
+        var cartState = [];
+        var currentModalProduct = null;
+        var currentModalSize = null;
+        var currentModalExtras = [];
+
+        function saveCart() {
+            try { localStorage.setItem('sabordemel_cart', JSON.stringify(cartState)); } catch(e) {}
+        }
+        function loadCart() {
+            try {
+                var saved = localStorage.getItem('sabordemel_cart');
+                if (saved) cartState = JSON.parse(saved);
+            } catch(e) { cartState = []; }
+        }
+
+        // --- Badge ---
+        var cartBadge = document.getElementById('cart-badge');
+        function updateBadge() {
+            var total = cartState.reduce(function(s, i) { return s + i.qty; }, 0);
+            cartBadge.textContent = total;
+            if (total > 0) { cartBadge.classList.add('visible'); }
+            else { cartBadge.classList.remove('visible'); }
+        }
+
+        // --- addToCart ---
+        function addToCart(product, size, extras) {
+            var unitPrice = (size && product.prices) ? product.prices[size] : product.price;
+            var extrasTotal = (extras || []).reduce(function(s, e) { return s + (e.preco || 0); }, 0);
+            var itemTotal = unitPrice + extrasTotal;
+            var key = product.id + '|' + (size || '') + '|' + (extras||[]).map(function(e){return e.nome;}).join(',');
+            var existing = null;
+            cartState.forEach(function(i) { if (i.key === key) existing = i; });
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cartState.push({
+                    key: key, id: product.id,
+                    name: product.name + (size ? ' (' + size + ')' : ''),
+                    unitPrice: itemTotal, qty: 1,
+                    extras: extras || [], icon: product.icon
+                });
+            }
+            saveCart(); updateBadge(); renderCartItems();
+            var headerBtn = document.getElementById('cart-btn');
+            headerBtn.classList.remove('cart-pop');
+            void headerBtn.offsetWidth;
+            headerBtn.classList.add('cart-pop');
+            setTimeout(function() { headerBtn.classList.remove('cart-pop'); }, 300);
+        }
+
+        // --- changeQty ---
+        function changeQty(key, delta) {
+            var idx = -1;
+            cartState.forEach(function(item, i) { if (item.key === key) idx = i; });
+            if (idx === -1) return;
+            cartState[idx].qty += delta;
+            if (cartState[idx].qty <= 0) cartState.splice(idx, 1);
+            saveCart(); updateBadge(); renderCartItems();
+        }
+
+        // --- renderCartItems ---
+        var cartItemsList = document.getElementById('cart-items-list');
+        var cartEmptyState = document.getElementById('cart-empty-state');
+        var cartCheckout = document.getElementById('cart-checkout-section');
+        var cartTotalEl = document.getElementById('cart-total');
+
+        function renderCartItems() {
+            cartItemsList.innerHTML = '';
+            if (cartState.length === 0) {
+                cartEmptyState.style.display = 'flex';
+                cartCheckout.classList.add('hidden');
+                cartItemsList.style.display = 'none';
+                return;
+            }
+            cartEmptyState.style.display = 'none';
+            cartCheckout.classList.remove('hidden');
+            cartItemsList.style.display = 'block';
+            var total = 0;
+            cartState.forEach(function(item) {
+                total += item.unitPrice * item.qty;
+                var div = document.createElement('div');
+                div.className = 'cart-item';
+                var extrasHtml = (item.extras && item.extras.length > 0)
+                    ? '<p class="text-[11px] text-slate-500 mt-0.5 leading-tight">' + item.extras.map(function(e){ return e.nome; }).join(', ') + '</p>'
+                    : '';
+                div.innerHTML =
+                    '<div class="w-9 h-9 rounded-lg bg-[#2a2a2a] flex items-center justify-center shrink-0 text-slate-500">' +
+                        '<span class="material-symbols-outlined text-[20px]">' + item.icon + '</span>' +
+                    '</div>' +
+                    '<div class="flex-1 min-w-0">' +
+                        '<p class="font-body text-sm text-slate-100 font-semibold truncate">' + item.name + '</p>' +
+                        extrasHtml +
+                        '<p class="text-accent font-display font-bold text-sm mt-0.5">R$ ' + item.unitPrice.toFixed(2) + '</p>' +
+                    '</div>' +
+                    '<div class="flex items-center gap-2 shrink-0">' +
+                        '<button class="qty-btn" data-key="' + item.key + '" data-delta="-1">−</button>' +
+                        '<span class="text-slate-200 font-bold text-sm w-5 text-center">' + item.qty + '</span>' +
+                        '<button class="qty-btn" data-key="' + item.key + '" data-delta="1">+</button>' +
+                    '</div>';
+                div.querySelectorAll('.qty-btn').forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        changeQty(btn.dataset.key, parseInt(btn.dataset.delta));
+                    });
+                });
+                cartItemsList.appendChild(div);
+            });
+            cartTotalEl.textContent = 'R$ ' + total.toFixed(2);
+        }
+
+        // --- Drawer ---
+        var cartDrawer = document.getElementById('cart-drawer');
+        var cartOverlay = document.getElementById('cart-overlay');
+        function openCart() { cartDrawer.classList.add('open'); cartOverlay.classList.add('open'); }
+        function closeCart() { cartDrawer.classList.remove('open'); cartOverlay.classList.remove('open'); }
+
+        document.getElementById('cart-btn').addEventListener('click', openCart);
+        document.getElementById('close-cart-btn').addEventListener('click', closeCart);
+        cartOverlay.addEventListener('click', closeCart);
+
+        // --- Delivery toggle ---
+        document.querySelectorAll('input[name="delivery-type"]').forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                var addr = document.getElementById('address-fields');
+                if (this.value === 'delivery') { addr.classList.remove('hidden'); }
+                else { addr.classList.add('hidden'); }
+            });
+        });
+
+        // --- WhatsApp ---
+        function buildWhatsAppMessage() {
+            var name = document.getElementById('cart-name').value.trim();
+            var deliveryType = document.querySelector('input[name="delivery-type"]:checked').value;
+            var street = document.getElementById('cart-street').value.trim();
+            var neighborhood = document.getElementById('cart-neighborhood').value.trim();
+            var reference = document.getElementById('cart-reference').value.trim();
+            if (!name) { alert('Por favor, informe seu nome.'); return null; }
+            if (deliveryType === 'delivery' && !street) { alert('Por favor, informe o endereço.'); return null; }
+            var total = 0;
+            var lines = ['*Novo Pedido - Sabor de Mel* 🍯', ''];
+            cartState.forEach(function(item) {
+                var sub = item.unitPrice * item.qty;
+                total += sub;
+                lines.push(item.qty + 'x ' + item.name + ' — R$ ' + sub.toFixed(2));
+                if (item.extras && item.extras.length > 0) {
+                    item.extras.forEach(function(e) { lines.push('   \u21b3 ' + e.nome); });
+                }
+            });
+            lines.push('');
+            lines.push('---------------------------');
+            lines.push('*Total: R$ ' + total.toFixed(2) + '*');
+            lines.push('');
+            lines.push('\ud83d\udc64 *Cliente:* ' + name);
+            if (deliveryType === 'delivery') {
+                lines.push('\ud83d\udee5 *Entrega:* Delivery');
+                lines.push('\ud83d\udccd ' + street + (neighborhood ? ', ' + neighborhood : ''));
+                if (reference) lines.push('\ud83d\udd16 Ref: ' + reference);
+            } else {
+                lines.push('\ud83c\udfea *Retirada* no local');
+            }
+            return lines.join('\n');
+        }
+
+        document.getElementById('whatsapp-btn').addEventListener('click', function() {
+            var msg = buildWhatsAppMessage();
+            if (!msg) return;
+            window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg), '_blank');
+        });
+
+        // --- Integração Modal → Carrinho ---
+        var _origOpenModal = openModal;
+        openModal = function(p) {
+            currentModalProduct = p;
+            currentModalSize = (p.prices) ? Object.keys(p.prices)[0] : null;
+            currentModalExtras = [];
+            _origOpenModal(p);
+
+            var opts = document.getElementById('modal-options');
+
+            // Bind botões de tamanho
+            var sizeKeys = p.prices ? Object.keys(p.prices) : [];
+            var sizeBtns = opts.querySelectorAll('button');
+            sizeBtns.forEach(function(btn, idx) {
+                if (!sizeKeys[idx]) return;
+                btn.addEventListener('click', function() {
+                    sizeBtns.forEach(function(b) {
+                        b.classList.remove('border-primary', 'bg-primary/10');
+                        b.classList.add('border-primary/20');
+                    });
+                    btn.classList.add('border-primary', 'bg-primary/10');
+                    currentModalSize = sizeKeys[idx];
+                    var extT = currentModalExtras.reduce(function(s,e){return s+(e.preco||0);},0);
+                    document.getElementById('modal-total-price').textContent = 'R$ ' + (p.prices[currentModalSize] + extT).toFixed(2);
+                });
+            });
+
+            // Bind checkboxes de adicionais
+            opts.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
+                cb.addEventListener('change', function() {
+                    currentModalExtras = [];
+                    opts.querySelectorAll('input[type="checkbox"]:checked').forEach(function(c) {
+                        var label = c.parentElement.textContent.trim();
+                        var m = label.match(/\+R\$\s*([\d,]+)/);
+                        var preco = m ? parseFloat(m[1].replace(',','.')) : 0;
+                        currentModalExtras.push({ nome: label.replace(/\s*\+R\$.*/, '').trim(), preco: preco });
+                    });
+                    var base = (currentModalSize && p.prices) ? p.prices[currentModalSize] : (p.price || 0);
+                    var extT = currentModalExtras.reduce(function(s,e){return s+(e.preco||0);},0);
+                    document.getElementById('modal-total-price').textContent = 'R$ ' + (base + extT).toFixed(2);
+                });
+            });
+        };
+
+        document.getElementById('modal-add-btn').addEventListener('click', function() {
+            if (!currentModalProduct) return;
+            addToCart(currentModalProduct, currentModalSize, currentModalExtras);
+            closeModal();
+            openCart();
+        });
+
+        // --- Init ---
+        loadCart();
+        updateBadge();
+        renderCartItems();
+        renderProducts();
+
     })();
     </script>
 </body>
 </html>
+
