@@ -816,7 +816,7 @@
             if (deliveryType === 'delivery' && !street) { alert('Por favor, informe o endereço.'); return null; }
             
             var total = 0;
-            var lines = ['*Novo Pedido - Sabor de Mel* 🍯', ''];
+            var lines = ['*Novo Pedido - Sabor de Mel*', ''];
             
             cartState.forEach(function(item) {
                 var sub = item.unitPrice * item.qty;
@@ -838,7 +838,7 @@
                     Object.keys(grouped).forEach(function(cat) {
                         // Capitaliza a primeira letra da categoria
                         var catName = cat.charAt(0).toUpperCase() + cat.slice(1);
-                        lines.push(' \u25ab _' + catName + ':_ ' + grouped[cat].join(', '));
+                        lines.push(catName + ': ' + grouped[cat].join(', '));
                     });
                 }
                 lines.push(''); // Espaço entre itens
@@ -848,14 +848,14 @@
             lines.push('*Total do Pedido: R$ ' + total.toFixed(2) + '*');
             lines.push('---------------------------');
             lines.push('');
-            lines.push('\ud83d\udc64 *Cliente:* ' + name);
+            lines.push('Cliente: ' + name);
             
             if (deliveryType === 'delivery') {
-                lines.push('\ud83d\udee5 *Entrega:* Delivery');
-                lines.push('\ud83d\udccd *Endereço:* ' + street + (neighborhood ? ', ' + neighborhood : ''));
-                if (reference) lines.push('\ud83d\udd16 *REF:* ' + reference);
+                lines.push('Entrega: Delivery');
+                lines.push('Endereço: ' + street + (neighborhood ? ', ' + neighborhood : ''));
+                if (reference) lines.push('REF: ' + reference);
             } else {
-                lines.push('\ud83c\udfea *Retirada* no local');
+                lines.push('Retirada no local');
             }
             
             return lines.join('\n');
