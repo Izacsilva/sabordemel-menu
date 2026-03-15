@@ -811,30 +811,53 @@
             var street = document.getElementById('cart-street').value.trim();
             var neighborhood = document.getElementById('cart-neighborhood').value.trim();
             var reference = document.getElementById('cart-reference').value.trim();
+            
             if (!name) { alert('Por favor, informe seu nome.'); return null; }
             if (deliveryType === 'delivery' && !street) { alert('Por favor, informe o endereço.'); return null; }
+            
             var total = 0;
             var lines = ['*Novo Pedido - Sabor de Mel* 🍯', ''];
+            
             cartState.forEach(function(item) {
                 var sub = item.unitPrice * item.qty;
                 total += sub;
-                lines.push(item.qty + 'x ' + item.name + ' — R$ ' + sub.toFixed(2));
+                
+                // Produto e Preço
+                lines.push('*' + item.qty + 'x ' + item.name + '*');
+                lines.push('Subtotal: R$ ' + sub.toFixed(2));
+                
+                // Personalizações agrupadas
                 if (item.extras && item.extras.length > 0) {
-                    item.extras.forEach(function(e) { lines.push('   \u21b3 ' + e.nome); });
+                    var grouped = {};
+                    item.extras.forEach(function(e) {
+                        var cat = e.categoria || 'Extras';
+                        if (!grouped[cat]) grouped[cat] = [];
+                        grouped[cat].push(e.nome + (e.preco > 0 ? ' (+R$ ' + e.preco.toFixed(2) + ')' : ''));
+                    });
+                    
+                    Object.keys(grouped).forEach(function(cat) {
+                        // Capitaliza a primeira letra da categoria
+                        var catName = cat.charAt(0).toUpperCase() + cat.slice(1);
+                        lines.push(' \u25ab _' + catName + ':_ ' + grouped[cat].join(', '));
+                    });
                 }
+                lines.push(''); // Espaço entre itens
             });
-            lines.push('');
+            
             lines.push('---------------------------');
-            lines.push('*Total: R$ ' + total.toFixed(2) + '*');
+            lines.push('*Total do Pedido: R$ ' + total.toFixed(2) + '*');
+            lines.push('---------------------------');
             lines.push('');
             lines.push('\ud83d\udc64 *Cliente:* ' + name);
+            
             if (deliveryType === 'delivery') {
                 lines.push('\ud83d\udee5 *Entrega:* Delivery');
-                lines.push('\ud83d\udccd ' + street + (neighborhood ? ', ' + neighborhood : ''));
-                if (reference) lines.push('\ud83d\udd16 Ref: ' + reference);
+                lines.push('\ud83d\udccd *Endereço:* ' + street + (neighborhood ? ', ' + neighborhood : ''));
+                if (reference) lines.push('\ud83d\udd16 *REF:* ' + reference);
             } else {
                 lines.push('\ud83c\udfea *Retirada* no local');
             }
+            
             return lines.join('\n');
         }
 
@@ -847,15 +870,16 @@
         document.getElementById('modal-add-btn').addEventListener('click', function() {
             if (!currentModalProduct) return;
             
-            // Unifica seleções gratuitas com extras ganhando um marcador
             var finalExtras = [];
+            // Seleções gratuitas
             Object.keys(currentModalSelections).forEach(function(cat) {
                 currentModalSelections[cat].forEach(function(item) {
-                    finalExtras.push({ nome: item + ' (' + cat + ')', preco: 0 });
+                    finalExtras.push({ nome: item, categoria: cat, preco: 0 });
                 });
             });
+            // Adicionais pagos
             currentModalExtras.forEach(function(e) {
-                finalExtras.push({ nome: e.nome + ' (Adicional)', preco: e.preco });
+                finalExtras.push({ nome: e.nome, categoria: 'Adicionais', preco: e.preco });
             });
 
             addToCart(currentModalProduct, currentModalSize, finalExtras);
