@@ -154,24 +154,28 @@
     </main>
 
     <div id="product-modal" class="fixed inset-0 bg-background-dark/80 backdrop-blur-sm z-[100] flex items-center justify-center p-5 hidden opacity-0 transition-opacity duration-300">
-        <div class="bg-surface-dark w-full max-w-md rounded-3xl overflow-hidden border border-surface-dark-alt shadow-2xl transform scale-95 transition-transform duration-300" id="modal-content">
-            <div class="relative h-48 bg-surface-dark-alt flex items-center justify-center text-slate-600">
+        <div class="bg-surface-dark w-full max-w-md rounded-3xl overflow-hidden border border-surface-dark-alt shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]" id="modal-content">
+            <div class="relative h-40 bg-surface-dark-alt flex items-center justify-center text-slate-600 shrink-0">
                 <span id="modal-icon" class="material-symbols-outlined text-[64px]">lunch_dining</span>
                 <button id="close-modal" class="absolute top-4 right-4 w-10 h-10 bg-background-dark/50 backdrop-blur-md rounded-full flex items-center justify-center text-white">
                     <span class="material-symbols-outlined">close</span>
                 </button>
             </div>
-            <div class="p-6">
+            <div class="p-6 overflow-y-auto flex-1 custom-scrollbar">
                 <h3 id="modal-title" class="font-display font-bold text-2xl text-primary uppercase">Produto</h3>
                 <p id="modal-description" class="font-body text-slate-400 text-sm mt-1"></p>
                 <div id="modal-options" class="mt-6 flex flex-col gap-4"></div>
-                <div class="mt-8 flex items-center justify-between border-t border-surface-dark-alt pt-6">
+            </div>
+            <div class="p-6 border-t border-surface-dark-alt bg-surface-dark shrink-0">
+                <div class="flex items-center justify-between mb-4">
                     <div class="flex flex-col">
                         <span class="text-xs text-slate-500 uppercase font-bold tracking-wider">Total</span>
                         <span id="modal-total-price" class="font-display font-bold text-2xl text-accent">R$ 0,00</span>
                     </div>
-                    <button id="modal-add-btn" class="bg-primary text-background-dark font-display font-bold uppercase px-8 py-3 rounded-xl hover:bg-yellow-300 active:scale-95 transition-all">Adicionar ao Carrinho</button>
                 </div>
+                <button id="modal-add-btn" class="w-full bg-primary text-background-dark font-display font-bold uppercase py-4 rounded-xl active:scale-95 transition-transform">
+                    Adicionar ao Carrinho
+                </button>
             </div>
         </div>
     </div>
@@ -253,9 +257,36 @@
             { id: 'p10', category: 'pasteis', name: 'Carne Sol com Cheddar', price: 18.00, description: '2 fatias de queijo, carne de sol e cheddar', icon: 'bakery_dining' },
             { id: 'p11', category: 'pasteis', name: 'Pastel Tudão', price: 20.00, description: 'Queijo, presunto, frango, charque, bacon, calabresa e milho', icon: 'bakery_dining' },
 
-            // ══════════════ AÇAÍ & SORVETES ══════════════
-            { id: 'acai-tigela', category: 'acai-sorvetes', name: 'Açaí na Tigela', prices: { '200ml': 9.00, '300ml': 12.00, '400ml': 14.00, '500ml': 16.00 }, description: 'Complementos, creme, fruta e cobertura', icon: 'icecream', hasCustomization: true },
-            { id: 'acai-copo', category: 'acai-sorvetes', name: 'Açaí no Copo', prices: { '330ml': 14.00, '400ml': 16.00, '500ml': 18.00 }, description: 'Para levar com complementos favoritos', icon: 'local_bar', hasCustomization: true },
+            // ══════════════ AÇAÍ & SORVETES ═════════════
+            { 
+                id: 'acai-tigela', 
+                category: 'acai-sorvetes', 
+                name: 'Açaí na Tigela', 
+                prices: { '200ml': 9.00, '300ml': 12.00, '400ml': 14.00, '500ml': 16.00 }, 
+                limits: {
+                    '200ml': { complementos: 3, cremes: 1, frutas: 1, coberturas: 1 },
+                    '300ml': { complementos: 4, cremes: 1, frutas: 1, coberturas: 1 },
+                    '400ml': { complementos: 4, cremes: 1, frutas: 1, coberturas: 1 },
+                    '500ml': { complementos: 5, cremes: 1, frutas: 1, coberturas: 1 }
+                },
+                description: 'Complementos, creme, fruta e cobertura inclusos', 
+                icon: 'icecream', 
+                hasCustomization: true 
+            },
+            { 
+                id: 'acai-copo', 
+                category: 'acai-sorvetes', 
+                name: 'Açaí no Copo', 
+                prices: { '330ml': 14.00, '400ml': 16.00, '500ml': 18.00 }, 
+                limits: {
+                    '330ml': { complementos: 4, cremes: 1, frutas: 1, coberturas: 1 },
+                    '400ml': { complementos: 4, cremes: 1, frutas: 1, coberturas: 1 },
+                    '500ml': { complementos: 5, cremes: 1, frutas: 1, coberturas: 1 }
+                },
+                description: 'Ideal para levar com seus complementos favoritos', 
+                icon: 'local_bar', 
+                hasCustomization: true 
+            },
             { id: 'milk-shake', category: 'acai-sorvetes', name: 'Milk-shake Tradicional', prices: { '330ml': 12.00, '400ml': 14.00, '500ml': 16.00 }, description: 'Chocolate, Morango, Flocos, Nata Goiaba, Chiclete, Abacaxi, Ovomaltine, Paçoca', icon: 'coffee_maker' },
             { id: 'milk-shake-especial', category: 'acai-sorvetes', name: 'Milk-shake Especial', prices: { '330ml': 14.00, '400ml': 16.00, '500ml': 18.00 }, description: 'Ninho c/ Nutella, Ninho c/ Oreo, Morango c/ Nutella, Chocolate c/ Nutella', icon: 'star_rate' },
             { id: 'sorvete', category: 'acai-sorvetes', name: 'Sorvete no Copo', prices: { '200ml': 8.00, '300ml': 10.00, '400ml': 12.00, '500ml': 14.00 }, description: 'Chocolate, Morango, Toffee, Flocos, Nata Goiaba, Chiclete, Creme c/ Passas, Abacaxi', icon: 'icecream' },
@@ -439,71 +470,185 @@
             });
         }
 
+        var currentModalProduct = null;
+        var currentModalSize = null;
+        var currentModalExtras = []; // Adicionais pagos
+        var currentModalSelections = {}; // Seleções gratuitas por categoria
+
         function openModal(p) {
+            currentModalProduct = p;
+            currentModalSize = p.prices ? Object.keys(p.prices)[0] : null;
+            currentModalExtras = [];
+            currentModalSelections = {};
+            
+            // Inicializa categorias de seleção
+            if (p.limits) {
+                Object.keys(p.limits[currentModalSize] || {}).forEach(function(cat) {
+                    currentModalSelections[cat] = [];
+                });
+            }
+
+            renderModal();
+            
+            modal.classList.remove('hidden');
+            setTimeout(function() { 
+                modal.classList.remove('opacity-0'); 
+                modalContent.classList.remove('scale-95'); 
+            }, 10);
+        }
+
+        function renderModal() {
+            var p = currentModalProduct;
+            if (!p) return;
             document.getElementById('modal-title').textContent = p.name;
             document.getElementById('modal-description').textContent = p.description;
             document.getElementById('modal-icon').textContent = p.icon;
+            
             var opts = document.getElementById('modal-options');
             opts.innerHTML = '';
 
+            // 1. Tamanhos
             if (p.prices) {
-                var html = '<span class="text-[10px] font-bold text-slate-500 uppercase">Tamanhos</span><div class="flex gap-2 flex-wrap">';
+                var sizeHtml = '<div class="mb-4 text-left"><span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Escolha o Tamanho</span><div class="grid grid-cols-2 sm:grid-cols-4 gap-2">';
                 Object.keys(p.prices).forEach(function(s) {
-                    html += '<button class="flex-1 p-2 rounded-lg bg-surface-dark-alt border border-primary/20 text-xs font-bold text-slate-200">' + s + '<br>R$ ' + p.prices[s].toFixed(2) + '</button>';
+                    var isActive = currentModalSize === s;
+                    sizeHtml += '<button onclick="window.changeModalSize(\'' + s + '\')" class="flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all ' + 
+                        (isActive ? 'border-primary bg-primary/10 text-primary scale-[1.02]' : 'border-surface-dark-alt bg-surface-dark-alt/50 text-slate-400 hover:border-slate-700') + '">' +
+                        '<span class="text-xs font-bold">' + s + '</span>' +
+                        '<span class="text-[10px] opacity-80 mt-0.5">R$ ' + p.prices[s].toFixed(2) + '</span>' +
+                        '</button>';
                 });
-                html += '</div>';
-                opts.innerHTML += html;
+                sizeHtml += '</div></div>';
+                opts.innerHTML += sizeHtml;
             }
 
-            if (p.id.indexOf('acai') !== -1) {
-                var cremes = ['Cupuaçu', 'Ninho c/ Oreo', 'Ninho c/ Nutella', 'Ovomaltine'];
-                var coberturas = ['Chocolate', 'Morango', 'Leite Condensado'];
-                var frutas = ['Banana', 'Uva'];
-                var complementos = ['Gotas de Chocolate', 'Chocoball', 'Ovomaltine', 'Granola', 'Farinha Lacta', 'Leite em Pó', 'Amendoim', 'Paçoca', 'M&M', 'Bis', 'Sucrilhos', 'Cereal', 'Jujuba', 'Canudinhos Wafer', 'Marshmallow'];
+            // 2. Opções de Açaí (se houver limites)
+            if (p.limits && currentModalSize) {
+                var limits = p.limits[currentModalSize];
+                var ACAI_OPTIONS = {
+                    cremes: ['Cupuaçu', 'Ninho c/ Oreo', 'Ninho c/ Nutella', 'Ovomaltine'],
+                    coberturas: ['Chocolate', 'Morango', 'Leite Condensado'],
+                    frutas: ['Banana', 'Uva'],
+                    complementos: ['Gotas de Chocolate', 'Chocoball', 'Ovomaltine', 'Granola', 'Farinha Lacta', 'Leite em Pó', 'Amendoim', 'Paçoca', 'M&M', 'Bis', 'Sucrilhos', 'Cereal', 'Jujuba', 'Canudinhos Wafer', 'Marshmallow']
+                };
 
-                var sections = [
-                    { title: 'Creme (1)', items: cremes },
-                    { title: 'Cobertura (1)', items: coberturas },
-                    { title: 'Fruta (1)', items: frutas },
-                    { title: 'Complementos', items: complementos }
-                ];
-
-                sections.forEach(function(sec) {
-                    var secHtml = '<div class="mt-3"><span class="text-[10px] font-bold text-slate-500 uppercase">' + sec.title + '</span><div class="grid grid-cols-2 gap-2 mt-1">';
-                    sec.items.forEach(function(item) {
-                        secHtml += '<div class="flex items-center gap-2 p-2 bg-surface-dark-alt rounded-lg text-[11px] text-slate-300"><input type="checkbox" class="rounded border-slate-700 bg-background-dark text-primary focus:ring-primary h-3 w-3">' + item + '</div>';
+                Object.keys(limits).forEach(function(cat) {
+                    var max = limits[cat];
+                    var current = (currentModalSelections[cat] || []).length;
+                    var title = cat.charAt(0).toUpperCase() + cat.slice(1);
+                    
+                    var secHtml = '<div class="mt-6 border-t border-surface-dark-alt pt-4">' +
+                        '<div class="flex justify-between items-end mb-3">' +
+                            '<span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">' + title + '</span>' +
+                            '<span class="text-[10px] font-bold ' + (current === max ? 'text-primary' : 'text-slate-500') + '">' + current + ' / ' + max + '</span>' +
+                        '</div>' +
+                        '<div class="grid grid-cols-2 gap-2">';
+                    
+                    (ACAI_OPTIONS[cat] || []).forEach(function(item) {
+                        var isChecked = (currentModalSelections[cat] || []).indexOf(item) !== -1;
+                        var isDisabled = !isChecked && current >= max;
+                        
+                        secHtml += '<label class="flex items-center gap-3 p-3 bg-surface-dark-alt/50 rounded-xl border border-transparent transition-all cursor-pointer ' + 
+                            (isChecked ? 'border-primary/30 bg-primary/5 ring-1 ring-primary/20' : '') + ' ' +
+                            (isDisabled ? 'opacity-30 grayscale cursor-not-allowed' : 'hover:bg-surface-dark-alt') + '">' +
+                            '<input type="checkbox" ' + (isChecked ? 'checked' : '') + ' ' + (isDisabled ? 'disabled' : '') + 
+                            ' onchange="window.toggleSelection(\'' + cat + '\', \'' + item + '\')" ' +
+                            ' class="rounded-full border-slate-700 bg-background-dark text-primary focus:ring-primary h-4 w-4 transition-transform ' + (isChecked ? 'scale-110' : '') + '">' +
+                            '<span class="text-xs ' + (isChecked ? 'text-slate-100 font-semibold' : 'text-slate-400') + '">' + item + '</span>' +
+                            '</label>';
                     });
+                    
                     secHtml += '</div></div>';
                     opts.innerHTML += secHtml;
                 });
 
-                // Adicionais com preço
-                var adicionais = [
+                // 3. Adicionais Pagos
+                var PAID_ADDITIONS = [
                     { nome: 'Morango', preco: 3 },
                     { nome: 'Kiwi', preco: 3 },
                     { nome: 'Nutella', preco: 3 },
                     { nome: 'Kit Kat', preco: 3 },
                     { nome: 'Mousse de Maracujá', preco: 5 }
                 ];
-                var adHtml = '<div class="mt-3"><span class="text-[10px] font-bold text-slate-500 uppercase">Adicionais (+R$)</span><div class="grid grid-cols-2 gap-2 mt-1">';
-                adicionais.forEach(function(a) {
-                    adHtml += '<div class="flex items-center gap-2 p-2 bg-surface-dark-alt rounded-lg text-[11px] text-slate-300"><input type="checkbox" class="rounded border-slate-700 bg-background-dark text-primary focus:ring-primary h-3 w-3">' + a.nome + ' +R$ ' + a.preco.toFixed(2) + '</div>';
+
+                var adHtml = '<div class="mt-6 border-t border-surface-dark-alt pt-4 mb-4">' +
+                    '<span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-3">Turbine seu Açaí (+R$)</span>' +
+                    '<div class="grid grid-cols-1 sm:grid-cols-2 gap-2">';
+                
+                PAID_ADDITIONS.forEach(function(a) {
+                    var isChecked = currentModalExtras.some(function(e) { return e.nome === a.nome; });
+                    adHtml += '<label class="flex items-center justify-between p-3 bg-surface-dark-alt/50 rounded-xl border border-transparent hover:bg-surface-dark-alt transition-all cursor-pointer ' + 
+                        (isChecked ? 'border-primary/30 bg-primary/5' : '') + '">' +
+                        '<div class="flex items-center gap-3">' +
+                            '<input type="checkbox" ' + (isChecked ? 'checked' : '') + 
+                            ' onchange="window.toggleExtra(\'' + a.nome + '\', ' + a.preco + ')" ' +
+                            ' class="rounded-full border-slate-700 bg-background-dark text-primary focus:ring-primary h-4 w-4">' +
+                            '<span class="text-xs ' + (isChecked ? 'text-slate-100 font-semibold' : 'text-slate-400') + '">' + a.nome + '</span>' +
+                        '</div>' +
+                        '<span class="text-[10px] font-bold text-accent">+ R$ ' + a.preco.toFixed(2) + '</span>' +
+                        '</label>';
                 });
                 adHtml += '</div></div>';
                 opts.innerHTML += adHtml;
             }
 
-            var initialPrice = p.prices ? Object.values(p.prices)[0] : p.price;
-            document.getElementById('modal-total-price').textContent = 'R$ ' + initialPrice.toFixed(2);
+            updateModalPrice();
+        }
 
-            modal.classList.remove('hidden');
-            setTimeout(function() { modal.classList.remove('opacity-0'); modalContent.classList.remove('scale-95'); }, 10);
+        window.changeModalSize = function(s) {
+            currentModalSize = s;
+            // Ao mudar o tamanho, validamos as seleções atuais contra os novos limites
+            var limits = currentModalProduct.limits[s];
+            if (limits) {
+                Object.keys(currentModalSelections).forEach(function(cat) {
+                    if (currentModalSelections[cat].length > (limits[cat] || 0)) {
+                        currentModalSelections[cat] = currentModalSelections[cat].slice(0, limits[cat]);
+                    }
+                });
+            }
+            renderModal();
+        };
+
+        window.toggleSelection = function(cat, item) {
+            if (!currentModalSelections[cat]) currentModalSelections[cat] = [];
+            var idx = currentModalSelections[cat].indexOf(item);
+            if (idx === -1) {
+                var max = currentModalProduct.limits[currentModalSize][cat];
+                if (currentModalSelections[cat].length < max) {
+                    currentModalSelections[cat].push(item);
+                }
+            } else {
+                currentModalSelections[cat].splice(idx, 1);
+            }
+            renderModal();
+        };
+
+        window.toggleExtra = function(name, price) {
+            var idx = -1;
+            currentModalExtras.forEach(function(e, i) { if (e.nome === name) idx = i; });
+            if (idx === -1) {
+                currentModalExtras.push({ nome: name, preco: price });
+            } else {
+                currentModalExtras.splice(idx, 1);
+            }
+            renderModal();
+        };
+
+        function updateModalPrice() {
+            var p = currentModalProduct;
+            if (!p) return;
+            var base = p.prices ? p.prices[currentModalSize] : p.price;
+            var extrasTotal = currentModalExtras.reduce(function(s, e) { return s + (e.preco || 0); }, 0);
+            document.getElementById('modal-total-price').textContent = 'R$ ' + (base + extrasTotal).toFixed(2);
         }
 
         function closeModal() {
             modal.classList.add('opacity-0');
             modalContent.classList.add('scale-95');
-            setTimeout(function() { modal.classList.add('hidden'); }, 300);
+            setTimeout(function() { 
+                modal.classList.add('hidden'); 
+                currentModalProduct = null;
+            }, 300);
         }
 
         closeBtn.addEventListener('click', closeModal);
@@ -699,53 +844,21 @@
             window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg), '_blank');
         });
 
-        // --- Integração Modal → Carrinho ---
-        var _origOpenModal = openModal;
-        openModal = function(p) {
-            currentModalProduct = p;
-            currentModalSize = (p.prices) ? Object.keys(p.prices)[0] : null;
-            currentModalExtras = [];
-            _origOpenModal(p);
-
-            var opts = document.getElementById('modal-options');
-
-            // Bind botões de tamanho
-            var sizeKeys = p.prices ? Object.keys(p.prices) : [];
-            var sizeBtns = opts.querySelectorAll('button');
-            sizeBtns.forEach(function(btn, idx) {
-                if (!sizeKeys[idx]) return;
-                btn.addEventListener('click', function() {
-                    sizeBtns.forEach(function(b) {
-                        b.classList.remove('border-primary', 'bg-primary/10');
-                        b.classList.add('border-primary/20');
-                    });
-                    btn.classList.add('border-primary', 'bg-primary/10');
-                    currentModalSize = sizeKeys[idx];
-                    var extT = currentModalExtras.reduce(function(s,e){return s+(e.preco||0);},0);
-                    document.getElementById('modal-total-price').textContent = 'R$ ' + (p.prices[currentModalSize] + extT).toFixed(2);
-                });
-            });
-
-            // Bind checkboxes de adicionais
-            opts.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
-                cb.addEventListener('change', function() {
-                    currentModalExtras = [];
-                    opts.querySelectorAll('input[type="checkbox"]:checked').forEach(function(c) {
-                        var label = c.parentElement.textContent.trim();
-                        var m = label.match(/\+R\$\s*([\d,]+)/);
-                        var preco = m ? parseFloat(m[1].replace(',','.')) : 0;
-                        currentModalExtras.push({ nome: label.replace(/\s*\+R\$.*/, '').trim(), preco: preco });
-                    });
-                    var base = (currentModalSize && p.prices) ? p.prices[currentModalSize] : (p.price || 0);
-                    var extT = currentModalExtras.reduce(function(s,e){return s+(e.preco||0);},0);
-                    document.getElementById('modal-total-price').textContent = 'R$ ' + (base + extT).toFixed(2);
-                });
-            });
-        };
-
         document.getElementById('modal-add-btn').addEventListener('click', function() {
             if (!currentModalProduct) return;
-            addToCart(currentModalProduct, currentModalSize, currentModalExtras);
+            
+            // Unifica seleções gratuitas com extras ganhando um marcador
+            var finalExtras = [];
+            Object.keys(currentModalSelections).forEach(function(cat) {
+                currentModalSelections[cat].forEach(function(item) {
+                    finalExtras.push({ nome: item + ' (' + cat + ')', preco: 0 });
+                });
+            });
+            currentModalExtras.forEach(function(e) {
+                finalExtras.push({ nome: e.nome + ' (Adicional)', preco: e.preco });
+            });
+
+            addToCart(currentModalProduct, currentModalSize, finalExtras);
             closeModal();
             openCart();
         });
