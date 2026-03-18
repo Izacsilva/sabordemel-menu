@@ -226,11 +226,24 @@
         <div class="flex items-center justify-between px-5 py-4 border-b border-border dark:border-[#2a2a2a] shrink-0">
             <div class="flex items-center gap-3">
                 <span class="material-symbols-outlined text-primary text-[24px]">shopping_cart</span>
-                <h2 class="font-display font-bold text-lg text-text-primary dark:text-slate-100 uppercase tracking-wide">Seu Pedido</h2>
+                <h2 id="cart-drawer-title" class="font-display font-bold text-lg text-text-primary dark:text-slate-100 uppercase tracking-wide">Seu Pedido</h2>
             </div>
-            <button id="close-cart-btn" class="w-9 h-9 flex items-center justify-center rounded-full bg-surface-alt dark:bg-[#2a2a2a] text-text-secondary hover:text-text-primary dark:text-slate-400 dark:hover:text-slate-100 hover:bg-border dark:hover:bg-[#333] transition-colors">
-                <span class="material-symbols-outlined text-[20px]">close</span>
-            </button>
+            <div class="flex items-center gap-2">
+                <button id="view-history-btn" class="flex items-center gap-1 text-xs font-bold text-primary hover:text-accent transition-colors mr-2">
+                    <span class="material-symbols-outlined text-[18px]">history</span>
+                    <span class="btn-text">Histórico</span>
+                </button>
+                <button id="close-cart-btn" class="w-9 h-9 flex items-center justify-center rounded-full bg-surface-alt dark:bg-[#2a2a2a] text-text-secondary hover:text-text-primary dark:text-slate-400 dark:hover:text-slate-100 hover:bg-border dark:hover:bg-[#333] transition-colors">
+                    <span class="material-symbols-outlined text-[20px]">close</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Lista de histórico (scroll) -->
+        <div id="history-items-list" class="hidden flex-1 overflow-y-auto px-5 py-2"></div>
+        <div id="history-empty-state" class="hidden flex flex-col items-center justify-center py-16 text-center px-5 flex-1">
+            <span class="material-symbols-outlined text-[56px] text-text-secondary/50 dark:text-slate-600 mb-3">history</span>
+            <p class="font-display font-semibold text-text-secondary dark:text-slate-400 text-base uppercase">Nenhum histórico encontrado</p>
         </div>
 
         <!-- Lista de itens (scroll) -->
@@ -352,9 +365,9 @@
                 icon: 'local_bar', 
                 hasCustomization: true 
             },
-            { id: 'milk-shake', category: 'acai-sorvetes', name: 'Milk-shake Tradicional', prices: { '330ml': 12.00, '400ml': 14.00, '500ml': 16.00 }, description: 'Chocolate, Morango, Flocos, Nata Goiaba, Chiclete, Abacaxi, Ovomaltine, Paçoca', icon: 'coffee_maker' },
-            { id: 'milk-shake-especial', category: 'acai-sorvetes', name: 'Milk-shake Especial', prices: { '330ml': 14.00, '400ml': 16.00, '500ml': 18.00 }, description: 'Ninho c/ Nutella, Ninho c/ Oreo, Morango c/ Nutella, Chocolate c/ Nutella', icon: 'star_rate' },
-            { id: 'sorvete', category: 'acai-sorvetes', name: 'Sorvete no Copo', prices: { '200ml': 8.00, '300ml': 10.00, '400ml': 12.00, '500ml': 14.00 }, description: 'Chocolate, Morango, Toffee, Flocos, Nata Goiaba, Chiclete, Creme c/ Passas, Abacaxi', icon: 'icecream' },
+            { id: 'milk-shake', category: 'acai-sorvetes', name: 'Milk-shake Tradicional', prices: { '330ml': 12.00, '400ml': 14.00, '500ml': 16.00 }, description: 'Escolha seu sabor favorito', icon: 'coffee_maker', flavors: ['Chocolate', 'Morango', 'Flocos', 'Nata Goiaba', 'Chiclete', 'Abacaxi', 'Ovomaltine', 'Paçoca'] },
+            { id: 'milk-shake-especial', category: 'acai-sorvetes', name: 'Milk-shake Especial', prices: { '330ml': 14.00, '400ml': 16.00, '500ml': 18.00 }, description: 'Escolha seu sabor especial', icon: 'star_rate', flavors: ['Ninho c/ Nutella', 'Ninho c/ Oreo', 'Morango c/ Nutella', 'Chocolate c/ Nutella'] },
+            { id: 'sorvete', category: 'acai-sorvetes', name: 'Sorvete no Copo', prices: { '200ml': 8.00, '300ml': 10.00, '400ml': 12.00, '500ml': 14.00 }, description: 'Escolha seu sabor de sorvete', icon: 'icecream', flavors: ['Chocolate', 'Morango', 'Toffee', 'Flocos', 'Nata Goiaba', 'Chiclete', 'Creme c/ Passas', 'Abacaxi'] },
             { id: 'mousse-maracuja', category: 'acai-sorvetes', name: 'Mousse de Maracujá', price: 5.00, description: 'Mousse cremoso de maracujá', icon: 'icecream' },
             { id: 'mousse-limao', category: 'acai-sorvetes', name: 'Mousse de Limão', price: 5.00, description: 'Mousse cremoso de limão', icon: 'icecream' },
 
@@ -489,12 +502,17 @@
         var currentModalSize = null;
         var currentModalExtras = []; // Adicionais pagos
         var currentModalSelections = {}; // Seleções gratuitas por categoria
+        var currentModalFlavor = null; // Sabor selecionado (milk-shake/sorvete)
+        var editingCartItemKey = null;
 
         function openModal(p) {
             currentModalProduct = p;
             currentModalSize = p.prices ? Object.keys(p.prices)[0] : null;
             currentModalExtras = [];
             currentModalSelections = {};
+            currentModalFlavor = null;
+            editingCartItemKey = null;
+            document.getElementById('modal-add-btn').textContent = 'Adicionar ao Carrinho';
             
             // Inicializa categorias de seleção
             if (p.limits) {
@@ -535,6 +553,31 @@
                 });
                 sizeHtml += '</div></div>';
                 opts.innerHTML += sizeHtml;
+            }
+
+            // 1.5. Sabores (Milk-shake e Sorvete)
+            if (p.flavors && p.flavors.length > 0) {
+                var flavorHtml = '<div class="mb-4 mt-2 text-left">' +
+                    '<div class="flex justify-between items-end mb-3">' +
+                        '<span class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Escolha o Sabor</span>' +
+                        '<span class="text-[10px] font-bold ' + (currentModalFlavor ? 'text-primary' : 'text-accent') + '">' + (currentModalFlavor ? '1 / 1 ✓' : '0 / 1') + '</span>' +
+                    '</div>' +
+                    '<div class="grid grid-cols-2 gap-2">';
+                p.flavors.forEach(function(flavor) {
+                    var isActive = currentModalFlavor === flavor;
+                    flavorHtml += '<button onclick="window.selectFlavor(\'' + flavor.replace(/'/g, "\\'") + '\')" class="flex items-center gap-2.5 p-3 rounded-xl border-2 transition-all text-left ' +
+                        (isActive 
+                            ? 'border-primary bg-primary/10 ring-1 ring-primary/20 scale-[1.02]' 
+                            : 'border-slate-200 dark:border-surface-dark-alt bg-slate-50 dark:bg-surface-dark-alt/50 hover:border-primary/30 dark:hover:border-slate-700') + '">' +
+                        '<span class="w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-all ' +
+                            (isActive ? 'border-primary bg-primary' : 'border-slate-300 dark:border-slate-600') + '">' +
+                            (isActive ? '<span class="material-symbols-outlined text-[14px] text-[#131313] font-bold">check</span>' : '') +
+                        '</span>' +
+                        '<span class="text-xs font-medium ' + (isActive ? 'text-slate-800 dark:text-slate-100 font-semibold' : 'text-slate-500 dark:text-slate-400') + '">' + flavor + '</span>' +
+                        '</button>';
+                });
+                flavorHtml += '</div></div>';
+                opts.innerHTML += flavorHtml;
             }
 
             // 2. Opções de Açaí (se houver limites)
@@ -613,7 +656,7 @@
         window.changeModalSize = function(s) {
             currentModalSize = s;
             // Ao mudar o tamanho, validamos as seleções atuais contra os novos limites
-            var limits = currentModalProduct.limits[s];
+            var limits = currentModalProduct.limits ? currentModalProduct.limits[s] : null;
             if (limits) {
                 Object.keys(currentModalSelections).forEach(function(cat) {
                     if (currentModalSelections[cat].length > (limits[cat] || 0)) {
@@ -621,6 +664,11 @@
                     }
                 });
             }
+            renderModal();
+        };
+
+        window.selectFlavor = function(flavor) {
+            currentModalFlavor = (currentModalFlavor === flavor) ? null : flavor;
             renderModal();
         };
 
@@ -693,18 +741,23 @@
 
         // --- Estado ---
         var cartState = [];
-        var currentModalProduct = null;
-        var currentModalSize = null;
-        var currentModalExtras = [];
+        var historyState = [];
 
         function saveCart() {
             try { localStorage.setItem('sabordemel_cart', JSON.stringify(cartState)); } catch(e) {}
+        }
+        function saveHistory() {
+            try { localStorage.setItem('sabordemel_history', JSON.stringify(historyState)); } catch(e) {}
         }
         function loadCart() {
             try {
                 var saved = localStorage.getItem('sabordemel_cart');
                 if (saved) cartState = JSON.parse(saved);
             } catch(e) { cartState = []; }
+            try {
+                var savedHist = localStorage.getItem('sabordemel_history');
+                if (savedHist) historyState = JSON.parse(savedHist);
+            } catch(e) { historyState = []; }
         }
 
         // --- Badge ---
@@ -717,22 +770,37 @@
         }
 
         // --- addToCart ---
-        function addToCart(product, size, extras) {
+        function addToCart(product, size, extras, flavor) {
             var unitPrice = (size && product.prices) ? product.prices[size] : product.price;
             var extrasTotal = (extras || []).reduce(function(s, e) { return s + (e.preco || 0); }, 0);
             var itemTotal = unitPrice + extrasTotal;
-            var key = product.id + '|' + (size || '') + '|' + (extras||[]).map(function(e){return e.nome;}).join(',');
+            var timeStmp = Date.now().toString(36);
+            var key = editingCartItemKey ? editingCartItemKey : product.id + '|' + (size || '') + '|' + timeStmp;
             var existing = null;
             cartState.forEach(function(i) { if (i.key === key) existing = i; });
+            
+            var displayName = product.name;
+            if (flavor) displayName += ' - ' + flavor;
+            if (size) displayName += ' (' + size + ')';
+            
+            var newItem = {
+                key: key, id: product.id,
+                name: displayName,
+                unitPrice: itemTotal, qty: existing ? existing.qty : 1,
+                extras: extras || [], icon: product.icon,
+                size: size, flavor: flavor || null
+            };
+
             if (existing) {
-                existing.qty += 1;
+                var idx = cartState.findIndex(function(i) { return i.key === key; });
+                if (editingCartItemKey) {
+                    cartState[idx] = newItem;
+                    editingCartItemKey = null;
+                } else {
+                    cartState[idx].qty += 1;
+                }
             } else {
-                cartState.push({
-                    key: key, id: product.id,
-                    name: product.name + (size ? ' (' + size + ')' : ''),
-                    unitPrice: itemTotal, qty: 1,
-                    extras: extras || [], icon: product.icon
-                });
+                cartState.push(newItem);
             }
             saveCart(); updateBadge(); renderCartItems();
             var headerBtn = document.getElementById('cart-btn');
@@ -741,6 +809,47 @@
             headerBtn.classList.add('cart-pop');
             setTimeout(function() { headerBtn.classList.remove('cart-pop'); }, 300);
         }
+
+        // --- editCartItem ---
+        window.editCartItem = function(key) {
+            var item = cartState.find(function(i) { return i.key === key; });
+            if (!item) return;
+
+            var p = PRODUCTS.find(function(prod) { return prod.id === item.id; });
+            if (!p) return;
+
+            currentModalProduct = p;
+            currentModalSize = item.size || (p.prices ? Object.keys(p.prices)[0] : null);
+            currentModalExtras = [];
+            currentModalSelections = {};
+            currentModalFlavor = item.flavor || null;
+
+            if (p.limits) {
+                Object.keys(p.limits[currentModalSize] || {}).forEach(function(cat) {
+                    currentModalSelections[cat] = [];
+                });
+            }
+
+            item.extras.forEach(function(e) {
+                if (e.preco > 0 || e.categoria === 'Adicionais') {
+                    currentModalExtras.push({ nome: e.nome, preco: e.preco });
+                } else if (e.categoria && currentModalSelections[e.categoria]) {
+                    currentModalSelections[e.categoria].push(e.nome);
+                }
+            });
+
+            editingCartItemKey = key;
+            renderModal();
+            
+            document.getElementById('modal-add-btn').textContent = 'Salvar Alteração';
+            
+            closeCart();
+            modal.classList.remove('hidden');
+            setTimeout(function() { 
+                modal.classList.remove('opacity-0'); 
+                modalContent.classList.remove('scale-95'); 
+            }, 10);
+        };
 
         // --- changeQty ---
         function changeQty(key, delta) {
@@ -781,8 +890,11 @@
                     '<div class="w-9 h-9 rounded-lg bg-slate-100 dark:bg-[#2a2a2a] flex items-center justify-center shrink-0 text-slate-400 dark:text-slate-500">' +
                         '<span class="material-symbols-outlined text-[20px]">' + item.icon + '</span>' +
                     '</div>' +
-                    '<div class="flex-1 min-w-0">' +
-                        '<p class="font-body text-sm text-slate-800 dark:text-slate-100 font-semibold truncate">' + item.name + '</p>' +
+                    '<div class="flex-1 min-w-0 pr-1 cursor-pointer" onclick="window.editCartItem(\'' + item.key + '\')" title="Editar item">' +
+                        '<div class="flex items-center gap-1.5">' +
+                            '<p class="font-body text-sm text-slate-800 dark:text-slate-100 font-semibold truncate hover:text-primary transition-colors">' + item.name + '</p>' +
+                            '<span class="material-symbols-outlined text-[14px] text-slate-400 bg-slate-100 dark:bg-surface-dark-alt rounded px-0.5" aria-hidden="true">edit</span>' +
+                        '</div>' +
                         extrasHtml +
                         '<p class="text-accent font-display font-bold text-sm mt-0.5">R$ ' + item.unitPrice.toFixed(2) + '</p>' +
                     '</div>' +
@@ -810,6 +922,94 @@
         document.getElementById('cart-btn').addEventListener('click', openCart);
         document.getElementById('close-cart-btn').addEventListener('click', closeCart);
         cartOverlay.addEventListener('click', closeCart);
+
+        // --- History ---
+        var historyItemsList = document.getElementById('history-items-list');
+        var historyEmptyState = document.getElementById('history-empty-state');
+        var viewHistoryBtn = document.getElementById('view-history-btn');
+        var cartDrawerTitle = document.getElementById('cart-drawer-title');
+        var viewingHistory = false;
+
+        function toggleHistoryView() {
+            viewingHistory = !viewingHistory;
+            if (viewingHistory) {
+                cartDrawerTitle.textContent = "Histórico";
+                viewHistoryBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">arrow_back</span> <span class="btn-text">Voltar</span>';
+                
+                cartItemsList.style.display = 'none';
+                cartCheckout.classList.add('hidden');
+                cartEmptyState.style.display = 'none';
+                
+                renderHistoryItems();
+            } else {
+                cartDrawerTitle.textContent = "Seu Pedido";
+                viewHistoryBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">history</span> <span class="btn-text">Histórico</span>';
+                
+                historyItemsList.style.display = 'none';
+                historyEmptyState.style.display = 'none';
+                renderCartItems();
+            }
+        }
+        
+        viewHistoryBtn.addEventListener('click', toggleHistoryView);
+
+        window.reorderHistory = function(idxReversed) {
+            var actualIdx = historyState.length - 1 - idxReversed;
+            var order = historyState[actualIdx];
+            if(!order) return;
+            
+            order.items.forEach(function(oi) {
+                var existing = cartState.find(function(i) { return i.key === oi.key; });
+                if (existing) { existing.qty += oi.qty; }
+                else { cartState.push(JSON.parse(JSON.stringify(oi))); }
+            });
+            saveCart();
+            updateBadge();
+            if(viewingHistory) toggleHistoryView();
+            else renderCartItems();
+        };
+
+        function renderHistoryItems() {
+            historyItemsList.innerHTML = '';
+            if (historyState.length === 0) {
+                historyEmptyState.style.display = 'flex';
+                historyItemsList.style.display = 'none';
+                return;
+            }
+            historyEmptyState.style.display = 'none';
+            historyItemsList.style.display = 'flex';
+            historyItemsList.style.flexDirection = 'column';
+            historyItemsList.style.gap = '12px';
+            
+            var reversed = historyState.slice().reverse();
+            reversed.forEach(function(order, idx) {
+                var div = document.createElement('div');
+                div.className = 'p-4 rounded-xl bg-slate-50 dark:bg-surface-dark-alt border border-slate-200 dark:border-[#2a2a2a] shrink-0';
+                
+                var d = new Date(order.date);
+                var dateStr = d.toLocaleDateString('pt-BR') + ' às ' + d.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'});
+                
+                var itemsHtml = order.items.map(function(i) {
+                    return '<div class="flex justify-between text-sm text-slate-600 dark:text-slate-400 mt-1">' +
+                           '<span class="truncate pr-2">' + i.qty + 'x ' + i.name + '</span>' +
+                           '<span class="shrink-0">R$ ' + (i.unitPrice * i.qty).toFixed(2) + '</span>' +
+                           '</div>';
+                }).join('');
+
+                div.innerHTML = 
+                    '<div class="flex justify-between items-center mb-2 border-b border-slate-200 dark:border-[#2a2a2a] pb-2">' +
+                        '<span class="font-bold text-slate-800 dark:text-slate-200">Pedido</span>' +
+                        '<span class="text-xs text-slate-500">' + dateStr + '</span>' +
+                    '</div>' +
+                    itemsHtml +
+                    '<div class="flex justify-between items-center mt-3 pt-3 border-t border-slate-200 dark:border-[#2a2a2a]">' +
+                        '<span class="font-bold text-accent">Total: R$ ' + order.total.toFixed(2) + '</span>' +
+                        '<button onclick="window.reorderHistory(' + idx + ')" class="px-4 py-1.5 bg-primary text-[#131313] text-xs font-bold rounded-lg uppercase shadow-sm active:scale-95 transition-transform hover:brightness-110">Refazer</button>' +
+                    '</div>';
+                    
+                historyItemsList.appendChild(div);
+            });
+        }
 
         // --- Delivery toggle ---
         document.querySelectorAll('input[name="delivery-type"]').forEach(function(radio) {
@@ -880,13 +1080,57 @@
         document.getElementById('whatsapp-btn').addEventListener('click', function() {
             var msg = buildWhatsAppMessage();
             if (!msg) return;
+            
+            // Salvar no Histórico
+            var total = cartState.reduce(function(s, i) { return s + i.unitPrice * i.qty; }, 0);
+            historyState.push({
+                date: new Date().toISOString(),
+                items: JSON.parse(JSON.stringify(cartState)),
+                total: total
+            });
+            saveHistory();
+            
+            // Esvaziar o carrinho atual
+            cartState = [];
+            saveCart();
+            updateBadge();
+            renderCartItems();
+
             window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg), '_blank');
         });
 
         document.getElementById('modal-add-btn').addEventListener('click', function() {
             if (!currentModalProduct) return;
             
+            // Validação de Sabor obrigatório
+            if (currentModalProduct.flavors && currentModalProduct.flavors.length > 0 && !currentModalFlavor) {
+                alert('Por favor, escolha um sabor antes de adicionar.');
+                return;
+            }
+            
+            // Validação de Limites
+            if (currentModalProduct.limits && currentModalSize) {
+                var missingcats = [];
+                var lims = currentModalProduct.limits[currentModalSize];
+                Object.keys(lims).forEach(function(cat) {
+                    var max = lims[cat];
+                    var cur = (currentModalSelections[cat] || []).length;
+                    if (cur < max) {
+                        missingcats.push(cat + " (" + cur + "/" + max + ")");
+                    }
+                });
+                
+                if (missingcats.length > 0) {
+                    var proceed = confirm("Você ainda não escolheu todos os itens para: \n" + missingcats.join(', ') + "\n\nDeseja confirmar assim mesmo?");
+                    if (!proceed) return;
+                }
+            }
+            
             var finalExtras = [];
+            // Sabor selecionado
+            if (currentModalFlavor) {
+                finalExtras.push({ nome: currentModalFlavor, categoria: 'Sabor', preco: 0 });
+            }
             // Seleções gratuitas
             Object.keys(currentModalSelections).forEach(function(cat) {
                 currentModalSelections[cat].forEach(function(item) {
@@ -898,7 +1142,7 @@
                 finalExtras.push({ nome: e.nome, categoria: 'Adicionais', preco: e.preco });
             });
 
-            addToCart(currentModalProduct, currentModalSize, finalExtras);
+            addToCart(currentModalProduct, currentModalSize, finalExtras, currentModalFlavor);
             closeModal();
             openCart();
         });
