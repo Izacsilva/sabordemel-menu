@@ -23,3 +23,9 @@
 18. **Checkout WhatsApp** — Mensagem formatada com itens, total, nome e endereço
 19. **Toggle Retirada/Delivery** — Campos condicionais de endereço
 20. **Animação cart-pop** — Feedback visual ao adicionar item
+
+
+
+**💡 Sugestões para futuro:** 4. Indicador de seções obrigatórias (asterisco) 5. Resumo das seleções antes do botão 6. Seções colapsáveis (accordion) 7. Radio-pill para tamanhos
+
+Posso executar? Alguma regra de negócio preciso ajustar?

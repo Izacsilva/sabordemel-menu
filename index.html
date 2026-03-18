@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="dark" lang="pt-BR">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,7 +32,32 @@
         }
     </script>
     <style>
-        body { min-height: 100dvh; }
+        :root {
+            --background: #f8f8f6;
+            --surface: #ffffff;
+            --surface-alt: #f1f1f1;
+            --text-primary: #1a1a1b;
+            --text-secondary: #64748b;
+            --border: #e2e8f0;
+            --shadow: rgba(0,0,0,0.08);
+        }
+
+        .dark {
+            --background: #131313;
+            --surface: #1e1e1e;
+            --surface-alt: #2a2a2a;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border: #2a2a2a;
+            --shadow: rgba(0,0,0,0.4);
+        }
+
+        body { 
+            min-height: 100dvh; 
+            background-color: var(--background);
+            color: var(--text-primary);
+        }
+        
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .product-card { transition: opacity 0.3s ease, transform 0.3s ease; }
@@ -43,23 +68,24 @@
         #cart-drawer {
             position: fixed; top: 0; right: 0; height: 100dvh;
             width: min(400px, 100vw);
-            background: #1a1a1a;
-            border-left: 1px solid #2a2a2a;
+            background: var(--surface);
+            border-left: 1px solid var(--border);
             z-index: 200;
             transform: translateX(100%);
             transition: transform 0.32s cubic-bezier(0.4,0,0.2,1);
             display: flex; flex-direction: column;
-            box-shadow: -8px 0 32px rgba(0,0,0,0.5);
+            box-shadow: -8px 0 32px var(--shadow);
         }
         #cart-drawer.open { transform: translateX(0); }
         #cart-overlay {
             position: fixed; inset: 0;
-            background: rgba(0,0,0,0.65);
+            background: rgba(0,0,0,0.4);
             backdrop-filter: blur(3px);
             z-index: 199;
             opacity: 0; pointer-events: none;
             transition: opacity 0.32s ease;
         }
+        .dark #cart-overlay { background: rgba(0,0,0,0.65); }
         #cart-overlay.open { opacity: 1; pointer-events: auto; }
 
         /* Badge do carrinho */
@@ -83,97 +109,108 @@
         .cart-item {
             display: flex; align-items: center; gap: 12px;
             padding: 12px 0;
-            border-bottom: 1px solid #2a2a2a;
+            border-bottom: 1px solid var(--border);
             animation: slideInRight 0.2s ease;
         }
         @keyframes slideInRight { from{opacity:0;transform:translateX(16px)} to{opacity:1;transform:translateX(0)} }
         .qty-btn {
             width: 28px; height: 28px; border-radius: 50%;
-            background: #2a2a2a; color: #edcd2c;
+            background: var(--surface-alt); color: #edcd2c;
             display: flex; align-items: center; justify-content: center;
             border: none; cursor: pointer; font-size: 18px; font-weight: 700;
             transition: background 0.15s, transform 0.1s;
         }
-        .qty-btn:hover { background: #333; transform: scale(1.1); }
+        .qty-btn:hover { background: var(--border); transform: scale(1.1); }
 
         /* Input estilizado */
         .cart-input {
-            width: 100%; background: #252525; border: 1px solid #333;
+            width: 100%; background: var(--surface-alt); border: 1px solid var(--border);
             border-radius: 10px; padding: 10px 12px;
-            color: #e2e8f0; font-size: 14px;
+            color: var(--text-primary); font-size: 14px;
             transition: border-color 0.2s;
             outline: none;
         }
         .cart-input:focus { border-color: #edcd2c; }
-        .cart-input::placeholder { color: #555; }
+        .cart-input::placeholder { color: var(--text-secondary); opacity: 0.6; }
 
         /* Radio custom */
-        .delivery-option { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .delivery-option { display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--text-secondary); }
         .delivery-option input[type=radio] { accent-color: #edcd2c; width: 16px; height: 16px; }
+
+        /* Modal Custom Scrollbar */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-body antialiased min-h-screen">
 
-    <header class="flex items-center justify-between px-5 h-[72px] sticky top-0 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md z-50">
-        <h1 class="font-display font-bold text-[24px] text-primary tracking-wide uppercase">Sabor de Mel</h1>
-        <button id="cart-btn" class="relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-dark transition-colors">
-            <span class="material-symbols-outlined text-[24px]">shopping_cart</span>
-            <span id="cart-badge">0</span>
-        </button>
+    <header class="flex items-center justify-between px-5 h-[72px] sticky top-0 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md z-50 border-b border-border/10">
+        <h1 class="font-display font-bold text-[24px] text-primary tracking-wide uppercase drop-shadow-sm">Sabor de Mel</h1>
+        <div class="flex items-center gap-2">
+            <button id="theme-toggle" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-alt transition-colors text-text-secondary">
+                <span class="material-symbols-outlined theme-icon-dark hidden">dark_mode</span>
+                <span class="material-symbols-outlined theme-icon-light">light_mode</span>
+            </button>
+            <button id="cart-btn" class="relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-alt transition-colors">
+                <span class="material-symbols-outlined text-[24px]">shopping_cart</span>
+                <span id="cart-badge">0</span>
+            </button>
+        </div>
     </header>
 
     <main class="flex flex-col gap-8 pt-4 pb-24">
         <div class="px-5">
-            <div class="relative flex items-center h-[48px] bg-surface-dark rounded-xl overflow-hidden border border-surface-dark-alt/50 focus-within:border-primary transition-colors">
-                <div class="flex items-center justify-center pl-4 text-slate-400">
+            <div class="relative flex items-center h-[48px] bg-surface-alt dark:bg-surface-dark rounded-xl overflow-hidden border border-slate-200 dark:border-surface-dark-alt focus-within:border-primary transition-colors focus-within:ring-1 focus-within:ring-primary/20">
+                <div class="flex items-center justify-center pl-4 text-text-secondary opacity-60">
                     <span class="material-symbols-outlined text-[20px]">search</span>
                 </div>
-                <input id="search-input" class="w-full h-full bg-transparent border-none text-slate-100 placeholder:text-slate-500 text-[15px] focus:ring-0 font-body" placeholder="O que você quer comer hoje?" type="text">
+                <input id="search-input" class="w-full h-full bg-transparent border-none text-text-primary placeholder:text-text-secondary/50 text-[15px] focus:ring-0 font-body" placeholder="O que você quer comer hoje?" type="text">
             </div>
         </div>
 
         <div class="px-5">
             <div id="category-filters" class="flex gap-3 overflow-x-auto pb-2 hide-scrollbar">
-                <button class="category-chip active flex h-10 shrink-0 items-center justify-center rounded-full bg-primary px-6 text-background-dark font-semibold text-sm transition-all" data-category="all">Todos</button>
-                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 font-medium text-sm transition-all" data-category="pasteis">Pastéis</button>
-                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 font-medium text-sm transition-all" data-category="acai-sorvetes">Açaí &amp; Sorvetes</button>
-                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 font-medium text-sm transition-all" data-category="sanduiches">Sanduíches</button>
-                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 font-medium text-sm transition-all" data-category="salgados-outros">Salgados &amp; Outros</button>
-                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-surface-dark-alt px-6 text-slate-300 font-medium text-sm transition-all" data-category="bebidas">Bebidas</button>
+                <button class="category-chip active flex h-10 shrink-0 items-center justify-center rounded-full bg-primary px-6 text-[#131313] font-semibold text-sm transition-all" data-category="all">Todos</button>
+                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-alt dark:bg-surface-dark border border-slate-200 dark:border-surface-dark-alt px-6 text-text-secondary font-medium text-sm transition-all hover:border-primary/50" data-category="pasteis">Pastéis</button>
+                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-alt dark:bg-surface-dark border border-slate-200 dark:border-surface-dark-alt px-6 text-text-secondary font-medium text-sm transition-all hover:border-primary/50" data-category="acai-sorvetes">Açaí &amp; Sorvetes</button>
+                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-alt dark:bg-surface-dark border border-slate-200 dark:border-surface-dark-alt px-6 text-text-secondary font-medium text-sm transition-all hover:border-primary/50" data-category="sanduiches">Sanduíches</button>
+                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-alt dark:bg-surface-dark border border-slate-200 dark:border-surface-dark-alt px-6 text-text-secondary font-medium text-sm transition-all hover:border-primary/50" data-category="salgados-outros">Salgados &amp; Outros</button>
+                <button class="category-chip flex h-10 shrink-0 items-center justify-center rounded-full bg-surface-alt dark:bg-surface-dark border border-slate-200 dark:border-surface-dark-alt px-6 text-text-secondary font-medium text-sm transition-all hover:border-primary/50" data-category="bebidas">Bebidas</button>
             </div>
         </div>
 
         <div class="px-5">
             <div id="product-list" class="flex flex-col gap-4"></div>
             <div id="empty-state" class="hidden flex flex-col items-center justify-center py-16 text-center">
-                <span class="material-symbols-outlined text-[64px] text-slate-600 mb-4">search_off</span>
-                <h3 class="font-display font-semibold text-lg text-slate-400">Ops! Nada encontrado</h3>
-                <p class="font-body text-sm text-slate-500 mt-2">Tente buscar por outro termo.</p>
+                <span class="material-symbols-outlined text-[64px] text-text-secondary opacity-20 mb-4">search_off</span>
+                <h3 class="font-display font-semibold text-lg text-text-secondary">Ops! Nada encontrado</h3>
+                <p class="font-body text-sm text-text-secondary/60 mt-2">Tente buscar por outro termo.</p>
             </div>
         </div>
     </main>
 
-    <div id="product-modal" class="fixed inset-0 bg-background-dark/80 backdrop-blur-sm z-[100] flex items-center justify-center p-5 hidden opacity-0 transition-opacity duration-300">
-        <div class="bg-surface-dark w-full max-w-md rounded-3xl overflow-hidden border border-surface-dark-alt shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]" id="modal-content">
-            <div class="relative h-40 bg-surface-dark-alt flex items-center justify-center text-slate-600 shrink-0">
+    <div id="product-modal" class="fixed inset-0 bg-black/40 dark:bg-background-dark/80 backdrop-blur-sm z-[100] flex items-center justify-center p-5 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-surface w-full max-w-md rounded-3xl overflow-hidden border border-slate-200 dark:border-surface-dark-alt shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]" id="modal-content">
+            <div class="relative h-40 bg-surface-alt flex items-center justify-center text-text-secondary shrink-0">
                 <span id="modal-icon" class="material-symbols-outlined text-[64px]">lunch_dining</span>
-                <button id="close-modal" class="absolute top-4 right-4 w-10 h-10 bg-background-dark/50 backdrop-blur-md rounded-full flex items-center justify-center text-white">
+                <button id="close-modal" class="absolute top-4 right-4 w-10 h-10 bg-black/10 dark:bg-background-dark/50 backdrop-blur-md rounded-full flex items-center justify-center text-text-primary hover:bg-black/20 dark:hover:bg-background-dark/80 transition-colors">
                     <span class="material-symbols-outlined">close</span>
                 </button>
             </div>
             <div class="p-6 overflow-y-auto flex-1 custom-scrollbar">
                 <h3 id="modal-title" class="font-display font-bold text-2xl text-primary uppercase">Produto</h3>
-                <p id="modal-description" class="font-body text-slate-400 text-sm mt-1"></p>
+                <p id="modal-description" class="font-body text-text-secondary text-sm mt-1"></p>
                 <div id="modal-options" class="mt-6 flex flex-col gap-4"></div>
             </div>
-            <div class="p-6 border-t border-surface-dark-alt bg-surface-dark shrink-0">
+            <div class="p-6 border-t border-slate-200 dark:border-surface-dark-alt bg-surface shrink-0">
                 <div class="flex items-center justify-between mb-4">
                     <div class="flex flex-col">
-                        <span class="text-xs text-slate-500 uppercase font-bold tracking-wider">Total</span>
+                        <span class="text-xs text-text-secondary uppercase font-bold tracking-wider opacity-60">Total</span>
                         <span id="modal-total-price" class="font-display font-bold text-2xl text-accent">R$ 0,00</span>
                     </div>
                 </div>
-                <button id="modal-add-btn" class="w-full bg-primary text-background-dark font-display font-bold uppercase py-4 rounded-xl active:scale-95 transition-transform">
+                <button id="modal-add-btn" class="w-full bg-primary text-[#131313] font-display font-bold uppercase py-4 rounded-xl active:scale-95 transition-transform shadow-lg shadow-primary/20">
                     Adicionar ao Carrinho
                 </button>
             </div>
@@ -186,12 +223,12 @@
     <!-- Drawer do Carrinho -->
     <aside id="cart-drawer">
         <!-- Header -->
-        <div class="flex items-center justify-between px-5 py-4 border-b border-[#2a2a2a] shrink-0">
+        <div class="flex items-center justify-between px-5 py-4 border-b border-border dark:border-[#2a2a2a] shrink-0">
             <div class="flex items-center gap-3">
                 <span class="material-symbols-outlined text-primary text-[24px]">shopping_cart</span>
-                <h2 class="font-display font-bold text-lg text-slate-100 uppercase tracking-wide">Seu Pedido</h2>
+                <h2 class="font-display font-bold text-lg text-text-primary dark:text-slate-100 uppercase tracking-wide">Seu Pedido</h2>
             </div>
-            <button id="close-cart-btn" class="w-9 h-9 flex items-center justify-center rounded-full bg-[#2a2a2a] text-slate-400 hover:text-slate-100 hover:bg-[#333] transition-colors">
+            <button id="close-cart-btn" class="w-9 h-9 flex items-center justify-center rounded-full bg-surface-alt dark:bg-[#2a2a2a] text-text-secondary hover:text-text-primary dark:text-slate-400 dark:hover:text-slate-100 hover:bg-border dark:hover:bg-[#333] transition-colors">
                 <span class="material-symbols-outlined text-[20px]">close</span>
             </button>
         </div>
@@ -201,15 +238,15 @@
 
         <!-- Estado vazio -->
         <div id="cart-empty-state" class="flex flex-col items-center justify-center py-16 text-center px-5 flex-1">
-            <span class="material-symbols-outlined text-[56px] text-slate-600 mb-3">shopping_basket</span>
-            <p class="font-display font-semibold text-slate-400 text-base uppercase">Seu carrinho está vazio</p>
-            <p class="font-body text-sm text-slate-600 mt-1">Adicione itens do cardápio para começar</p>
+            <span class="material-symbols-outlined text-[56px] text-text-secondary/50 dark:text-slate-600 mb-3">shopping_basket</span>
+            <p class="font-display font-semibold text-text-secondary dark:text-slate-400 text-base uppercase">Seu carrinho está vazio</p>
+            <p class="font-body text-sm text-text-secondary/80 dark:text-slate-600 mt-1">Adicione itens do cardápio para começar</p>
         </div>
 
         <!-- Formulário e Checkout -->
-        <div id="cart-checkout-section" class="hidden shrink-0 px-5 py-4 border-t border-[#2a2a2a] bg-[#161616]">
+        <div id="cart-checkout-section" class="hidden shrink-0 px-5 py-4 border-t border-border/40 dark:border-surface-dark-alt bg-white/50 dark:bg-[#161616]">
             <div class="flex items-center justify-between mb-4">
-                <span class="font-body text-slate-400 text-sm font-semibold uppercase tracking-wider">Total</span>
+                <span class="font-body text-slate-500 dark:text-slate-400 text-sm font-semibold uppercase tracking-wider">Total</span>
                 <span id="cart-total" class="font-display font-bold text-2xl text-accent">R$ 0,00</span>
             </div>
 
@@ -218,10 +255,10 @@
                 <input id="cart-name" class="cart-input" type="text" placeholder="Seu nome *" autocomplete="name">
                 <div class="flex gap-4 py-1">
                     <label class="delivery-option">
-                        <input type="radio" name="delivery-type" value="retirada" checked> <span class="text-sm text-slate-300">Retirada</span>
+                        <input type="radio" name="delivery-type" value="retirada" checked> <span class="text-sm dark:text-slate-300">Retirada</span>
                     </label>
                     <label class="delivery-option">
-                        <input type="radio" name="delivery-type" value="delivery"> <span class="text-sm text-slate-300">Delivery</span>
+                        <input type="radio" name="delivery-type" value="delivery"> <span class="text-sm dark:text-slate-300">Delivery</span>
                     </label>
                 </div>
                 <div id="address-fields" class="hidden flex flex-col gap-3">
@@ -242,6 +279,34 @@
     <script>
     (function () {
         'use strict';
+
+        // ── Theme Manager ──
+        const html = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const darkIcon = document.querySelector('.theme-icon-dark');
+        const lightIcon = document.querySelector('.theme-icon-light');
+
+        function updateTheme(theme) {
+            if (theme === 'dark') {
+                html.classList.add('dark');
+                darkIcon.classList.remove('hidden');
+                lightIcon.classList.add('hidden');
+            } else {
+                html.classList.remove('dark');
+                darkIcon.classList.add('hidden');
+                lightIcon.classList.remove('hidden');
+            }
+            localStorage.setItem('sabordemel_theme', theme);
+        }
+
+        // Init Theme
+        const savedTheme = localStorage.getItem('sabordemel_theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        updateTheme(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const isDark = html.classList.contains('dark');
+            updateTheme(isDark ? 'light' : 'dark');
+        });
 
         var PRODUCTS = [
             // ══════════════ PASTÉIS (11 itens) ══════════════
@@ -332,15 +397,11 @@
             { id: 'c1', category: 'salgados-outros', name: 'Cuscuz Tradicional', price: 12.00, description: 'Cuscuz com calabresa e vinagrete', icon: 'flatware' },
             { id: 'c2', category: 'salgados-outros', name: 'Cuscuz Especial', price: 17.00, description: 'Carne de sol + mussarela + vinagrete', icon: 'flatware' },
             { id: 'sal1', category: 'salgados-outros', name: 'Coxinhas / Enroladinhos', price: 5.00, description: 'Coxinhas e enroladinhos fritos na hora', icon: 'egg' },
-            { id: 'batata', category: 'salgados-outros', name: 'Batata Frita', prices: { 'P': 10.00, 'M': 12.00, 'G': 16.00 }, description: 'Porções de batatas fritas crocantes', icon: 'fastfood' },
+            { id: 'batata', category: 'salgados-outros', name: 'Batata Frita', prices: { 'Pequena': 10.00, 'Média': 12.00, 'Grande': 16.00 }, description: 'Porções de batatas fritas crocantes', icon: 'fastfood' },
             { id: 'batata-recheada', category: 'salgados-outros', name: 'Batata G Recheada', price: 23.00, description: 'Recheio de bacon ou calabresa e cheddar', icon: 'fastfood' },
 
             // ══════════════ BEBIDAS ══════════════
-            // Água Mineral
-            { id: 'b-agua1', category: 'bebidas', name: 'Água s/ gás 350ml', price: 2.00, description: 'Água mineral sem gás', icon: 'water_drop' },
-            { id: 'b-agua2', category: 'bebidas', name: 'Água s/ gás 500ml', price: 3.00, description: 'Água mineral sem gás', icon: 'water_drop' },
-            { id: 'b-agua3', category: 'bebidas', name: 'Água s/ gás 1.5L', price: 6.00, description: 'Água mineral sem gás', icon: 'water_drop' },
-            { id: 'b-agua4', category: 'bebidas', name: 'Água c/ gás 500ml', price: 3.50, description: 'Água mineral com gás', icon: 'water_drop' },
+            { id: 'b-agua', category: 'bebidas', name: 'Água Mineral', prices: { '350ml': 2.00, '500ml': 3.00, '1.5L': 6.00, 'c/ Gás 500ml': 3.50 }, description: 'Água mineral natural ou com gás', icon: 'water_drop' },
 
             // Sucos Del Valle
             { id: 'b-dv', category: 'bebidas', name: 'Suco Del Valle 450ml', price: 5.00, description: 'Sabores: Uva, Laranja ou Frutas Cítricas', icon: 'local_cafe' },
@@ -350,44 +411,15 @@
             { id: 'b-suco-limao', category: 'bebidas', name: 'Suco de Limão', price: 8.00, description: 'Suco natural da fruta', icon: 'local_cafe' },
 
             // Sucos de Polpa
-            { id: 'b-polpa', category: 'bebidas', name: 'Suco de Polpa 300ml (sem leite)', price: 5.00, description: 'Acerola, Abacaxi c/ Hortelã, Cajá, Graviola, Goiaba ou Maracujá', icon: 'local_cafe' },
-            { id: 'b-polpa-leite', category: 'bebidas', name: 'Suco de Polpa 300ml (com leite)', price: 6.00, description: 'Acerola, Abacaxi c/ Hortelã, Cajá, Graviola, Goiaba ou Maracujá', icon: 'local_cafe' },
+            { id: 'b-polpa', category: 'bebidas', name: 'Suco de Polpa 300ml', prices: { 'Sem Leite': 5.00, 'Com Leite': 6.00 }, description: 'Acerola, Abacaxi c/ Hortelã, Cajá, Graviola, Goiaba ou Maracujá', icon: 'local_cafe' },
 
-            // Refrigerantes NS
-            { id: 'b-coca-ns', category: 'bebidas', name: 'Coca-Cola NS', price: 4.00, description: 'Refrigerante não retornável', icon: 'liquor' },
-            { id: 'b-fanta-ns', category: 'bebidas', name: 'Fanta NS', price: 4.00, description: 'Refrigerante não retornável', icon: 'liquor' },
-
-            // Mini Pet
-            { id: 'b-coca-mini', category: 'bebidas', name: 'Coca-Cola Mini Pet', price: 4.00, description: 'Refrigerante mini pet', icon: 'liquor' },
-            { id: 'b-fanta-mini', category: 'bebidas', name: 'Fanta Mini Pet', price: 4.00, description: 'Refrigerante mini pet', icon: 'liquor' },
-
-            // KS 290ml
-            { id: 'b-coca-ks', category: 'bebidas', name: 'Coca-Cola KS 290ml', price: 5.00, description: 'Garrafa de vidro', icon: 'liquor' },
-            { id: 'b-fanta-ks', category: 'bebidas', name: 'Fanta KS 290ml', price: 5.00, description: 'Garrafa de vidro', icon: 'liquor' },
-
-            // Lata 350ml
-            { id: 'b-coca-lata', category: 'bebidas', name: 'Coca-Cola Lata 350ml', price: 5.00, description: 'Lata geladinha', icon: 'liquor' },
-            { id: 'b-fanta-lata', category: 'bebidas', name: 'Fanta Lata 350ml', price: 5.00, description: 'Lata geladinha', icon: 'liquor' },
-            { id: 'b-kuat-lata', category: 'bebidas', name: 'Kuat Lata 350ml', price: 5.00, description: 'Lata geladinha', icon: 'liquor' },
-            { id: 'b-sprite-lata', category: 'bebidas', name: 'Sprite Lata 350ml', price: 5.00, description: 'Lata geladinha', icon: 'liquor' },
-            { id: 'b-coca-zero-lata', category: 'bebidas', name: 'Coca-Cola Zero Lata 350ml', price: 5.00, description: 'Lata geladinha', icon: 'liquor' },
-            { id: 'b-schweppes-lata', category: 'bebidas', name: 'Schweppes Citrus Lata 350ml', price: 5.00, description: 'Lata geladinha', icon: 'liquor' },
-
-            // Pet 1L
-            { id: 'b-coca-1l', category: 'bebidas', name: 'Coca-Cola 1 Litro', price: 10.00, description: 'Pet 1 litro', icon: 'liquor' },
-            { id: 'b-fanta-1l', category: 'bebidas', name: 'Fanta 1 Litro', price: 9.00, description: 'Pet 1 litro', icon: 'liquor' },
-
-            // Pet 2L
-            { id: 'b-coca-2l', category: 'bebidas', name: 'Coca-Cola 2 Litros', price: 15.00, description: 'Pet 2 litros', icon: 'liquor' },
-            { id: 'b-fanta-2l', category: 'bebidas', name: 'Fanta 2 Litros', price: 12.00, description: 'Pet 2 litros', icon: 'liquor' },
-
-            // Outros tamanhos
-            { id: 'b-coca-500', category: 'bebidas', name: 'Coca-Cola 500ml', price: 6.00, description: 'Pet 500ml', icon: 'liquor' },
+            // Refrigerantes
+            { id: 'b-coca', category: 'bebidas', name: 'Coca-Cola', prices: { 'NS': 4.00, 'Mini Pet': 4.00, 'KS 290ml': 5.00, 'Lata 350ml': 5.00, '500ml': 6.00, '1 Litro': 10.00, '2 Litros': 15.00, 'LS Retornável': 7.50 }, description: 'Escolha o tamanho disponível', icon: 'liquor' },
+            { id: 'b-fanta', category: 'bebidas', name: 'Fanta', prices: { 'NS': 4.00, 'Mini Pet': 4.00, 'KS 290ml': 5.00, 'Lata 350ml': 5.00, '1 Litro': 9.00, '2 Litros': 12.00, 'LS Retornável': 7.50 }, description: 'Escolha o tamanho disponível', icon: 'liquor' },
+            { id: 'b-outros-latas', category: 'bebidas', name: 'Outras Latas 350ml', prices: { 'Kuat': 5.00, 'Sprite': 5.00, 'Coca-Cola Zero': 5.00, 'Schweppes Citrus': 5.00 }, description: 'Lata geladinha 350ml', icon: 'liquor' },
             { id: 'b-sprite-fresh', category: 'bebidas', name: 'Sprite Fresh Limão 510ml', price: 6.00, description: 'Pet 510ml', icon: 'liquor' },
 
             // LS Retornável
-            { id: 'b-coca-ls', category: 'bebidas', name: 'Coca-Cola LS Retornável', price: 7.50, description: 'Garrafa retornável', icon: 'liquor' },
-            { id: 'b-fanta-ls', category: 'bebidas', name: 'Fanta LS Retornável', price: 7.50, description: 'Garrafa retornável', icon: 'liquor' },
 
             // Monster
             { id: 'b-monster', category: 'bebidas', name: 'Monster Energy', price: 10.00, description: 'Lata 269ml', icon: 'bolt' }
@@ -419,53 +451,36 @@
 
             filtered.forEach(function(p) {
                 var card = document.createElement('div');
-                card.className = 'product-card card-visible flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-surface-dark-alt/20 hover:border-surface-dark-alt/50 transition-all cursor-pointer';
+                card.className = 'product-card card-visible flex items-center gap-4 p-4 rounded-2xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-dark-alt/20 hover:border-primary/40 dark:hover:border-surface-dark-alt/50 transition-all cursor-pointer shadow-sm shadow-black/5 dark:shadow-none';
+                
                 var isVariable = !!p.prices;
-                var price = isVariable ? Object.values(p.prices)[0] : p.price;
-                var sizeOptions = '';
-                if (isVariable) {
-                    sizeOptions = '<select class="size-sel bg-surface-dark-alt text-[10px] text-primary p-1 rounded uppercase border-none focus:ring-0">';
-                    Object.keys(p.prices).forEach(function(s) {
-                        sizeOptions += '<option value="' + s + '">' + s + '</option>';
-                    });
-                    sizeOptions += '</select>';
-                }
-                card.innerHTML = '<div class="w-[72px] h-[72px] rounded-xl bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-500 overflow-hidden">' +
+                var hasCustom = !!p.hasCustomization;
+                var needsModal = isVariable || hasCustom;
+                
+                var priceDisplay = isVariable ? 'A partir de R$ ' + Object.values(p.prices)[0].toFixed(2) : 'R$ ' + p.price.toFixed(2);
+                
+                card.innerHTML = '<div class="w-[72px] h-[72px] rounded-xl bg-slate-100 dark:bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-400 dark:text-slate-500 overflow-hidden">' +
                     '<span class="material-symbols-outlined text-[32px]">' + p.icon + '</span>' +
                     '</div>' +
                     '<div class="flex-1 min-w-0">' +
-                    '<h4 class="font-display font-semibold text-[15px] truncate text-slate-100">' + p.name + '</h4>' +
-                    '<p class="font-body text-[13px] text-slate-400 truncate">' + p.description + '</p>' +
+                    '<h4 class="font-display font-semibold text-[15px] truncate text-slate-800 dark:text-slate-100">' + p.name + '</h4>' +
+                    '<p class="font-body text-[13px] text-slate-500 dark:text-slate-400 truncate">' + p.description + '</p>' +
                     '<div class="flex items-center gap-3 mt-2">' +
-                    '<div class="price font-display font-bold text-accent text-[16px]">R$ ' + price.toFixed(2) + '</div>' +
-                    sizeOptions +
+                    '<div class="price font-display font-bold text-accent text-[16px]">' + priceDisplay + '</div>' +
                     '</div>' +
                     '</div>' +
-                    '<button class="add-btn w-9 h-9 rounded-full bg-primary text-background-dark flex items-center justify-center shrink-0">' +
-                    '<span class="material-symbols-outlined text-[20px]">add</span>' +
+                    '<button class="add-btn w-9 h-9 rounded-full bg-primary text-background-dark flex items-center justify-center shrink-0 shadow-md shadow-primary/20 dark:shadow-none">' +
+                    '<span class="material-symbols-outlined text-[20px]">' + (needsModal ? 'open_in_new' : 'add') + '</span>' +
                     '</button>';
 
-                if (isVariable) {
-                    var sel = card.querySelector('.size-sel');
-                    sel.addEventListener('change', function(e) {
-                        e.stopPropagation();
-                        card.querySelector('.price').textContent = 'R$ ' + p.prices[e.target.value].toFixed(2);
-                    });
-                    sel.addEventListener('click', function(e) { e.stopPropagation(); });
-                }
-                card.querySelector('.add-btn').addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    if (p.hasCustomization) {
+                card.addEventListener('click', function() {
+                    if (needsModal) {
                         openModal(p);
                     } else {
-                        var sel = card.querySelector('.size-sel');
-                        var size = sel ? sel.value : null;
-                        addToCart(p, size, []);
+                        addToCart(p);
                     }
                 });
-                card.addEventListener('click', function() {
-                    if (p.hasCustomization) openModal(p);
-                });
+
                 productList.appendChild(card);
             });
         }
@@ -513,7 +528,7 @@
                 Object.keys(p.prices).forEach(function(s) {
                     var isActive = currentModalSize === s;
                     sizeHtml += '<button onclick="window.changeModalSize(\'' + s + '\')" class="flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all ' + 
-                        (isActive ? 'border-primary bg-primary/10 text-primary scale-[1.02]' : 'border-surface-dark-alt bg-surface-dark-alt/50 text-slate-400 hover:border-slate-700') + '">' +
+                        (isActive ? 'border-primary bg-primary/10 text-primary scale-[1.02]' : 'border-slate-200 dark:border-surface-dark-alt bg-slate-50 dark:bg-surface-dark-alt/50 text-slate-600 dark:text-slate-400 hover:border-primary/30 dark:hover:border-slate-700') + '">' +
                         '<span class="text-xs font-bold">' + s + '</span>' +
                         '<span class="text-[10px] opacity-80 mt-0.5">R$ ' + p.prices[s].toFixed(2) + '</span>' +
                         '</button>';
@@ -537,10 +552,10 @@
                     var current = (currentModalSelections[cat] || []).length;
                     var title = cat.charAt(0).toUpperCase() + cat.slice(1);
                     
-                    var secHtml = '<div class="mt-6 border-t border-surface-dark-alt pt-4">' +
+                    var secHtml = '<div class="mt-6 border-t border-slate-100 dark:border-surface-dark-alt pt-4">' +
                         '<div class="flex justify-between items-end mb-3">' +
-                            '<span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">' + title + '</span>' +
-                            '<span class="text-[10px] font-bold ' + (current === max ? 'text-primary' : 'text-slate-500') + '">' + current + ' / ' + max + '</span>' +
+                            '<span class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">' + title + '</span>' +
+                            '<span class="text-[10px] font-bold ' + (current === max ? 'text-primary' : 'text-slate-400 dark:text-slate-500') + '">' + current + ' / ' + max + '</span>' +
                         '</div>' +
                         '<div class="grid grid-cols-2 gap-2">';
                     
@@ -548,13 +563,13 @@
                         var isChecked = (currentModalSelections[cat] || []).indexOf(item) !== -1;
                         var isDisabled = !isChecked && current >= max;
                         
-                        secHtml += '<label class="flex items-center gap-3 p-3 bg-surface-dark-alt/50 rounded-xl border border-transparent transition-all cursor-pointer ' + 
+                        secHtml += '<label class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-surface-dark-alt/50 rounded-xl border border-transparent transition-all cursor-pointer ' + 
                             (isChecked ? 'border-primary/30 bg-primary/5 ring-1 ring-primary/20' : '') + ' ' +
-                            (isDisabled ? 'opacity-30 grayscale cursor-not-allowed' : 'hover:bg-surface-dark-alt') + '">' +
+                            (isDisabled ? 'opacity-30 grayscale cursor-not-allowed' : 'hover:bg-slate-100 dark:hover:bg-surface-dark-alt') + '">' +
                             '<input type="checkbox" ' + (isChecked ? 'checked' : '') + ' ' + (isDisabled ? 'disabled' : '') + 
                             ' onchange="window.toggleSelection(\'' + cat + '\', \'' + item + '\')" ' +
-                            ' class="rounded-full border-slate-700 bg-background-dark text-primary focus:ring-primary h-4 w-4 transition-transform ' + (isChecked ? 'scale-110' : '') + '">' +
-                            '<span class="text-xs ' + (isChecked ? 'text-slate-100 font-semibold' : 'text-slate-400') + '">' + item + '</span>' +
+                            ' class="rounded-full border-slate-200 dark:border-slate-700 bg-white dark:bg-background-dark text-primary focus:ring-primary h-4 w-4 transition-transform ' + (isChecked ? 'scale-110' : '') + '">' +
+                            '<span class="text-xs ' + (isChecked ? 'text-slate-800 dark:text-slate-100 font-semibold' : 'text-slate-500 dark:text-slate-400') + '">' + item + '</span>' +
                             '</label>';
                     });
                     
@@ -571,19 +586,19 @@
                     { nome: 'Mousse de Maracujá', preco: 5 }
                 ];
 
-                var adHtml = '<div class="mt-6 border-t border-surface-dark-alt pt-4 mb-4">' +
-                    '<span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-3">Turbine seu Açaí (+R$)</span>' +
+                var adHtml = '<div class="mt-6 border-t border-slate-100 dark:border-surface-dark-alt pt-4 mb-4">' +
+                    '<span class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block mb-3">Turbine seu Açaí (+R$)</span>' +
                     '<div class="grid grid-cols-1 sm:grid-cols-2 gap-2">';
                 
                 PAID_ADDITIONS.forEach(function(a) {
                     var isChecked = currentModalExtras.some(function(e) { return e.nome === a.nome; });
-                    adHtml += '<label class="flex items-center justify-between p-3 bg-surface-dark-alt/50 rounded-xl border border-transparent hover:bg-surface-dark-alt transition-all cursor-pointer ' + 
+                    adHtml += '<label class="flex items-center justify-between p-3 bg-slate-50 dark:bg-surface-dark-alt/50 rounded-xl border border-transparent hover:bg-slate-100 dark:hover:bg-surface-dark-alt transition-all cursor-pointer ' + 
                         (isChecked ? 'border-primary/30 bg-primary/5' : '') + '">' +
                         '<div class="flex items-center gap-3">' +
                             '<input type="checkbox" ' + (isChecked ? 'checked' : '') + 
                             ' onchange="window.toggleExtra(\'' + a.nome + '\', ' + a.preco + ')" ' +
-                            ' class="rounded-full border-slate-700 bg-background-dark text-primary focus:ring-primary h-4 w-4">' +
-                            '<span class="text-xs ' + (isChecked ? 'text-slate-100 font-semibold' : 'text-slate-400') + '">' + a.nome + '</span>' +
+                            ' class="rounded-full border-slate-200 dark:border-slate-700 bg-white dark:bg-background-dark text-primary focus:ring-primary h-4 w-4">' +
+                            '<span class="text-xs ' + (isChecked ? 'text-slate-800 dark:text-slate-100 font-semibold' : 'text-slate-500 dark:text-slate-400') + '">' + a.nome + '</span>' +
                         '</div>' +
                         '<span class="text-[10px] font-bold text-accent">+ R$ ' + a.preco.toFixed(2) + '</span>' +
                         '</label>';
@@ -657,10 +672,11 @@
         chips.forEach(function(c) {
             c.addEventListener('click', function() {
                 chips.forEach(function(x) {
-                    x.classList.remove('active', 'bg-primary', 'text-background-dark');
-                    x.classList.add('bg-surface-dark', 'text-slate-300');
+                    x.classList.remove('active', 'bg-primary', 'text-[#131313]', 'text-background-dark', 'font-semibold');
+                    x.classList.add('bg-surface-alt', 'dark:bg-surface-dark', 'border', 'border-slate-200', 'dark:border-surface-dark-alt', 'text-text-secondary', 'font-medium', 'hover:border-primary/50');
                 });
-                c.classList.add('active', 'bg-primary', 'text-background-dark');
+                c.classList.remove('bg-surface-alt', 'dark:bg-surface-dark', 'border', 'border-slate-200', 'dark:border-surface-dark-alt', 'text-text-secondary', 'font-medium', 'hover:border-primary/50');
+                c.classList.add('active', 'bg-primary', 'text-[#131313]', 'font-semibold');
                 activeCategory = c.dataset.category;
                 renderProducts();
             });
@@ -762,17 +778,17 @@
                     ? '<p class="text-[11px] text-slate-500 mt-0.5 leading-tight">' + item.extras.map(function(e){ return e.nome; }).join(', ') + '</p>'
                     : '';
                 div.innerHTML =
-                    '<div class="w-9 h-9 rounded-lg bg-[#2a2a2a] flex items-center justify-center shrink-0 text-slate-500">' +
+                    '<div class="w-9 h-9 rounded-lg bg-slate-100 dark:bg-[#2a2a2a] flex items-center justify-center shrink-0 text-slate-400 dark:text-slate-500">' +
                         '<span class="material-symbols-outlined text-[20px]">' + item.icon + '</span>' +
                     '</div>' +
                     '<div class="flex-1 min-w-0">' +
-                        '<p class="font-body text-sm text-slate-100 font-semibold truncate">' + item.name + '</p>' +
+                        '<p class="font-body text-sm text-slate-800 dark:text-slate-100 font-semibold truncate">' + item.name + '</p>' +
                         extrasHtml +
                         '<p class="text-accent font-display font-bold text-sm mt-0.5">R$ ' + item.unitPrice.toFixed(2) + '</p>' +
                     '</div>' +
                     '<div class="flex items-center gap-2 shrink-0">' +
                         '<button class="qty-btn" data-key="' + item.key + '" data-delta="-1">−</button>' +
-                        '<span class="text-slate-200 font-bold text-sm w-5 text-center">' + item.qty + '</span>' +
+                        '<span class="text-slate-800 dark:text-slate-200 font-bold text-sm w-5 text-center">' + item.qty + '</span>' +
                         '<button class="qty-btn" data-key="' + item.key + '" data-delta="1">+</button>' +
                     '</div>';
                 div.querySelectorAll('.qty-btn').forEach(function(btn) {
