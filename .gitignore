@@ -29,5 +29,9 @@ Thumbs.db
 .vercel
 .env*.local
 
+#agentes
+.agent/
+.agents/
+
 # Docs
 docs/

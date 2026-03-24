@@ -464,26 +464,26 @@
 
             filtered.forEach(function(p) {
                 var card = document.createElement('div');
-                card.className = 'product-card card-visible flex items-center gap-4 p-4 rounded-2xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-dark-alt/20 hover:border-primary/40 dark:hover:border-surface-dark-alt/50 transition-all cursor-pointer shadow-sm shadow-black/5 dark:shadow-none';
+                card.className = 'product-card card-visible flex items-center gap-4 p-4 rounded-2xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-dark-alt/20 hover:border-primary/40 dark:hover:border-surface-dark-alt/50 hover:shadow-md hover:shadow-primary/5 transition-all cursor-pointer shadow-sm shadow-black/5 dark:shadow-none active:scale-[0.99]';
                 
                 var isVariable = !!p.prices;
                 var hasCustom = !!p.hasCustomization;
                 var needsModal = isVariable || hasCustom;
                 
-                var priceDisplay = isVariable ? 'A partir de R$ ' + Object.values(p.prices)[0].toFixed(2) : 'R$ ' + p.price.toFixed(2);
+                var priceDisplay = isVariable ? 'A partir de R$ ' + Object.values(p.prices)[0].toFixed(2).replace('.',',') : 'R$ ' + p.price.toFixed(2).replace('.',',');
                 
                 card.innerHTML = '<div class="w-[72px] h-[72px] rounded-xl bg-slate-100 dark:bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-400 dark:text-slate-500 overflow-hidden">' +
                     '<span class="material-symbols-outlined text-[32px]">' + p.icon + '</span>' +
                     '</div>' +
                     '<div class="flex-1 min-w-0">' +
-                    '<h4 class="font-display font-semibold text-[15px] truncate text-slate-800 dark:text-slate-100">' + p.name + '</h4>' +
-                    '<p class="font-body text-[13px] text-slate-500 dark:text-slate-400 truncate">' + p.description + '</p>' +
-                    '<div class="flex items-center gap-3 mt-2">' +
+                    '<h4 class="font-display font-semibold text-[15px] leading-tight text-slate-800 dark:text-slate-100 mb-0.5">' + p.name + '</h4>' +
+                    '<p class="font-body text-[12px] leading-snug text-slate-500 dark:text-slate-400">' + p.description + '</p>' +
+                    '<div class="flex items-center gap-3 mt-1.5">' +
                     '<div class="price font-display font-bold text-accent text-[16px]">' + priceDisplay + '</div>' +
                     '</div>' +
                     '</div>' +
-                    '<button class="add-btn w-9 h-9 rounded-full bg-primary text-background-dark flex items-center justify-center shrink-0 shadow-md shadow-primary/20 dark:shadow-none">' +
-                    '<span class="material-symbols-outlined text-[20px]">' + (needsModal ? 'open_in_new' : 'add') + '</span>' +
+                    '<button class="add-btn w-10 h-10 rounded-full bg-primary text-background-dark flex items-center justify-center shrink-0 shadow-md shadow-primary/30 dark:shadow-none hover:brightness-110 active:scale-90 transition-all">' +
+                    '<span class="material-symbols-outlined text-[22px]">' + (needsModal ? 'open_in_new' : 'add') + '</span>' +
                     '</button>';
 
                 card.addEventListener('click', function() {
