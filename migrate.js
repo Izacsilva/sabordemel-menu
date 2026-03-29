@@ -79,6 +79,32 @@ for (let i = 1; i < lines.length; i++) {
     const icon = getIcon(normCat);
 
     // Dynamic grouping logic:
+    // Suco da Polpa logic
+    const sucoMatch = name.match(/^Suco de (.+?) (com|sem) leite/i);
+    if (sucoMatch) {
+        const flavor = sucoMatch[1].trim();
+        const milkOption = sucoMatch[2].toLowerCase() === 'com' ? 'Com Leite' : 'Sem Leite';
+        
+        if (!grouped['Suco da Polpa']) {
+            grouped['Suco da Polpa'] = {
+                id: 'prod-' + Math.random().toString(36).substr(2, 7),
+                category: normCat,
+                name: 'Suco da Polpa',
+                description: 'Copo de 300ml.', // Can be simple, as flavors will be visible
+                icon: icon,
+                prices: {},
+                pricesTitle: 'Sua Opção:',
+                flavors: []
+            };
+        }
+        
+        grouped['Suco da Polpa'].prices[milkOption] = price;
+        if (!grouped['Suco da Polpa'].flavors.includes(flavor)) {
+            grouped['Suco da Polpa'].flavors.push(flavor);
+        }
+        continue;
+    }
+
     // We check if it matches a size pattern: 200ml, 1,5L, P/M/G at the end.
     const sizePattern = /\s+(\d+(?:,\d+)?(?:ml|L|l)|P|M|G|KS|Lata|Pet|Mini Pet|LS\s+Retorn\u00E1vel|Pet\s+2L|KS\s+290ml|Lata\s+350ml|c\/\s+G\u00E1s)\s*$/i;
     const match = name.match(sizePattern);

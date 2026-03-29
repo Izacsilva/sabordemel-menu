@@ -1,6 +1,6 @@
 [
     {
-        "id": "prod-2m7zbh5",
+        "id": "prod-08vjyvg",
         "category": "sanduiches",
         "name": "Hot Dog Tradicional",
         "description": "Carne moída ou frango + salsicha + tomate + milho verde + batata palha",
@@ -8,7 +8,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-hrx2me6",
+        "id": "prod-qdrljom",
         "category": "sanduiches",
         "name": "Misto Quente",
         "description": "2 fatias de queijo + 2 fatias de presunto",
@@ -16,7 +16,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-dk4bwq7",
+        "id": "prod-5z8f4k5",
         "category": "sanduiches",
         "name": "Bauru",
         "description": "2 fatias de queijo + 2 fatias de presunto",
@@ -24,7 +24,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-0j9se61",
+        "id": "prod-co5x5ap",
         "category": "sanduiches",
         "name": "Hot Dog na Chapa",
         "description": "Pão bola + carne moída ou frango + salsicha + tomate + milho verde + batata palha",
@@ -32,7 +32,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-hwxuy7o",
+        "id": "prod-6iv9l69",
         "category": "sanduiches",
         "name": "Americano",
         "description": "Ovo + queijo + presunto + alface e tomate",
@@ -40,7 +40,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-nvvx35d",
+        "id": "prod-xf9xze7",
         "category": "sanduiches",
         "name": "Hambúrguer",
         "description": "Hambúrguer + queijo + alface e tomate",
@@ -48,7 +48,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-xug7o8i",
+        "id": "prod-pvq586p",
         "category": "sanduiches",
         "name": "X Calabar",
         "description": "Hambúrguer + queijo + calabresa",
@@ -56,7 +56,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-zc541wi",
+        "id": "prod-i4uk1yd",
         "category": "sanduiches",
         "name": "X Salada",
         "description": "Hambúrguer + queijo + presunto + alface e tomate",
@@ -64,7 +64,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-buzflya",
+        "id": "prod-zynt75x",
         "category": "sanduiches",
         "name": "Eggs Burguer",
         "description": "Hambúrguer + queijo + presunto + ovo + alface e tomate",
@@ -72,7 +72,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-qi7f7e7",
+        "id": "prod-q6vbz34",
         "category": "sanduiches",
         "name": "X Brasil",
         "description": "Hambúrguer + queijo + presunto + salsicha + alface e tomate",
@@ -80,7 +80,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-jvna5rw",
+        "id": "prod-i8kovxv",
         "category": "sanduiches",
         "name": "Salsibresa",
         "description": "Salsicha + queijo + presunto + calabresa + alface e tomate",
@@ -88,7 +88,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-w413ywz",
+        "id": "prod-g0f20wc",
         "category": "sanduiches",
         "name": "Minuano",
         "description": "Hambúrguer + queijo + presunto + ovo + salsicha + alface e tomate",
@@ -96,7 +96,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-vaflhdr",
+        "id": "prod-j49ccb5",
         "category": "sanduiches",
         "name": "X Varadouro",
         "description": "2 Hambúrguer + ovo + queijo",
@@ -104,7 +104,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-hg7qqgp",
+        "id": "prod-ug0zbw4",
         "category": "sanduiches",
         "name": "Salsibacon",
         "description": "Salsicha + queijo + presunto + bacon + alface e tomate",
@@ -112,7 +112,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-pwva0sa",
+        "id": "prod-69aom1v",
         "category": "sanduiches",
         "name": "X Qualquer Coisa",
         "description": "Queijo + presunto + carne moída + alface e tomate",
@@ -120,7 +120,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-7wqg79u",
+        "id": "prod-ifcnj7b",
         "category": "sanduiches",
         "name": "X Calabresa",
         "description": "Hambúrguer + queijo + presunto + ovo + calabresa + alface e tomate",
@@ -128,7 +128,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-qod51h7",
+        "id": "prod-m895lcs",
         "category": "sanduiches",
         "name": "X Biss",
         "description": "Calabresa + queijo + bacon + presunto + alface e tomate",
@@ -136,7 +136,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-afpky63",
+        "id": "prod-vur18km",
         "category": "sanduiches",
         "name": "X Bacon",
         "description": "Hambúrguer + queijo + presunto + ovo + bacon + alface e tomate",
@@ -144,7 +144,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-km2d6e1",
+        "id": "prod-uc2nukk",
         "category": "sanduiches",
         "name": "X Dose Dupla",
         "description": "2 Hambúrguer + queijo + presunto + alface e tomate",
@@ -152,7 +152,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-3y8za7q",
+        "id": "prod-2snvkm5",
         "category": "sanduiches",
         "name": "X Porto Calvo",
         "description": "2 Hambúrguer + queijo + 2 ovos + alface e tomate",
@@ -160,7 +160,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-xfa4jq1",
+        "id": "prod-v1dhpud",
         "category": "sanduiches",
         "name": "X Desfiadinho",
         "description": "Frango desfiado + queijo + milho verde + batata palha + cheddar + bacon + alface e tomate",
@@ -168,7 +168,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-g549jfz",
+        "id": "prod-e3mvyj7",
         "category": "sanduiches",
         "name": "Passaburguer",
         "description": "Carne moída + salsicha + milho verde + batata palha + queijo + Hambúrguer + alface e tomate",
@@ -176,7 +176,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-dubjt2e",
+        "id": "prod-3ja7dov",
         "category": "sanduiches",
         "name": "Calabacon",
         "description": "Hambúrguer + queijo + presunto + calabresa + bacon + alface e tomate",
@@ -184,7 +184,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-o22aany",
+        "id": "prod-cxvjt6u",
         "category": "sanduiches",
         "name": "X Duplo",
         "description": "2 Hambúrguer + queijo + presunto + 2 ovos + alface e tomate",
@@ -192,7 +192,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-wso1fvc",
+        "id": "prod-hvdgvta",
         "category": "sanduiches",
         "name": "X Cheddar",
         "description": "2 Hambúrguer + queijo + bacon + batata palha + cheddar + alface e tomate",
@@ -200,7 +200,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-8w1mpta",
+        "id": "prod-3cff9wd",
         "category": "sanduiches",
         "name": "X Yara",
         "description": "2 Hambúrguer + queijo + presunto + bacon + porção de batatinha frita",
@@ -208,7 +208,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-afhyedc",
+        "id": "prod-p3jjaz0",
         "category": "sanduiches",
         "name": "X Tudo",
         "description": "Hambúrguer + queijo + presunto + ovo + calabresa + bacon + salsicha + alface e tomate",
@@ -216,7 +216,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-9j4p7fn",
+        "id": "prod-4hvws27",
         "category": "sanduiches",
         "name": "X Especial",
         "description": "Bacon + queijo + carne moída + calabresa + porção de batatinha frita",
@@ -224,7 +224,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-de8zzi4",
+        "id": "prod-pu1fvws",
         "category": "sanduiches",
         "name": "Chicken",
         "description": "Frango em cubos + bacon + queijo + alface e tomate + porção de batatinha frita (cheddar à gosto)",
@@ -232,7 +232,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-488ucdk",
+        "id": "prod-li6lvtr",
         "category": "sanduiches",
         "name": "X Delícia",
         "description": "Hambúrguer artesanal 130g + bacon + cheddar + alface e tomate + porção de batatinha frita (cebola à gosto)",
@@ -240,7 +240,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-l9uv8qp",
+        "id": "prod-weqmtat",
         "category": "sanduiches",
         "name": "X Triplo",
         "description": "3 Hambúrguer + 3 ovos + queijo + presunto + alface e tomate",
@@ -248,7 +248,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-kurn1hj",
+        "id": "prod-6r6kbt0",
         "category": "sanduiches",
         "name": "Carne de Sol",
         "description": "Carne de sol em cubos + bacon + cheddar + alface e tomate + porção de batatinha frita (cebola à gosto)",
@@ -256,7 +256,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-kedqkwh",
+        "id": "prod-wt8tb3s",
         "category": "sanduiches",
         "name": "X Big",
         "description": "2 Hambúrguer + queijo + presunto + 2 ovos + salsicha + calabresa + bacon + alface e tomate (cebola à gosto)",
@@ -264,7 +264,7 @@
         "icon": "lunch_dining"
     },
     {
-        "id": "prod-hh7xfz1",
+        "id": "prod-1d8s578",
         "category": "pasteis",
         "name": "Queijo",
         "description": "2 fatias de queijo e orégano",
@@ -272,7 +272,7 @@
         "icon": "bakery_dining"
     },
     {
-        "id": "prod-f5s538b",
+        "id": "prod-6p2bj6j",
         "category": "pasteis",
         "name": "Misto",
         "description": "Queijo e presunto",
@@ -280,7 +280,7 @@
         "icon": "bakery_dining"
     },
     {
-        "id": "prod-yx4ydpz",
+        "id": "prod-eh8v65r",
         "category": "pasteis",
         "name": "Charque",
         "description": "Queijo, presunto e charque",
@@ -288,7 +288,7 @@
         "icon": "bakery_dining"
     },
     {
-        "id": "prod-hmtjx7i",
+        "id": "prod-a6rgiau",
         "category": "pasteis",
         "name": "Frango",
         "description": "Queijo, presunto, frango e orégano",
@@ -296,7 +296,7 @@
         "icon": "bakery_dining"
     },
     {
-        "id": "prod-eqz9qf7",
+        "id": "prod-hza47nk",
         "category": "pasteis",
         "name": "Frango com Bacon",
         "description": "2 fatias de queijo, frango e bacon",
@@ -304,7 +304,7 @@
         "icon": "bakery_dining"
     },
     {
-        "id": "prod-60rk3nw",
+        "id": "prod-uokn66t",
         "category": "pasteis",
         "name": "Frango com Bacon e Catupiry",
         "description": "2 fatias de queijo, frango, bacon e catupiry",
@@ -312,7 +312,7 @@
         "icon": "bakery_dining"
     },
     {
-        "id": "prod-60xlza3",
+        "id": "prod-e84yr9d",
         "category": "pasteis",
         "name": "Frango com Catupiry",
         "description": "2 fatias de queijo, frango, catupiry e orégano",
@@ -320,7 +320,7 @@
         "icon": "bakery_dining"
     },
     {
-        "id": "prod-25wt3i1",
+        "id": "prod-uwem43t",
         "category": "pasteis",
         "name": "Frango com Bacon e Cheddar",
         "description": "2 fatias de queijo, frango, bacon e cheddar",
@@ -328,7 +328,7 @@
         "icon": "bakery_dining"
     },
     {
-        "id": "prod-h4bzl00",
+        "id": "prod-682puoi",
         "category": "pasteis",
         "name": "Carne de Sol com Catupiry",
         "description": "2 fatias de queijo, carne de sol e catupiry",
@@ -336,7 +336,7 @@
         "icon": "bakery_dining"
     },
     {
-        "id": "prod-zv2javf",
+        "id": "prod-jmatbeb",
         "category": "pasteis",
         "name": "Carne de Sol com Cheddar",
         "description": "2 fatias de queijo, carne de sol e cheddar",
@@ -344,7 +344,7 @@
         "icon": "bakery_dining"
     },
     {
-        "id": "prod-b6gcu47",
+        "id": "prod-vbij7r3",
         "category": "pasteis",
         "name": "Tudão",
         "description": "Queijo, presunto, frango, charque, bacon, calabresa e milho",
@@ -352,7 +352,7 @@
         "icon": "bakery_dining"
     },
     {
-        "id": "prod-lanc28b",
+        "id": "prod-lfzcsdw",
         "category": "pasteis",
         "name": "Carne Moída",
         "description": "Carne moída + queijo + presunto e milho",
@@ -360,7 +360,7 @@
         "icon": "bakery_dining"
     },
     {
-        "id": "prod-cg7m2at",
+        "id": "prod-2vckqea",
         "category": "bebidas",
         "name": "Coca Cola NS",
         "description": "Refrigerante",
@@ -368,7 +368,7 @@
         "icon": "liquor"
     },
     {
-        "id": "prod-213peom",
+        "id": "prod-dlrwi3x",
         "category": "bebidas",
         "name": "Fanta NS",
         "description": "Refrigerante",
@@ -376,7 +376,7 @@
         "icon": "liquor"
     },
     {
-        "id": "prod-5li1os0",
+        "id": "prod-gqzr1t4",
         "category": "bebidas",
         "name": "Água 500ml sem gás",
         "description": "Água mineral sem gás 500ml",
@@ -384,7 +384,7 @@
         "icon": "liquor"
     },
     {
-        "id": "prod-sgluw0z",
+        "id": "prod-bcurq8p",
         "category": "bebidas",
         "name": "Água 350ml sem gás",
         "description": "Água mineral sem gás 350ml",
@@ -392,7 +392,7 @@
         "icon": "liquor"
     },
     {
-        "id": "prod-5t35zer",
+        "id": "prod-yimaqio",
         "category": "bebidas",
         "name": "Água 500ml com gás",
         "description": "Água mineral com gás 500ml",
@@ -400,7 +400,7 @@
         "icon": "liquor"
     },
     {
-        "id": "prod-81bevfr",
+        "id": "prod-0n0hyrx",
         "category": "bebidas",
         "name": "Água 1,5L sem gás",
         "description": "Água mineral sem gás 1,5 litro",
@@ -408,7 +408,7 @@
         "icon": "liquor"
     },
     {
-        "id": "prod-45fso4y",
+        "id": "prod-qdx45dh",
         "category": "bebidas",
         "name": "Suco de Laranja",
         "description": "Suco da fruta natural",
@@ -416,7 +416,7 @@
         "icon": "liquor"
     },
     {
-        "id": "prod-ar8jitu",
+        "id": "prod-81qkwjj",
         "category": "bebidas",
         "name": "Suco de Limão",
         "description": "Suco da fruta natural",
@@ -424,7 +424,7 @@
         "icon": "liquor"
     },
     {
-        "id": "prod-e72r2tg",
+        "id": "prod-qlixgog",
         "category": "salgados-outros",
         "name": "Cuscuz com Calabresa e Vinagrete",
         "description": "Cuscuz com calabresa e vinagrete",
@@ -432,7 +432,7 @@
         "icon": "flatware"
     },
     {
-        "id": "prod-mohfv9s",
+        "id": "prod-jl8g6y1",
         "category": "salgados-outros",
         "name": "Cuscuz com Carne de Sol",
         "description": "Cuscuz com carne de sol + fatia de queijo mussarela + vinagrete",
@@ -440,7 +440,7 @@
         "icon": "flatware"
     },
     {
-        "id": "prod-vy25pea",
+        "id": "prod-ywpcpz2",
         "category": "salgados-outros",
         "name": "Coxinha",
         "description": "Salgado coxinha",
@@ -448,7 +448,7 @@
         "icon": "flatware"
     },
     {
-        "id": "prod-oaipwav",
+        "id": "prod-eoza8vc",
         "category": "salgados-outros",
         "name": "Enroladinho",
         "description": "Salgado enroladinho",
@@ -456,7 +456,7 @@
         "icon": "flatware"
     },
     {
-        "id": "prod-enrt15m",
+        "id": "prod-jf9x7yj",
         "category": "salgados-outros",
         "name": "Batata Frita G com Recheio",
         "description": "Batata G com recheio de bacon ou calabresa e cheddar",
@@ -464,7 +464,7 @@
         "icon": "flatware"
     },
     {
-        "id": "prod-eieyc4n",
+        "id": "prod-6crc9vq",
         "category": "acai-sorvetes",
         "name": "Mousse de Maracujá",
         "description": "Mousse artesanal de maracujá",
@@ -472,7 +472,7 @@
         "icon": "icecream"
     },
     {
-        "id": "prod-1slpdxq",
+        "id": "prod-gwqs2qg",
         "category": "acai-sorvetes",
         "name": "Mousse de Limão",
         "description": "Mousse artesanal de limão",
@@ -480,7 +480,7 @@
         "icon": "icecream"
     },
     {
-        "id": "prod-gkkd1lj",
+        "id": "prod-c13wwvq",
         "category": "bebidas",
         "name": "Coca Cola",
         "description": "Refrigerante mini pet",
@@ -494,7 +494,7 @@
         }
     },
     {
-        "id": "prod-f6g3rqe",
+        "id": "prod-vnunx3k",
         "category": "bebidas",
         "name": "Fanta",
         "description": "Refrigerante mini pet",
@@ -507,7 +507,7 @@
         }
     },
     {
-        "id": "prod-pzxq0k8",
+        "id": "prod-vy32s45",
         "category": "bebidas",
         "name": "Kuat",
         "description": "Refrigerante lata 350ml",
@@ -517,7 +517,7 @@
         }
     },
     {
-        "id": "prod-ffq0gq2",
+        "id": "prod-1o3t9l0",
         "category": "bebidas",
         "name": "Sprite",
         "description": "Refrigerante lata 350ml",
@@ -527,7 +527,7 @@
         }
     },
     {
-        "id": "prod-welba3x",
+        "id": "prod-13zu8z9",
         "category": "bebidas",
         "name": "Coca Cola Zero",
         "description": "Refrigerante lata 350ml",
@@ -537,7 +537,7 @@
         }
     },
     {
-        "id": "prod-j7uzbbu",
+        "id": "prod-qxxtq8b",
         "category": "bebidas",
         "name": "Schweppes Citrus",
         "description": "Refrigerante lata 350ml",
@@ -547,7 +547,7 @@
         }
     },
     {
-        "id": "prod-50vzvch",
+        "id": "prod-0dbrmjk",
         "category": "bebidas",
         "name": "Coca Cola 1L",
         "description": "Refrigerante 1 litro pet",
@@ -557,7 +557,7 @@
         }
     },
     {
-        "id": "prod-ijqpaem",
+        "id": "prod-ykoquo0",
         "category": "bebidas",
         "name": "Fanta 1L",
         "description": "Refrigerante 1 litro pet",
@@ -567,7 +567,7 @@
         }
     },
     {
-        "id": "prod-tjrmmml",
+        "id": "prod-egd6jpz",
         "category": "bebidas",
         "name": "Coca Cola 2L",
         "description": "Refrigerante 2 litros pet",
@@ -577,7 +577,7 @@
         }
     },
     {
-        "id": "prod-aht4vjb",
+        "id": "prod-7bkbzny",
         "category": "bebidas",
         "name": "Fanta 2L",
         "description": "Refrigerante 2 litros pet",
@@ -587,7 +587,7 @@
         }
     },
     {
-        "id": "prod-i9rfaeh",
+        "id": "prod-3hf7si1",
         "category": "bebidas",
         "name": "Sprite Fresh Limão",
         "description": "Refrigerante 510ml",
@@ -597,7 +597,7 @@
         }
     },
     {
-        "id": "prod-3w8g5c6",
+        "id": "prod-ddcvwl0",
         "category": "bebidas",
         "name": "Monster Energy Lata",
         "description": "Energético lata 269ml",
@@ -607,7 +607,7 @@
         }
     },
     {
-        "id": "prod-fvqkefq",
+        "id": "prod-wcxetrz",
         "category": "bebidas",
         "name": "Delvalle Uva",
         "description": "Suco Delvalle uva 450ml",
@@ -617,7 +617,7 @@
         }
     },
     {
-        "id": "prod-1mzwk6d",
+        "id": "prod-sm6w9rv",
         "category": "bebidas",
         "name": "Delvalle Laranja",
         "description": "Suco Delvalle laranja 450ml",
@@ -627,7 +627,7 @@
         }
     },
     {
-        "id": "prod-8r87koh",
+        "id": "prod-fouri62",
         "category": "bebidas",
         "name": "Delvalle Frutas Cítricas",
         "description": "Suco Delvalle frutas cítricas 450ml",
@@ -637,127 +637,27 @@
         }
     },
     {
-        "id": "prod-gfjpple",
+        "id": "prod-ma4rx7s",
         "category": "bebidas",
-        "name": "Suco de Acerola sem leite",
-        "description": "Suco de polpa Acerola 300ml sem leite",
+        "name": "Suco da Polpa",
+        "description": "Copo de 300ml.",
         "icon": "liquor",
         "prices": {
-            "300ml": 5
-        }
+            "Sem Leite": 5,
+            "Com Leite": 6
+        },
+        "pricesTitle": "Sua Opção:",
+        "flavors": [
+            "Acerola",
+            "Abacaxi com Hortelã",
+            "Cajá",
+            "Graviola",
+            "Goiaba",
+            "Maracujá"
+        ]
     },
     {
-        "id": "prod-dwppz8y",
-        "category": "bebidas",
-        "name": "Suco de Acerola com leite",
-        "description": "Suco de polpa Acerola 300ml com leite",
-        "icon": "liquor",
-        "prices": {
-            "300ml": 6
-        }
-    },
-    {
-        "id": "prod-ci5k9jr",
-        "category": "bebidas",
-        "name": "Suco de Abacaxi com Hortelã sem leite",
-        "description": "Suco de polpa Abacaxi com Hortelã 300ml sem leite",
-        "icon": "liquor",
-        "prices": {
-            "300ml": 5
-        }
-    },
-    {
-        "id": "prod-476kma8",
-        "category": "bebidas",
-        "name": "Suco de Abacaxi com Hortelã com leite",
-        "description": "Suco de polpa Abacaxi com Hortelã 300ml com leite",
-        "icon": "liquor",
-        "prices": {
-            "300ml": 6
-        }
-    },
-    {
-        "id": "prod-gw9dk4u",
-        "category": "bebidas",
-        "name": "Suco de Cajá sem leite",
-        "description": "Suco de polpa Cajá 300ml sem leite",
-        "icon": "liquor",
-        "prices": {
-            "300ml": 5
-        }
-    },
-    {
-        "id": "prod-763t5ck",
-        "category": "bebidas",
-        "name": "Suco de Cajá com leite",
-        "description": "Suco de polpa Cajá 300ml com leite",
-        "icon": "liquor",
-        "prices": {
-            "300ml": 6
-        }
-    },
-    {
-        "id": "prod-l4j69j1",
-        "category": "bebidas",
-        "name": "Suco de Graviola sem leite",
-        "description": "Suco de polpa Graviola 300ml sem leite",
-        "icon": "liquor",
-        "prices": {
-            "300ml": 5
-        }
-    },
-    {
-        "id": "prod-yj1l98e",
-        "category": "bebidas",
-        "name": "Suco de Graviola com leite",
-        "description": "Suco de polpa Graviola 300ml com leite",
-        "icon": "liquor",
-        "prices": {
-            "300ml": 6
-        }
-    },
-    {
-        "id": "prod-130fi3x",
-        "category": "bebidas",
-        "name": "Suco de Goiaba sem leite",
-        "description": "Suco de polpa Goiaba 300ml sem leite",
-        "icon": "liquor",
-        "prices": {
-            "300ml": 5
-        }
-    },
-    {
-        "id": "prod-4kg758i",
-        "category": "bebidas",
-        "name": "Suco de Goiaba com leite",
-        "description": "Suco de polpa Goiaba 300ml com leite",
-        "icon": "liquor",
-        "prices": {
-            "300ml": 6
-        }
-    },
-    {
-        "id": "prod-b8zoo2j",
-        "category": "bebidas",
-        "name": "Suco de Maracujá sem leite",
-        "description": "Suco de polpa Maracujá 300ml sem leite",
-        "icon": "liquor",
-        "prices": {
-            "300ml": 5
-        }
-    },
-    {
-        "id": "prod-7piu4sw",
-        "category": "bebidas",
-        "name": "Suco de Maracujá com leite",
-        "description": "Suco de polpa Maracujá 300ml com leite",
-        "icon": "liquor",
-        "prices": {
-            "300ml": 6
-        }
-    },
-    {
-        "id": "prod-3ga4bzy",
+        "id": "prod-qfmyo4n",
         "category": "salgados-outros",
         "name": "Porção de Batata Frita",
         "description": "Porção de batatinhas fritas - tamanho P",
@@ -769,7 +669,7 @@
         }
     },
     {
-        "id": "prod-xoxji1l",
+        "id": "prod-b6vdl5f",
         "category": "acai-sorvetes",
         "name": "Açaí na Tigela",
         "description": "3 complementos + 1 creme + 1 fruta + 1 cobertura | Cremes: Cupuaçu, Ninho com Oreo, Ninho com Nutella, Ovomaltine | Coberturas: Chocolate, Morango, Leite condensado | Frutas: Banana, Uva | Complementos: Gotas de chocolate, Chocoball, Ovomaltine, Granola, Farinha Lacta, Leite em pó, Amendoim, Paçoca, M&M, Bis, Sucrilhos, Cereal, Jujuba, Canudinhos Wafer, Marshmallow | Adicionais (R$3,00): Morango, Kiwi, Kit Kat, Nutella | Adicional (R$5,00): Mousse de maracujá",
@@ -809,7 +709,7 @@
         }
     },
     {
-        "id": "prod-8q64kre",
+        "id": "prod-c3o5ciq",
         "category": "acai-sorvetes",
         "name": "Açaí no Copo",
         "description": "3 complementos + 1 creme + 1 fruta + 1 cobertura | Cremes: Cupuaçu, Ninho com Oreo, Ninho com Nutella, Ovomaltine | Coberturas: Chocolate, Morango, Leite condensado | Frutas: Banana, Uva | Complementos: Gotas de chocolate, Chocoball, Ovomaltine, Granola, Farinha Lacta, Leite em pó, Amendoim, Paçoca, M&M, Bis, Sucrilhos, Cereal, Jujuba, Canudinhos Wafer, Marshmallow | Adicionais (R$3,00): Morango, Kiwi, Kit Kat, Nutella | Adicional (R$5,00): Mousse de maracujá",
@@ -842,7 +742,7 @@
         }
     },
     {
-        "id": "prod-psuj7ch",
+        "id": "prod-35hy46z",
         "category": "acai-sorvetes",
         "name": "Milk-Shake",
         "description": "Sabores: Chocolate, Morango, Flocos, Nata Goiaba, Chiclete, Delícia de Abacaxi, Ovomaltine, Paçoca",
@@ -864,7 +764,7 @@
         ]
     },
     {
-        "id": "prod-9jxvwnf",
+        "id": "prod-9bxygjk",
         "category": "acai-sorvetes",
         "name": "Milk-Shake Especial",
         "description": "Sabores especiais: Ninho com Nutella, Ninho com Oreo, Morango com Nutella, Chocolate com Nutella",
@@ -882,7 +782,7 @@
         ]
     },
     {
-        "id": "prod-odoy0of",
+        "id": "prod-42q1q60",
         "category": "acai-sorvetes",
         "name": "Sorvete",
         "description": "Sabores: Chocolate, Morango, Toffe, Flocos, Nata Goiaba, Chiclete, Creme com Passas, Delícia de Abacaxi",

@@ -370,6 +370,8 @@
                 var hasCustom = !!p.hasCustomization;
                 var needsModal = isVariable || hasCustom;
                 
+                var showDesc = p.category === 'sanduiches' || p.category === 'pasteis' || p.name.toLowerCase().includes('cuscuz');
+                
                 var priceDisplay = isVariable ? 'A partir de R$ ' + Object.values(p.prices)[0].toFixed(2).replace('.',',') : 'R$ ' + p.price.toFixed(2).replace('.',',');
                 
                 card.innerHTML = '<div class="w-[72px] h-[72px] rounded-xl bg-slate-100 dark:bg-surface-dark-alt shrink-0 flex items-center justify-center text-slate-400 dark:text-slate-500 overflow-hidden">' +
@@ -377,7 +379,7 @@
                     '</div>' +
                     '<div class="flex-1 min-w-0">' +
                     '<h4 class="font-display font-semibold text-[15px] leading-tight text-slate-800 dark:text-slate-100 mb-0.5">' + p.name + '</h4>' +
-                    '<p class="font-body text-[12px] leading-snug text-slate-500 dark:text-slate-400">' + p.description + '</p>' +
+                    (showDesc && p.description ? '<p class="font-body text-[12px] leading-snug text-slate-500 dark:text-slate-400">' + p.description + '</p>' : '') +
                     '<div class="flex items-center gap-3 mt-1.5">' +
                     '<div class="price font-display font-bold text-accent text-[16px]">' + priceDisplay + '</div>' +
                     '</div>' +
@@ -433,16 +435,18 @@
         function renderModal() {
             var p = currentModalProduct;
             if (!p) return;
+            var showDesc = p.category === 'sanduiches' || p.category === 'pasteis' || p.name.toLowerCase().includes('cuscuz');
             document.getElementById('modal-title').textContent = p.name;
-            document.getElementById('modal-description').textContent = p.description;
+            document.getElementById('modal-description').textContent = showDesc && p.description ? p.description : '';
             document.getElementById('modal-icon').textContent = p.icon;
             
             var opts = document.getElementById('modal-options');
             opts.innerHTML = '';
 
-            // 1. Tamanhos
+            // 1. Tamanhos / Opções
             if (p.prices) {
-                var sizeHtml = '<div class="mb-4 text-left"><span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Escolha o Tamanho</span><div class="grid grid-cols-2 sm:grid-cols-4 gap-2">';
+                var sizeLabel = p.pricesTitle || 'Escolha o Tamanho';
+                var sizeHtml = '<div class="mb-4 text-left"><span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">' + sizeLabel + '</span><div class="grid grid-cols-2 sm:grid-cols-4 gap-2">';
                 Object.keys(p.prices).forEach(function(s) {
                     var isActive = currentModalSize === s;
                     sizeHtml += '<button onclick="window.changeModalSize(\'' + s + '\')" class="flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all ' + 
@@ -455,11 +459,12 @@
                 opts.innerHTML += sizeHtml;
             }
 
-            // 1.5. Sabores (Milk-shake e Sorvete)
+            // 1.5. Sabores (Milk-shake, Sorvete, Sucos, etc)
             if (p.flavors && p.flavors.length > 0) {
+                var flavorLabel = p.flavorsTitle || 'Escolha o Sabor';
                 var flavorHtml = '<div class="mb-4 mt-2 text-left">' +
                     '<div class="flex justify-between items-end mb-3">' +
-                        '<span class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Escolha o Sabor</span>' +
+                        '<span class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">' + flavorLabel + '</span>' +
                         '<span class="text-[10px] font-bold ' + (currentModalFlavor ? 'text-primary' : 'text-accent') + '">' + (currentModalFlavor ? '1 / 1 ✓' : '0 / 1') + '</span>' +
                     '</div>' +
                     '<div class="grid grid-cols-2 gap-2">';
