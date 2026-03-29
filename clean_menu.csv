@@ -1,0 +1,115 @@
+Nome,Ingredientes,PreÃ§o (R$),Categoria
+Hot Dog Tradicional,Carne moÃ­da ou frango + salsicha + tomate + milho verde + batata palha,"R$ 12,00",SanduÃ­ches
+Misto Quente,2 fatias de queijo + 2 fatias de presunto,"R$ 12,00",SanduÃ­ches
+Bauru,2 fatias de queijo + 2 fatias de presunto,"R$ 13,00",SanduÃ­ches
+Hot Dog na Chapa,PÃ£o bola + carne moÃ­da ou frango + salsicha + tomate + milho verde + batata palha,"R$ 13,00",SanduÃ­ches
+Americano,Ovo + queijo + presunto + alface e tomate,"R$ 13,00",SanduÃ­ches
+HambÃºrguer,HambÃºrguer + queijo + alface e tomate,"R$ 14,00",SanduÃ­ches
+X Calabar,HambÃºrguer + queijo + calabresa,"R$ 14,00",SanduÃ­ches
+X Salada,HambÃºrguer + queijo + presunto + alface e tomate,"R$ 14,00",SanduÃ­ches
+Eggs Burguer,HambÃºrguer + queijo + presunto + ovo + alface e tomate,"R$ 15,00",SanduÃ­ches
+X Brasil,HambÃºrguer + queijo + presunto + salsicha + alface e tomate,"R$ 15,00",SanduÃ­ches
+Salsibresa,Salsicha + queijo + presunto + calabresa + alface e tomate,"R$ 15,00",SanduÃ­ches
+Minuano,HambÃºrguer + queijo + presunto + ovo + salsicha + alface e tomate,"R$ 17,00",SanduÃ­ches
+X Varadouro,2 HambÃºrguer + ovo + queijo,"R$ 17,00",SanduÃ­ches
+Salsibacon,Salsicha + queijo + presunto + bacon + alface e tomate,"R$ 17,00",SanduÃ­ches
+X Qualquer Coisa,Queijo + presunto + carne moÃ­da + alface e tomate,"R$ 17,00",SanduÃ­ches
+X Calabresa,HambÃºrguer + queijo + presunto + ovo + calabresa + alface e tomate,"R$ 18,00",SanduÃ­ches
+X Biss,Calabresa + queijo + bacon + presunto + alface e tomate,"R$ 18,00",SanduÃ­ches
+X Bacon,HambÃºrguer + queijo + presunto + ovo + bacon + alface e tomate,"R$ 19,00",SanduÃ­ches
+X Dose Dupla,2 HambÃºrguer + queijo + presunto + alface e tomate,"R$ 19,00",SanduÃ­ches
+X Porto Calvo,2 HambÃºrguer + queijo + 2 ovos + alface e tomate,"R$ 19,00",SanduÃ­ches
+X Desfiadinho,Frango desfiado + queijo + milho verde + batata palha + cheddar + bacon + alface e tomate,"R$ 19,00",SanduÃ­ches
+Passaburguer,Carne moÃ­da + salsicha + milho verde + batata palha + queijo + HambÃºrguer + alface e tomate,"R$ 20,00",SanduÃ­ches
+Calabacon,HambÃºrguer + queijo + presunto + calabresa + bacon + alface e tomate,"R$ 20,00",SanduÃ­ches
+X Duplo,2 HambÃºrguer + queijo + presunto + 2 ovos + alface e tomate,"R$ 21,00",SanduÃ­ches
+X Cheddar,2 HambÃºrguer + queijo + bacon + batata palha + cheddar + alface e tomate,"R$ 22,00",SanduÃ­ches
+X Yara,2 HambÃºrguer + queijo + presunto + bacon + porÃ§Ã£o de batatinha frita,"R$ 22,00",SanduÃ­ches
+X Tudo,HambÃºrguer + queijo + presunto + ovo + calabresa + bacon + salsicha + alface e tomate,"R$ 23,00",SanduÃ­ches
+X Especial,Bacon + queijo + carne moÃ­da + calabresa + porÃ§Ã£o de batatinha frita,"R$ 23,00",SanduÃ­ches
+Chicken,Frango em cubos + bacon + queijo + alface e tomate + porÃ§Ã£o de batatinha frita (cheddar Ã  gosto),"R$ 24,00",SanduÃ­ches
+X DelÃ­cia,HambÃºrguer artesanal 130g + bacon + cheddar + alface e tomate + porÃ§Ã£o de batatinha frita (cebola Ã  gosto),"R$ 24,00",SanduÃ­ches
+X Triplo,3 HambÃºrguer + 3 ovos + queijo + presunto + alface e tomate,"R$ 29,00",SanduÃ­ches
+Carne de Sol,Carne de sol em cubos + bacon + cheddar + alface e tomate + porÃ§Ã£o de batatinha frita (cebola Ã  gosto),"R$ 30,00",SanduÃ­ches
+X Big,2 HambÃºrguer + queijo + presunto + 2 ovos + salsicha + calabresa + bacon + alface e tomate (cebola Ã  gosto),"R$ 47,00",SanduÃ­ches
+Queijo,2 fatias de queijo e orÃ©gano,"R$ 9,00",PastÃ©is
+Misto,Queijo e presunto,"R$ 9,00",PastÃ©is
+Charque,"Queijo, presunto e charque","R$ 14,00",PastÃ©is
+Frango,"Queijo, presunto, frango e orÃ©gano","R$ 13,00",PastÃ©is
+Frango com Bacon,"2 fatias de queijo, frango e bacon","R$ 16,00",PastÃ©is
+Frango com Bacon e Catupiry,"2 fatias de queijo, frango, bacon e catupiry","R$ 22,00",PastÃ©is
+Frango com Catupiry,"2 fatias de queijo, frango, catupiry e orÃ©gano","R$ 18,00",PastÃ©is
+Frango com Bacon e Cheddar,"2 fatias de queijo, frango, bacon e cheddar","R$ 20,00",PastÃ©is
+Carne de Sol com Catupiry,"2 fatias de queijo, carne de sol e catupiry","R$ 20,00",PastÃ©is
+Carne de Sol com Cheddar,"2 fatias de queijo, carne de sol e cheddar","R$ 18,00",PastÃ©is
+TudÃ£o,"Queijo, presunto, frango, charque, bacon, calabresa e milho","R$ 20,00",PastÃ©is
+Carne MoÃ­da,Carne moÃ­da + queijo + presunto e milho,"R$ 14,00",PastÃ©is
+Coca Cola NS,Refrigerante,"R$ 4,00",Bebidas
+Fanta NS,Refrigerante,"R$ 4,00",Bebidas
+Coca Cola Mini Pet,Refrigerante mini pet,"R$ 4,50",Bebidas
+Fanta Mini Pet,Refrigerante mini pet,"R$ 4,00",Bebidas
+Coca Cola KS 290ml,Refrigerante KS 290ml,"R$ 6,00",Bebidas
+Fanta KS 290ml,Refrigerante KS 290ml,"R$ 5,00",Bebidas
+Coca Cola Lata 350ml,Refrigerante lata 350ml,"R$ 6,00",Bebidas
+Fanta Lata 350ml,Refrigerante lata 350ml,"R$ 5,00",Bebidas
+Kuat Lata 350ml,Refrigerante lata 350ml,"R$ 5,00",Bebidas
+Sprite Lata 350ml,Refrigerante lata 350ml,"R$ 5,00",Bebidas
+Coca Cola Zero Lata 350ml,Refrigerante lata 350ml,"R$ 6,00",Bebidas
+Schweppes Citrus Lata 350ml,Refrigerante lata 350ml,"R$ 6,00",Bebidas
+Coca Cola 1L Pet,Refrigerante 1 litro pet,"R$ 11,00",Bebidas
+Fanta 1L Pet,Refrigerante 1 litro pet,"R$ 9,00",Bebidas
+Coca Cola 2L Pet,Refrigerante 2 litros pet,"R$ 15,00",Bebidas
+Fanta 2L Pet,Refrigerante 2 litros pet,"R$ 13,00",Bebidas
+Coca Cola 500ml,Refrigerante 500ml,"R$ 6,50",Bebidas
+Sprite Fresh LimÃ£o 510ml,Refrigerante 510ml,"R$ 6,00",Bebidas
+Coca Cola LS RetornÃ¡vel,Refrigerante LS retornÃ¡vel,"R$ 7,50",Bebidas
+Fanta LS RetornÃ¡vel,Refrigerante LS retornÃ¡vel,"R$ 7,50",Bebidas
+Monster Energy Lata 269ml,EnergÃ©tico lata 269ml,"R$ 10,00",Bebidas
+Ãgua 500ml sem gÃ¡s,Ãgua mineral sem gÃ¡s 500ml,"R$ 3,50",Bebidas
+Ãgua 350ml sem gÃ¡s,Ãgua mineral sem gÃ¡s 350ml,"R$ 2,50",Bebidas
+Ãgua 500ml com gÃ¡s,Ãgua mineral com gÃ¡s 500ml,"R$ 4,00",Bebidas
+"Ãgua 1,5L sem gÃ¡s","Ãgua mineral sem gÃ¡s 1,5 litro","R$ 7,00",Bebidas
+Delvalle Uva 450ml,Suco Delvalle uva 450ml,"R$ 6,00",Bebidas
+Delvalle Laranja 450ml,Suco Delvalle laranja 450ml,"R$ 6,00",Bebidas
+Delvalle Frutas CÃ­tricas 450ml,Suco Delvalle frutas cÃ­tricas 450ml,"R$ 6,00",Bebidas
+Suco de Laranja,Suco da fruta natural,"R$ 8,00",Bebidas
+Suco de LimÃ£o,Suco da fruta natural,"R$ 8,00",Bebidas
+Suco de Acerola sem leite 300ml,Suco de polpa Acerola 300ml sem leite,"R$ 5,00",Bebidas
+Suco de Acerola com leite 300ml,Suco de polpa Acerola 300ml com leite,"R$ 6,00",Bebidas
+Suco de Abacaxi com HortelÃ£ sem leite 300ml,Suco de polpa Abacaxi com HortelÃ£ 300ml sem leite,"R$ 5,00",Bebidas
+Suco de Abacaxi com HortelÃ£ com leite 300ml,Suco de polpa Abacaxi com HortelÃ£ 300ml com leite,"R$ 6,00",Bebidas
+Suco de CajÃ¡ sem leite 300ml,Suco de polpa CajÃ¡ 300ml sem leite,"R$ 5,00",Bebidas
+Suco de CajÃ¡ com leite 300ml,Suco de polpa CajÃ¡ 300ml com leite,"R$ 6,00",Bebidas
+Suco de Graviola sem leite 300ml,Suco de polpa Graviola 300ml sem leite,"R$ 5,00",Bebidas
+Suco de Graviola com leite 300ml,Suco de polpa Graviola 300ml com leite,"R$ 6,00",Bebidas
+Suco de Goiaba sem leite 300ml,Suco de polpa Goiaba 300ml sem leite,"R$ 5,00",Bebidas
+Suco de Goiaba com leite 300ml,Suco de polpa Goiaba 300ml com leite,"R$ 6,00",Bebidas
+Suco de MaracujÃ¡ sem leite 300ml,Suco de polpa MaracujÃ¡ 300ml sem leite,"R$ 5,00",Bebidas
+Suco de MaracujÃ¡ com leite 300ml,Suco de polpa MaracujÃ¡ 300ml com leite,"R$ 6,00",Bebidas
+Cuscuz com Calabresa e Vinagrete,Cuscuz com calabresa e vinagrete,"R$ 12,00",Cuscuz
+Cuscuz com Carne de Sol,Cuscuz com carne de sol + fatia de queijo mussarela + vinagrete,"R$ 17,00",Cuscuz
+Coxinha,Salgado coxinha,"R$ 5,00",Salgados
+Enroladinho,Salgado enroladinho,"R$ 5,00",Salgados
+PorÃ§Ã£o de Batata Frita P,PorÃ§Ã£o de batatinhas fritas - tamanho P,"R$ 10,00",Batata Frita
+PorÃ§Ã£o de Batata Frita M,PorÃ§Ã£o de batatinhas fritas - tamanho M,"R$ 12,00",Batata Frita
+PorÃ§Ã£o de Batata Frita G,PorÃ§Ã£o de batatinhas fritas - tamanho G,"R$ 16,00",Batata Frita
+Batata Frita G com Recheio,Batata G com recheio de bacon ou calabresa e cheddar,"R$ 23,00",Batata Frita
+AÃ§aÃ­ na Tigela 200ml,"3 complementos + 1 creme + 1 fruta + 1 cobertura | Cremes: CupuaÃ§u, Ninho com Oreo, Ninho com Nutella, Ovomaltine | Coberturas: Chocolate, Morango, Leite condensado | Frutas: Banana, Uva | Complementos: Gotas de chocolate, Chocoball, Ovomaltine, Granola, Farinha Lacta, Leite em pÃ³, Amendoim, PaÃ§oca, M&M, Bis, Sucrilhos, Cereal, Jujuba, Canudinhos Wafer, Marshmallow | Adicionais (R$3,00): Morango, Kiwi, Kit Kat, Nutella | Adicional (R$5,00): Mousse de maracujÃ¡","R$ 9,00",AÃ§aÃ­
+AÃ§aÃ­ na Tigela 300ml,"4 complementos + 1 creme + 1 fruta + 1 cobertura | Cremes: CupuaÃ§u, Ninho com Oreo, Ninho com Nutella, Ovomaltine | Coberturas: Chocolate, Morango, Leite condensado | Frutas: Banana, Uva | Complementos: Gotas de chocolate, Chocoball, Ovomaltine, Granola, Farinha Lacta, Leite em pÃ³, Amendoim, PaÃ§oca, M&M, Bis, Sucrilhos, Cereal, Jujuba, Canudinhos Wafer, Marshmallow | Adicionais (R$3,00): Morango, Kiwi, Kit Kat, Nutella | Adicional (R$5,00): Mousse de maracujÃ¡","R$ 12,00",AÃ§aÃ­
+AÃ§aÃ­ na Tigela 400ml,"4 complementos + 1 creme + 1 fruta + 1 cobertura | Cremes: CupuaÃ§u, Ninho com Oreo, Ninho com Nutella, Ovomaltine | Coberturas: Chocolate, Morango, Leite condensado | Frutas: Banana, Uva | Complementos: Gotas de chocolate, Chocoball, Ovomaltine, Granola, Farinha Lacta, Leite em pÃ³, Amendoim, PaÃ§oca, M&M, Bis, Sucrilhos, Cereal, Jujuba, Canudinhos Wafer, Marshmallow | Adicionais (R$3,00): Morango, Kiwi, Kit Kat, Nutella | Adicional (R$5,00): Mousse de maracujÃ¡","R$ 14,00",AÃ§aÃ­
+AÃ§aÃ­ na Tigela 500ml,"5 complementos + 1 creme + 1 fruta + 1 cobertura | Cremes: CupuaÃ§u, Ninho com Oreo, Ninho com Nutella, Ovomaltine | Coberturas: Chocolate, Morango, Leite condensado | Frutas: Banana, Uva | Complementos: Gotas de chocolate, Chocoball, Ovomaltine, Granola, Farinha Lacta, Leite em pÃ³, Amendoim, PaÃ§oca, M&M, Bis, Sucrilhos, Cereal, Jujuba, Canudinhos Wafer, Marshmallow | Adicionais (R$3,00): Morango, Kiwi, Kit Kat, Nutella | Adicional (R$5,00): Mousse de maracujÃ¡","R$ 16,00",AÃ§aÃ­
+AÃ§aÃ­ no Copo 330ml,"3 complementos + 1 creme + 1 fruta + 1 cobertura | Cremes: CupuaÃ§u, Ninho com Oreo, Ninho com Nutella, Ovomaltine | Coberturas: Chocolate, Morango, Leite condensado | Frutas: Banana, Uva | Complementos: Gotas de chocolate, Chocoball, Ovomaltine, Granola, Farinha Lacta, Leite em pÃ³, Amendoim, PaÃ§oca, M&M, Bis, Sucrilhos, Cereal, Jujuba, Canudinhos Wafer, Marshmallow | Adicionais (R$3,00): Morango, Kiwi, Kit Kat, Nutella | Adicional (R$5,00): Mousse de maracujÃ¡","R$ 14,00",AÃ§aÃ­
+AÃ§aÃ­ no Copo 400ml,"4 complementos + 1 creme + 1 fruta + 1 cobertura | Cremes: CupuaÃ§u, Ninho com Oreo, Ninho com Nutella, Ovomaltine | Coberturas: Chocolate, Morango, Leite condensado | Frutas: Banana, Uva | Complementos: Gotas de chocolate, Chocoball, Ovomaltine, Granola, Farinha Lacta, Leite em pÃ³, Amendoim, PaÃ§oca, M&M, Bis, Sucrilhos, Cereal, Jujuba, Canudinhos Wafer, Marshmallow | Adicionais (R$3,00): Morango, Kiwi, Kit Kat, Nutella | Adicional (R$5,00): Mousse de maracujÃ¡","R$ 16,00",AÃ§aÃ­
+AÃ§aÃ­ no Copo 500ml,"4 complementos + 1 creme + 1 fruta + 1 cobertura | Cremes: CupuaÃ§u, Ninho com Oreo, Ninho com Nutella, Ovomaltine | Coberturas: Chocolate, Morango, Leite condensado | Frutas: Banana, Uva | Complementos: Gotas de chocolate, Chocoball, Ovomaltine, Granola, Farinha Lacta, Leite em pÃ³, Amendoim, PaÃ§oca, M&M, Bis, Sucrilhos, Cereal, Jujuba, Canudinhos Wafer, Marshmallow | Adicionais (R$3,00): Morango, Kiwi, Kit Kat, Nutella | Adicional (R$5,00): Mousse de maracujÃ¡","R$ 18,00",AÃ§aÃ­
+Milk-Shake 330ml,"Sabores: Chocolate, Morango, Flocos, Nata Goiaba, Chiclete, DelÃ­cia de Abacaxi, Ovomaltine, PaÃ§oca","R$ 12,00",Milk-Shake
+Milk-Shake 400ml,"Sabores: Chocolate, Morango, Flocos, Nata Goiaba, Chiclete, DelÃ­cia de Abacaxi, Ovomaltine, PaÃ§oca","R$ 14,00",Milk-Shake
+Milk-Shake 500ml,"Sabores: Chocolate, Morango, Flocos, Nata Goiaba, Chiclete, DelÃ­cia de Abacaxi, Ovomaltine, PaÃ§oca","R$ 16,00",Milk-Shake
+Milk-Shake Especial 330ml,"Sabores especiais: Ninho com Nutella, Ninho com Oreo, Morango com Nutella, Chocolate com Nutella","R$ 14,00",Milk-Shake
+Milk-Shake Especial 400ml,"Sabores especiais: Ninho com Nutella, Ninho com Oreo, Morango com Nutella, Chocolate com Nutella","R$ 16,00",Milk-Shake
+Milk-Shake Especial 500ml,"Sabores especiais: Ninho com Nutella, Ninho com Oreo, Morango com Nutella, Chocolate com Nutella","R$ 18,00",Milk-Shake
+Sorvete 200ml,"Sabores: Chocolate, Morango, Toffe, Flocos, Nata Goiaba, Chiclete, Creme com Passas, DelÃ­cia de Abacaxi","R$ 8,00",Sorvete
+Sorvete 300ml,"Sabores: Chocolate, Morango, Toffe, Flocos, Nata Goiaba, Chiclete, Creme com Passas, DelÃ­cia de Abacaxi","R$ 10,00",Sorvete
+Sorvete 400ml,"Sabores: Chocolate, Morango, Toffe, Flocos, Nata Goiaba, Chiclete, Creme com Passas, DelÃ­cia de Abacaxi","R$ 12,00",Sorvete
+Sorvete 500ml,"Sabores: Chocolate, Morango, Toffe, Flocos, Nata Goiaba, Chiclete, Creme com Passas, DelÃ­cia de Abacaxi","R$ 14,00",Sorvete
+Mousse de MaracujÃ¡,Mousse artesanal de maracujÃ¡,"R$ 5,00",Sorvete
+Mousse de LimÃ£o,Mousse artesanal de limÃ£o,"R$ 5,00",Sorvete

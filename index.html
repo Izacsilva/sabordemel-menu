@@ -320,122 +320,23 @@
             updateTheme(isDark ? 'light' : 'dark');
         });
 
-        var PRODUCTS = [
-            // ══════════════ PASTÉIS (11 itens) ══════════════
-            { id: 'p1', category: 'pasteis', name: 'Pastel de Queijo', price: 9.00, description: '2 fatias de queijo e orégano', icon: 'bakery_dining' },
-            { id: 'p2', category: 'pasteis', name: 'Pastel Misto', price: 9.00, description: 'Queijo e presunto', icon: 'bakery_dining' },
-            { id: 'p3', category: 'pasteis', name: 'Pastel de Charque', price: 14.00, description: 'Queijo, presunto e charque', icon: 'bakery_dining' },
-            { id: 'p4', category: 'pasteis', name: 'Pastel de Frango', price: 13.00, description: 'Queijo, presunto, frango e orégano', icon: 'bakery_dining' },
-            { id: 'p5', category: 'pasteis', name: 'Frango com Bacon', price: 16.00, description: '2 fatias de queijo, frango e bacon', icon: 'bakery_dining' },
-            { id: 'p6', category: 'pasteis', name: 'Frango Bacon Catupiry', price: 22.00, description: '2 fatias de queijo, frango, bacon e catupiry', icon: 'bakery_dining' },
-            { id: 'p7', category: 'pasteis', name: 'Frango com Catupiry', price: 18.00, description: '2 fatias de queijo, frango, catupiry e orégano', icon: 'bakery_dining' },
-            { id: 'p8', category: 'pasteis', name: 'Frango Bacon Cheddar', price: 20.00, description: '2 fatias de queijo, frango, bacon e cheddar', icon: 'bakery_dining' },
-            { id: 'p9', category: 'pasteis', name: 'Carne Sol com Catupiry', price: 20.00, description: '2 fatias de queijo, carne de sol e catupiry', icon: 'bakery_dining' },
-            { id: 'p10', category: 'pasteis', name: 'Carne Sol com Cheddar', price: 18.00, description: '2 fatias de queijo, carne de sol e cheddar', icon: 'bakery_dining' },
-            { id: 'p11', category: 'pasteis', name: 'Pastel Tudão', price: 20.00, description: 'Queijo, presunto, frango, charque, bacon, calabresa e milho', icon: 'bakery_dining' },
+        // ══════════════ PRODUTOS DINÂMICOS ══════════════
+        var PRODUCTS = [];
 
-            // ══════════════ AÇAÍ & SORVETES ═════════════
-            { 
-                id: 'acai-tigela', 
-                category: 'acai-sorvetes', 
-                name: 'Açaí na Tigela', 
-                prices: { '200ml': 9.00, '300ml': 12.00, '400ml': 14.00, '500ml': 16.00 }, 
-                limits: {
-                    '200ml': { complementos: 3, cremes: 1, frutas: 1, coberturas: 1 },
-                    '300ml': { complementos: 4, cremes: 1, frutas: 1, coberturas: 1 },
-                    '400ml': { complementos: 4, cremes: 1, frutas: 1, coberturas: 1 },
-                    '500ml': { complementos: 5, cremes: 1, frutas: 1, coberturas: 1 }
-                },
-                description: 'Complementos, creme, fruta e cobertura inclusos', 
-                icon: 'icecream', 
-                hasCustomization: true 
-            },
-            { 
-                id: 'acai-copo', 
-                category: 'acai-sorvetes', 
-                name: 'Açaí no Copo', 
-                prices: { '330ml': 14.00, '400ml': 16.00, '500ml': 18.00 }, 
-                limits: {
-                    '330ml': { complementos: 4, cremes: 1, frutas: 1, coberturas: 1 },
-                    '400ml': { complementos: 4, cremes: 1, frutas: 1, coberturas: 1 },
-                    '500ml': { complementos: 5, cremes: 1, frutas: 1, coberturas: 1 }
-                },
-                description: 'Ideal para levar com seus complementos favoritos', 
-                icon: 'local_bar', 
-                hasCustomization: true 
-            },
-            { id: 'milk-shake', category: 'acai-sorvetes', name: 'Milk-shake Tradicional', prices: { '330ml': 12.00, '400ml': 14.00, '500ml': 16.00 }, description: 'Escolha seu sabor favorito', icon: 'coffee_maker', flavors: ['Chocolate', 'Morango', 'Flocos', 'Nata Goiaba', 'Chiclete', 'Abacaxi', 'Ovomaltine', 'Paçoca'] },
-            { id: 'milk-shake-especial', category: 'acai-sorvetes', name: 'Milk-shake Especial', prices: { '330ml': 14.00, '400ml': 16.00, '500ml': 18.00 }, description: 'Escolha seu sabor especial', icon: 'star_rate', flavors: ['Ninho c/ Nutella', 'Ninho c/ Oreo', 'Morango c/ Nutella', 'Chocolate c/ Nutella'] },
-            { id: 'sorvete', category: 'acai-sorvetes', name: 'Sorvete no Copo', prices: { '200ml': 8.00, '300ml': 10.00, '400ml': 12.00, '500ml': 14.00 }, description: 'Escolha seu sabor de sorvete', icon: 'icecream', flavors: ['Chocolate', 'Morango', 'Toffee', 'Flocos', 'Nata Goiaba', 'Chiclete', 'Creme c/ Passas', 'Abacaxi'] },
-            { id: 'mousse-maracuja', category: 'acai-sorvetes', name: 'Mousse de Maracujá', price: 5.00, description: 'Mousse cremoso de maracujá', icon: 'icecream' },
-            { id: 'mousse-limao', category: 'acai-sorvetes', name: 'Mousse de Limão', price: 5.00, description: 'Mousse cremoso de limão', icon: 'icecream' },
-
-            // ══════════════ SANDUÍCHES (33 itens) ══════════════
-            { id: 's1', category: 'sanduiches', name: '1. Hot Dog Tradicional', price: 12.00, description: 'Carne moída ou frango, salsicha, tomate, milho verde, batata palha', icon: 'lunch_dining' },
-            { id: 's2', category: 'sanduiches', name: '2. Misto Quente', price: 12.00, description: '2 fatias de queijo, 2 fatias de presunto', icon: 'lunch_dining' },
-            { id: 's3', category: 'sanduiches', name: '3. Baurú', price: 13.00, description: '2 fatias de queijo, 2 fatias de presunto', icon: 'lunch_dining' },
-            { id: 's4', category: 'sanduiches', name: '4. Hot Dog na Chapa', price: 13.00, description: 'Pão bola, carne moída ou frango, salsicha, tomate, milho verde, batata palha', icon: 'lunch_dining' },
-            { id: 's5', category: 'sanduiches', name: '5. Americano', price: 12.00, description: 'Ovo, queijo, presunto, alface e tomate', icon: 'lunch_dining' },
-            { id: 's6', category: 'sanduiches', name: '6. Hambúrguer', price: 12.00, description: 'Hambúrguer, queijo, alface e tomate', icon: 'lunch_dining' },
-            { id: 's7', category: 'sanduiches', name: '7. X Calabar', price: 13.00, description: 'Hambúrguer, queijo, calabresa', icon: 'lunch_dining' },
-            { id: 's8', category: 'sanduiches', name: '8. X Salada', price: 13.00, description: 'Hambúrguer, queijo, presunto, alface e tomate', icon: 'lunch_dining' },
-            { id: 's9', category: 'sanduiches', name: '9. Eggs Burguer', price: 14.00, description: 'Hambúrguer, queijo, presunto, ovo, alface e tomate', icon: 'lunch_dining' },
-            { id: 's10', category: 'sanduiches', name: '10. X Brasil', price: 14.00, description: 'Hambúrguer, queijo, presunto, salsicha, alface e tomate', icon: 'lunch_dining' },
-            { id: 's11', category: 'sanduiches', name: '11. Salsibresa', price: 14.00, description: 'Salsicha, queijo, presunto, calabresa, alface e tomate', icon: 'lunch_dining' },
-            { id: 's12', category: 'sanduiches', name: '12. Minuano', price: 16.00, description: 'Hambúrguer, queijo, presunto, ovo, salsicha, alface e tomate', icon: 'lunch_dining' },
-            { id: 's13', category: 'sanduiches', name: '13. X Varadouro', price: 16.00, description: '2 hambúrguer, ovo, queijo', icon: 'lunch_dining' },
-            { id: 's14', category: 'sanduiches', name: '14. Salsibacon', price: 16.00, description: 'Salsicha, queijo, presunto, bacon, alface e tomate', icon: 'lunch_dining' },
-            { id: 's15', category: 'sanduiches', name: '15. X Calabresa', price: 17.00, description: 'Hambúrguer, queijo, presunto, ovo, calabresa, alface e tomate', icon: 'lunch_dining' },
-            { id: 's16', category: 'sanduiches', name: '16. X Qualquer Coisa', price: 16.00, description: 'Queijo, presunto, carne moída, alface e tomate', icon: 'lunch_dining' },
-            { id: 's17', category: 'sanduiches', name: '17. X Biss', price: 17.00, description: 'Calabresa, queijo, bacon, presunto, alface e tomate', icon: 'lunch_dining' },
-            { id: 's18', category: 'sanduiches', name: '18. X Bacon', price: 18.00, description: 'Hambúrguer, queijo, presunto, ovo, bacon, alface e tomate', icon: 'lunch_dining' },
-            { id: 's19', category: 'sanduiches', name: '19. X Dose Dupla', price: 18.00, description: '2 hambúrguer, queijo, presunto, alface e tomate', icon: 'lunch_dining' },
-            { id: 's20', category: 'sanduiches', name: '20. Passaburguer', price: 19.00, description: 'Carne moída, salsicha, milho verde, batata palha, queijo, hambúrguer, alface e tomate', icon: 'lunch_dining' },
-            { id: 's21', category: 'sanduiches', name: '21. Calabacon', price: 19.00, description: 'Hambúrguer, queijo, presunto, calabresa, bacon, alface e tomate', icon: 'lunch_dining' },
-            { id: 's22', category: 'sanduiches', name: '22. X Porto Calvo', price: 18.00, description: '2 hambúrguer, queijo, 2 ovos, alface e tomate', icon: 'lunch_dining' },
-            { id: 's23', category: 'sanduiches', name: '23. X Desfiadinho', price: 18.00, description: 'Frango desfiado, queijo, milho verde, batata palha, cheddar, bacon, alface e tomate', icon: 'lunch_dining' },
-            { id: 's24', category: 'sanduiches', name: '24. X Duplo', price: 20.00, description: '2 hambúrguer, queijo, presunto, 2 ovos, alface e tomate', icon: 'lunch_dining' },
-            { id: 's25', category: 'sanduiches', name: '25. X Cheddar', price: 21.00, description: '2 hambúrguer, queijo, bacon, batata palha, cheddar, alface e tomate', icon: 'lunch_dining' },
-            { id: 's26', category: 'sanduiches', name: '26. Chicken', price: 23.00, description: 'Frango em cubos, bacon, queijo, alface e tomate, porção de batatinha frita (cheddar à gosto)', icon: 'lunch_dining' },
-            { id: 's27', category: 'sanduiches', name: '27. X Yara', price: 22.00, description: '2 hambúrguer, queijo, presunto, bacon, porção de batatinha frita', icon: 'lunch_dining' },
-            { id: 's28', category: 'sanduiches', name: '28. X Delícia', price: 23.00, description: 'Hambúrguer artesanal 130g, bacon, cheddar, alface e tomate, porção de batatinha frita', icon: 'lunch_dining' },
-            { id: 's29', category: 'sanduiches', name: '29. X TUDO', price: 23.00, description: 'Hambúrguer, queijo, presunto, ovo, calabresa, bacon, salsicha, alface e tomate', icon: 'lunch_dining' },
-            { id: 's30', category: 'sanduiches', name: '30. X Especial', price: 22.00, description: 'Bacon, queijo, carne moída, calabresa, porção de batatinha frita', icon: 'lunch_dining' },
-            { id: 's31', category: 'sanduiches', name: '31. X Triplo', price: 29.00, description: '3 hambúrguer, 3 ovos, queijo, presunto, alface e tomate', icon: 'lunch_dining' },
-            { id: 's32', category: 'sanduiches', name: '32. Carne de Sol', price: 28.00, description: 'Carne de sol em cubos, bacon, cheddar, alface e tomate, porção de batatinha frita', icon: 'lunch_dining' },
-            { id: 's33', category: 'sanduiches', name: '33. X BIG', price: 45.00, description: '2 hambúrguer, queijo, presunto, 2 ovos, salsicha, calabresa, bacon, alface e tomate', icon: 'stars' },
-
-            // ══════════════ SALGADOS & OUTROS ══════════════
-            { id: 'c1', category: 'salgados-outros', name: 'Cuscuz Tradicional', price: 12.00, description: 'Cuscuz com calabresa e vinagrete', icon: 'flatware' },
-            { id: 'c2', category: 'salgados-outros', name: 'Cuscuz Especial', price: 17.00, description: 'Carne de sol + mussarela + vinagrete', icon: 'flatware' },
-            { id: 'sal1', category: 'salgados-outros', name: 'Coxinhas / Enroladinhos', price: 5.00, description: 'Coxinhas e enroladinhos fritos na hora', icon: 'egg' },
-            { id: 'batata', category: 'salgados-outros', name: 'Batata Frita', prices: { 'Pequena': 10.00, 'Média': 12.00, 'Grande': 16.00 }, description: 'Porções de batatas fritas crocantes', icon: 'fastfood' },
-            { id: 'batata-recheada', category: 'salgados-outros', name: 'Batata G Recheada', price: 23.00, description: 'Recheio de bacon ou calabresa e cheddar', icon: 'fastfood' },
-
-            // ══════════════ BEBIDAS ══════════════
-            { id: 'b-agua', category: 'bebidas', name: 'Água Mineral', prices: { '350ml': 2.00, '500ml': 3.00, '1.5L': 6.00, 'c/ Gás 500ml': 3.50 }, description: 'Água mineral natural ou com gás', icon: 'water_drop' },
-
-            // Sucos Del Valle
-            { id: 'b-dv', category: 'bebidas', name: 'Suco Del Valle 450ml', price: 5.00, description: 'Sabores: Uva, Laranja ou Frutas Cítricas', icon: 'local_cafe' },
-
-            // Sucos da Fruta
-            { id: 'b-suco-laranja', category: 'bebidas', name: 'Suco de Laranja', price: 8.00, description: 'Suco natural da fruta', icon: 'local_cafe' },
-            { id: 'b-suco-limao', category: 'bebidas', name: 'Suco de Limão', price: 8.00, description: 'Suco natural da fruta', icon: 'local_cafe' },
-
-            // Sucos de Polpa
-            { id: 'b-polpa', category: 'bebidas', name: 'Suco de Polpa 300ml', prices: { 'Sem Leite': 5.00, 'Com Leite': 6.00 }, description: 'Acerola, Abacaxi c/ Hortelã, Cajá, Graviola, Goiaba ou Maracujá', icon: 'local_cafe' },
-
-            // Refrigerantes
-            { id: 'b-coca', category: 'bebidas', name: 'Coca-Cola', prices: { 'NS': 4.00, 'Mini Pet': 4.00, 'KS 290ml': 5.00, 'Lata 350ml': 5.00, '500ml': 6.00, '1 Litro': 10.00, '2 Litros': 15.00, 'LS Retornável': 7.50 }, description: 'Escolha o tamanho disponível', icon: 'liquor' },
-            { id: 'b-fanta', category: 'bebidas', name: 'Fanta', prices: { 'NS': 4.00, 'Mini Pet': 4.00, 'KS 290ml': 5.00, 'Lata 350ml': 5.00, '1 Litro': 9.00, '2 Litros': 12.00, 'LS Retornável': 7.50 }, description: 'Escolha o tamanho disponível', icon: 'liquor' },
-            { id: 'b-outros-latas', category: 'bebidas', name: 'Outras Latas 350ml', prices: { 'Kuat': 5.00, 'Sprite': 5.00, 'Coca-Cola Zero': 5.00, 'Schweppes Citrus': 5.00 }, description: 'Lata geladinha 350ml', icon: 'liquor' },
-            { id: 'b-sprite-fresh', category: 'bebidas', name: 'Sprite Fresh Limão 510ml', price: 6.00, description: 'Pet 510ml', icon: 'liquor' },
-
-            // LS Retornável
-
-            // Monster
-            { id: 'b-monster', category: 'bebidas', name: 'Monster Energy', price: 10.00, description: 'Lata 269ml', icon: 'bolt' }
-        ];
+        async function loadProducts() {
+            try {
+                const response = await fetch('products.json');
+                if (!response.ok) throw new Error('Não foi possível carregar os produtos');
+                PRODUCTS = await response.json();
+                renderProducts(); // Renderiza após carregar
+            } catch (error) {
+                console.error('Erro ao carregar menu:', error);
+                // Fallback ou mensagem de erro amigável se necessário
+            }
+        }
+        
+        // Carrega os produtos na inicialização
+        loadProducts();
 
         var searchInput = document.getElementById('search-input');
         var productList = document.getElementById('product-list');
