@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "npx -y serve .",
-    "start": "npx -y serve ."
+    "start": "npx -y serve .",
+    "build": "node migrate.js"
   },
   "engines": {
     "node": ">=18"
