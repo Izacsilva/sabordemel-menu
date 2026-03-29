@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html class="dark" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design System — Sabor de Mel</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary":           "#edcd2c",
+                        "accent":            "#f26522",
+                        "background-light":  "#f8f8f6",
+                        "background-dark":   "#131313",
+                        "surface-dark":      "#1e1e1e",
+                        "surface-dark-alt":  "#2a2a2a"
+                    },
+                    fontFamily: {
+                        "display": ["'Barlow Condensed'", "sans-serif"],
+                        "body":    ["'Lato'", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* ══ CSS VARIABLES ══ */
+        :root {
+            --background:      #f8f8f6;
+            --surface:         #ffffff;
+            --surface-alt:     #f1f1f1;
+            --surface-alt2:    #e8e8e6;
+            --text-primary:    #1a1a1b;
+            --text-secondary:  #64748b;
+            --text-muted:      #94a3b8;
+            --border:          #e2e8f0;
+            --border-md:       #cbd5e1;
+            --shadow:          rgba(0,0,0,0.08);
+            --shadow-colored:  rgba(237,205,44,0.18);
+        }
+        .dark {
+            --background:      #131313;
+            --surface:         #1e1e1e;
+            --surface-alt:     #2a2a2a;
+            --surface-alt2:    #333333;
+            --text-primary:    #f1f5f9;
+            --text-secondary:  #94a3b8;
+            --text-muted:      #64748b;
+            --border:          #2a2a2a;
+            --border-md:       #3a3a3a;
+            --shadow:          rgba(0,0,0,0.4);
+            --shadow-colored:  rgba(237,205,44,0.12);
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-primary);
+            font-family: 'Lato', sans-serif;
+            transition: background 0.3s ease, color 0.3s ease;
+            background-image: url('C:/Users/izac/.gemini/antigravity/brain/87aa4a6e-6ac5-4065-809f-ed9c2f24c4ad/sabor_bg_v3_1774752062991.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-blend-mode: soft-light;
+        }
+
+        /* ══ NAV ══ */
+        .ds-nav {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+        nav a { transition: color 0.15s; }
+        nav a:hover { color: #edcd2c; }
+
+        /* ══ SECTION ══ */
+        .ds-section { border-top: 1px solid var(--border); padding-top: 3rem; }
+
+        /* ══ CARDS ══ */
+        .token-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        .component-frame {
+            background: var(--surface-alt);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        /* ══ SWATCHES ══ */
+        .swatch { width: 100%; height: 72px; border-radius: 0.625rem; }
+
+        /* ══ ICON GRID ══ */
+        .icon-item {
+            display: flex; flex-direction: column; align-items: center; gap: 6px;
+            padding: 12px; border-radius: 12px;
+            background: var(--surface); border: 1px solid var(--border);
+            font-size: 11px; color: var(--text-secondary); text-align: center;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .icon-item:hover {
+            border-color: #edcd2c;
+            background: rgba(237,205,44,0.06);
+        }
+
+        /* ══ INPUTS ══ */
+        .cart-input-demo {
+            width: 100%; background: var(--surface-alt); border: 1px solid var(--border);
+            border-radius: 10px; padding: 10px 12px;
+            color: var(--text-primary); font-size: 14px;
+            outline: none; font-family: 'Lato', sans-serif;
+            transition: border-color 0.15s;
+        }
+        .cart-input-demo:focus { border-color: #edcd2c; }
+        .cart-input-demo::placeholder { color: var(--text-muted); }
+
+        /* ══ CHIPS ══ */
+        .chip-active  { background: #edcd2c; color: #131313; font-weight: 700; }
+        .chip-inactive {
+            background: var(--surface-alt); border: 1px solid var(--border);
+            color: var(--text-secondary);
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .chip-inactive:hover { border-color: #edcd2c; color: #edcd2c; }
+
+        /* ══ QTY BTN ══ */
+        .qty-btn-demo {
+            width: 28px; height: 28px; border-radius: 50%;
+            background: var(--surface-alt); color: #edcd2c;
+            display: flex; align-items: center; justify-content: center;
+            border: none; cursor: pointer; font-size: 18px; font-weight: 700;
+            transition: background 0.15s;
+        }
+        .qty-btn-demo:hover { background: var(--surface-alt2); }
+
+        /* ══ CART BADGE ══ */
+        .cart-badge-demo {
+            position: absolute; top: 2px; right: 2px;
+            width: 18px; height: 18px; border-radius: 50%;
+            background: #f26522; color: #fff;
+            font-size: 10px; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ══════════════════════════════════════════
+           GRANCARTY PATTERNS — NOVOS COMPONENTES
+           ══════════════════════════════════════════ */
+
+        /* Hero Banner */
+        .hero-banner {
+            border-radius: 20px;
+            background: linear-gradient(135deg, #edcd2c 0%, #f0d740 55%, #c8a800 100%);
+            padding: 28px 28px 28px 32px;
+            color: #131313;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            right: -20px; top: -20px;
+            width: 140px; height: 140px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 50%;
+        }
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            right: 60px; bottom: -50px;
+            width: 100px; height: 100px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+        }
+        .hero-banner-dark {
+            background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+            border: 1px solid #3a3a3a;
+            color: #f1f5f9;
+        }
+        .hero-banner-dark::before { background: rgba(237,205,44,0.08); }
+
+        /* Category chip — estilo Grancarty */
+        .cat-chip {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding: 10px 14px;
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.18s;
+            min-width: 68px;
+        }
+        .cat-chip:hover { border-color: #edcd2c; background: rgba(237,205,44,0.08); }
+        .cat-chip.cat-active {
+            border-color: #edcd2c;
+            background: rgba(237,205,44,0.12);
+        }
+        .cat-chip.cat-active .cat-name { color: #c8a800; }
+        .dark .cat-chip.cat-active .cat-name { color: #edcd2c; }
+        .cat-name { font-size: 11px; font-weight: 700; color: var(--text-secondary); font-family: 'Barlow Condensed', sans-serif; letter-spacing: .04em; }
+
+        /* Product card — estilo Grancarty */
+        .gc-product-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: all 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+        .gc-product-card:hover {
+            border-color: #edcd2c;
+            box-shadow: 0 6px 24px var(--shadow-colored);
+            transform: translateY(-2px);
+        }
+        .gc-img-area {
+            height: 120px;
+            background: rgba(237,205,44,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            position: relative;
+        }
+        .dark .gc-img-area { background: rgba(237,205,44,0.07); }
+        .gc-fav {
+            position: absolute; top: 9px; right: 9px;
+            width: 28px; height: 28px; border-radius: 50%;
+            background: var(--surface); border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; cursor: pointer; transition: all 0.15s;
+        }
+        .gc-fav:hover { border-color: #f26522; color: #f26522; }
+        .gc-body { padding: 12px 14px 14px; }
+        .gc-category { font-size: 10px; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 3px; }
+        .gc-name { font-size: 14px; font-weight: 700; color: var(--text-primary); font-family: 'Barlow Condensed', sans-serif; margin-bottom: 8px; line-height: 1.2; letter-spacing: .01em; }
+        .gc-footer { display: flex; align-items: center; justify-content: space-between; }
+        .gc-price { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 700; color: #f26522; }
+        .gc-price-unit { font-size: 11px; font-weight: 500; color: var(--text-muted); }
+        .gc-add-btn {
+            width: 30px; height: 30px; border-radius: 50%;
+            background: #edcd2c; color: #131313; border: none;
+            font-size: 18px; cursor: pointer; display: flex;
+            align-items: center; justify-content: center; line-height: 1;
+            box-shadow: 0 2px 8px rgba(237,205,44,0.35);
+            transition: all 0.15s; font-weight: 700;
+        }
+        .gc-add-btn:hover { background: #f0d740; transform: scale(1.1); }
+        .gc-add-btn:active { transform: scale(0.93); }
+
+        /* Badge / tag */
+        .gc-badge {
+            display: inline-flex; align-items: center; gap: 4px;
+            padding: 3px 10px; border-radius: 9999px;
+            font-size: 11px; font-weight: 700;
+            font-family: 'Barlow Condensed', sans-serif; letter-spacing: .04em;
+        }
+        .badge-primary  { background: rgba(237,205,44,0.15); color: #c8a800; border: 1px solid rgba(237,205,44,0.3); }
+        .dark .badge-primary { background: rgba(237,205,44,0.1); color: #edcd2c; border-color: rgba(237,205,44,0.2); }
+        .badge-accent   { background: rgba(242,101,34,0.12); color: #f26522; border: 1px solid rgba(242,101,34,0.25); }
+        .badge-success  { background: rgba(34,197,94,0.1); color: #16a34a; border: 1px solid rgba(34,197,94,0.2); }
+        .dark .badge-success { color: #4ade80; }
+        .badge-neutral  { background: var(--surface-alt); color: var(--text-secondary); border: 1px solid var(--border); }
+
+        /* Coupon card */
+        .gc-coupon {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 18px;
+            background: var(--surface);
+            border: 1.5px dashed var(--border-md);
+            border-radius: 14px;
+            gap: 12px;
+            transition: all 0.18s;
+            cursor: pointer;
+        }
+        .gc-coupon:hover { border-color: #edcd2c; background: rgba(237,205,44,0.05); }
+        .gc-coupon + .gc-coupon { margin-top: 10px; }
+        .coupon-pct { font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 700; color: #edcd2c; line-height: 1; }
+        .coupon-label { font-size: 13px; color: var(--text-primary); font-weight: 700; font-family: 'Barlow Condensed', sans-serif; }
+        .coupon-exp { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+        .coupon-btn {
+            background: #edcd2c; color: #131313; border: none;
+            border-radius: 9999px; padding: 7px 18px;
+            font-size: 12px; font-weight: 700; cursor: pointer;
+            font-family: 'Barlow Condensed', sans-serif;
+            letter-spacing: .05em; text-transform: uppercase;
+            white-space: nowrap; transition: all 0.15s;
+        }
+        .coupon-btn:hover { background: #f0d740; }
+
+        /* Search bar — grancarty style */
+        .gc-search {
+            display: flex; align-items: center; gap: 10px;
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: 9999px;
+            padding: 0 14px; height: 48px;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+        .gc-search:focus-within {
+            border-color: #edcd2c;
+            box-shadow: 0 0 0 3px rgba(237,205,44,0.12);
+        }
+        .gc-search input {
+            border: none; background: transparent; outline: none;
+            font-size: 14px; color: var(--text-primary); font-family: 'Lato', sans-serif; flex: 1;
+        }
+        .gc-search input::placeholder { color: var(--text-muted); }
+
+        /* Order timeline */
+        .timeline-step {
+            display: flex; gap: 14px; align-items: flex-start;
+            padding: 10px 0; position: relative;
+        }
+        .timeline-dot {
+            width: 30px; height: 30px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; flex-shrink: 0; position: relative; z-index: 1;
+            border: 2px solid;
+        }
+        .timeline-dot.done   { background: rgba(34,197,94,0.12); color: #16a34a; border-color: #16a34a; }
+        .dark .timeline-dot.done { color: #4ade80; border-color: #4ade80; }
+        .timeline-dot.active { background: rgba(237,205,44,0.15); color: #c8a800; border-color: #edcd2c; }
+        .dark .timeline-dot.active { color: #edcd2c; }
+        .timeline-dot.pending { background: var(--surface-alt); color: var(--text-muted); border-color: var(--border-md); }
+        .timeline-step:not(:last-child)::before {
+            content: ''; position: absolute;
+            left: 14px; top: 42px;
+            width: 2px; height: calc(100% - 10px);
+            background: var(--border-md);
+        }
+        .timeline-step.done::before { background: rgba(34,197,94,0.35); }
+
+        /* Theme toggle */
+        .theme-toggle {
+            display: flex; align-items: center; gap: 4px;
+            background: var(--surface-alt); border: 1px solid var(--border);
+            border-radius: 9999px; padding: 4px;
+        }
+        .theme-btn {
+            padding: 5px 14px; border-radius: 9999px; border: none;
+            cursor: pointer; font-size: 11px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+            transition: all 0.2s; background: transparent;
+            color: var(--text-muted);
+        }
+        .theme-btn.active {
+            background: var(--surface);
+            color: var(--text-primary);
+            box-shadow: 0 1px 4px var(--shadow);
+        }
+
+        /* Scroll snap for mobile preview */
+        .preview-scroll {
+            display: flex; gap: 14px; overflow-x: auto; padding-bottom: 8px;
+            scrollbar-width: thin;
+        }
+        .preview-scroll::-webkit-scrollbar { height: 4px; }
+        .preview-scroll::-webkit-scrollbar-thumb { background: var(--border-md); border-radius: 4px; }
+
+        /* Rating stars */
+        .star-rate { color: #edcd2c; font-size: 12px; }
+        .star-off  { color: var(--text-muted); font-size: 12px; }
+
+        /* Section label */
+        .sec-eyebrow {
+            font-size: 10px; font-weight: 700; letter-spacing: .14em;
+            text-transform: uppercase; color: #edcd2c;
+            font-family: 'Barlow Condensed', sans-serif; margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen">
+
+    <!-- ══ NAV ══ -->
+    <nav class="ds-nav sticky top-0 z-50 px-6 py-3 flex items-center gap-6 overflow-x-auto">
+        <span class="font-display font-bold text-[18px] text-primary shrink-0 tracking-wide uppercase">Sabor de Mel · DS</span>
+        <div class="flex gap-5 text-sm text-slate-400 font-body flex-1 overflow-x-auto">
+            <a href="#tokens-cores" class="shrink-0">Cores</a>
+            <a href="#tokens-tipografia" class="shrink-0">Tipografia</a>
+            <a href="#tokens-icones" class="shrink-0">Ícones</a>
+            <a href="#tokens-espacamento" class="shrink-0">Espaçamento</a>
+            <a href="#comp-botoes" class="shrink-0">Botões</a>
+            <a href="#comp-inputs" class="shrink-0">Inputs</a>
+            <a href="#comp-cards" class="shrink-0">Cards</a>
+            <a href="#gc-patterns" class="shrink-0">Grancarty Patterns</a>
+            <a href="#comp-cart" class="shrink-0">Carrinho</a>
+            <a href="#comp-modal" class="shrink-0">Modal</a>
+            <a href="#comp-estados" class="shrink-0">Estados</a>
+        </div>
+        <!-- Theme toggle -->
+        <div class="theme-toggle shrink-0" id="themeToggle">
+            <button class="theme-btn" id="btn-light" onclick="setTheme('light')">☀ Light</button>
+            <button class="theme-btn active" id="btn-dark"  onclick="setTheme('dark')">☽ Dark</button>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-5 py-10 space-y-16">
+
+        <!-- ════ HERO ════ -->
+        <section class="rounded-2xl p-8" style="background:var(--surface);border:1px solid var(--border);">
+            <div class="sec-eyebrow">v2.0 — Grancarty Edition</div>
+            <h1 class="font-display font-bold text-[28px] text-primary tracking-wide uppercase">Design System</h1>
+            <p class="font-display font-semibold text-[20px]" style="color:var(--text-primary)">Sabor de Mel — Cardápio Digital</p>
+            <p class="font-body text-sm mt-2" style="color:var(--text-secondary)">Tokens originais preservados + padrões visuais do Grancarty. Dark &amp; Light mode nativos.</p>
+            <div class="mt-4 flex flex-wrap gap-3 text-xs font-body">
+                <span class="gc-badge badge-primary">Tailwind CSS CDN</span>
+                <span class="gc-badge badge-neutral">Material Symbols</span>
+                <span class="gc-badge badge-neutral">Barlow Condensed + Lato</span>
+                <span class="gc-badge badge-accent">+ Grancarty Patterns</span>
+                <span class="gc-badge badge-success">Dark &amp; Light Mode</span>
+            </div>
+        </section>
+
+        <!-- ════ CORES ════ -->
+        <section id="tokens-cores" class="ds-section">
+            <div class="sec-eyebrow">Tokens</div>
+            <h2 class="font-display font-bold text-[22px] uppercase mb-1" style="color:var(--text-primary)">Cores</h2>
+            <p class="font-body text-sm mb-6" style="color:var(--text-secondary)">Paleta principal preservada + CSS variables adaptadas para light/dark mode.</p>
+
+            <h3 class="font-body text-xs font-bold uppercase tracking-widest mb-3" style="color:var(--text-muted)">Paleta Principal</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+                <div class="token-card">
+                    <div class="swatch mb-3" style="background:#edcd2c;"></div>
+                    <p class="font-body font-bold text-sm" style="color:var(--text-primary)">Primary</p>
+                    <p class="font-body text-xs font-mono text-primary">#edcd2c</p>
+                    <p class="font-body text-xs mt-1" style="color:var(--text-muted)">Botões CTA, chips ativos, destaques</p>
+                </div>
+                <div class="token-card">
+                    <div class="swatch mb-3" style="background:#f26522;"></div>
+                    <p class="font-body font-bold text-sm" style="color:var(--text-primary)">Accent</p>
+                    <p class="font-body text-xs font-mono text-accent">#f26522</p>
+                    <p class="font-body text-xs mt-1" style="color:var(--text-muted)">Preços, badge carrinho, totais</p>
+                </div>
+                <div class="token-card">
+                    <div class="swatch mb-3" style="background:#1e1e1e; border:1px solid #3a3a3a;"></div>
+                    <p class="font-body font-bold text-sm" style="color:var(--text-primary)">Surface Dark</p>
+                    <p class="font-body text-xs font-mono" style="color:var(--text-secondary)">#1e1e1e</p>
+                    <p class="font-body text-xs mt-1" style="color:var(--text-muted)">Cards, header, drawer</p>
+                </div>
+                <div class="token-card">
+                    <div class="swatch mb-3" style="background:#131313; border:1px solid #3a3a3a;"></div>
+                    <p class="font-body font-bold text-sm" style="color:var(--text-primary)">Background Dark</p>
+                    <p class="font-body text-xs font-mono" style="color:var(--text-secondary)">#131313</p>
+                    <p class="font-body text-xs mt-1" style="color:var(--text-muted)">Fundo da página (dark)</p>
+                </div>
+            </div>
+
+            <h3 class="font-body text-xs font-bold uppercase tracking-widest mb-3" style="color:var(--text-muted)">CSS Variables (adaptadas p/ Light + Dark)</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="token-card">
+                    <p class="font-body font-bold text-xs uppercase tracking-widest mb-3" style="color:var(--text-muted)">☀ Light Mode</p>
+                    <div class="space-y-2 font-mono text-xs">
+                        <div class="flex justify-between"><span style="color:var(--text-muted)">--background</span><span style="color:var(--text-primary)">#f8f8f6</span></div>
+                        <div class="flex justify-between"><span style="color:var(--text-muted)">--surface</span><span style="color:var(--text-primary)">#ffffff</span></div>
+                        <div class="flex justify-between"><span style="color:var(--text-muted)">--surface-alt</span><span style="color:var(--text-primary)">#f1f1f1</span></div>
+                        <div class="flex justify-between"><span style="color:var(--text-muted)">--text-primary</span><span style="color:var(--text-primary)">#1a1a1b</span></div>
+                        <div class="flex justify-between"><span style="color:var(--text-muted)">--text-secondary</span><span style="color:var(--text-primary)">#64748b</span></div>
+                        <div class="flex justify-between"><span style="color:var(--text-muted)">--border</span><span style="color:var(--text-primary)">#e2e8f0</span></div>
+                    </div>
+                </div>
+                <div class="token-card">
+                    <p class="font-body font-bold text-xs uppercase tracking-widest mb-3" style="color:var(--text-muted)">☽ Dark Mode</p>
+                    <div class="space-y-2 font-mono text-xs">
+                        <div class="flex justify-between"><span style="color:var(--text-muted)">--background</span><span style="color:var(--text-primary)">#131313</span></div>
+                        <div class="flex justify-between"><span style="color:var(--text-muted)">--surface</span><span style="color:var(--text-primary)">#1e1e1e</span></div>
+                        <div class="flex justify-between"><span style="color:var(--text-muted)">--surface-alt</span><span style="color:var(--text-primary)">#2a2a2a</span></div>
+                        <div class="flex justify-between"><span style="color:var(--text-muted)">--text-primary</span><span style="color:var(--text-primary)">#f1f5f9</span></div>
+                        <div class="flex justify-between"><span style="color:var(--text-muted)">--text-secondary</span><span style="color:var(--text-primary)">#94a3b8</span></div>
+                        <div class="flex justify-between"><span style="color:var(--text-muted)">--border</span><span style="color:var(--text-primary)">#2a2a2a</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════ TIPOGRAFIA ════ -->
+        <section id="tokens-tipografia" class="ds-section">
+            <div class="sec-eyebrow">Tokens</div>
+            <h2 class="font-display font-bold text-[22px] uppercase mb-1" style="color:var(--text-primary)">Tipografia</h2>
+            <p class="font-body text-sm mb-6" style="color:var(--text-secondary)">Duas famílias: <strong>Barlow Condensed</strong> (display) + <strong>Lato</strong> (body). Sem alterações.</p>
+
+            <div class="space-y-3">
+                <div class="token-card flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                    <div>
+                        <p class="font-body text-xs mb-1" style="color:var(--text-muted)">Logo / Brand Header</p>
+                        <p class="font-body text-xs font-mono" style="color:var(--text-muted)">Barlow Condensed · 700 · 24px · uppercase</p>
+                    </div>
+                    <h1 class="font-display font-bold text-[24px] text-primary tracking-wide uppercase">Sabor de Mel</h1>
+                </div>
+                <div class="token-card flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                    <div>
+                        <p class="font-body text-xs mb-1" style="color:var(--text-muted)">Section Title</p>
+                        <p class="font-body text-xs font-mono" style="color:var(--text-muted)">Barlow Condensed · 600 · 18px · uppercase</p>
+                    </div>
+                    <h2 class="font-display font-semibold text-[18px] uppercase" style="color:var(--text-primary)">Escolhas Populares</h2>
+                </div>
+                <div class="token-card flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                    <div>
+                        <p class="font-body text-xs mb-1" style="color:var(--text-muted)">Product Name</p>
+                        <p class="font-body text-xs font-mono" style="color:var(--text-muted)">Barlow Condensed · 600 · 15px</p>
+                    </div>
+                    <h4 class="font-display font-semibold text-[15px]" style="color:var(--text-primary)">Pastel Tudão</h4>
+                </div>
+                <div class="token-card flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                    <div>
+                        <p class="font-body text-xs mb-1" style="color:var(--text-muted)">Price / Total</p>
+                        <p class="font-body text-xs font-mono" style="color:var(--text-muted)">Barlow Condensed · 700 · 16–24px · accent</p>
+                    </div>
+                    <span class="font-display font-bold text-[22px] text-accent">R$ 20,00</span>
+                </div>
+                <div class="token-card flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                    <div>
+                        <p class="font-body text-xs mb-1" style="color:var(--text-muted)">Ingredientes / Descrição</p>
+                        <p class="font-body text-xs font-mono" style="color:var(--text-muted)">Lato · 400 · 12px · leading-snug</p>
+                    </div>
+                    <p class="font-body text-[12px] leading-snug max-w-[260px]" style="color:var(--text-secondary)">Queijo, presunto, frango, charque, bacon, calabresa e milho</p>
+                </div>
+                <div class="token-card flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                    <div>
+                        <p class="font-body text-xs mb-1" style="color:var(--text-muted)">Body / UI labels</p>
+                        <p class="font-body text-xs font-mono" style="color:var(--text-muted)">Lato · 400 · 13–15px</p>
+                    </div>
+                    <p class="font-body text-[14px]" style="color:var(--text-primary)">Seu carrinho está vazio</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════ ÍCONES ════ -->
+        <section id="tokens-icones" class="ds-section">
+            <div class="sec-eyebrow">Tokens</div>
+            <h2 class="font-display font-bold text-[22px] uppercase mb-1" style="color:var(--text-primary)">Ícones</h2>
+            <p class="font-body text-sm mb-6" style="color:var(--text-secondary)">Material Symbols Outlined via Google Fonts. Tamanhos: 18, 20, 24, 32, 56, 64px.</p>
+
+            <h3 class="font-body text-xs font-bold uppercase tracking-widest mb-3" style="color:var(--text-muted)">Ícones de Produtos (32px)</h3>
+            <div class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-3 mb-6">
+                <div class="icon-item"><span class="material-symbols-outlined text-[32px]" style="color:var(--text-secondary)">bakery_dining</span>bakery_dining</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[32px]" style="color:var(--text-secondary)">lunch_dining</span>lunch_dining</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[32px]" style="color:var(--text-secondary)">icecream</span>icecream</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[32px]" style="color:var(--text-secondary)">local_bar</span>local_bar</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[32px]" style="color:var(--text-secondary)">coffee_maker</span>coffee_maker</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[32px]" style="color:var(--text-secondary)">star_rate</span>star_rate</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[32px]" style="color:var(--text-secondary)">flatware</span>flatware</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[32px]" style="color:var(--text-secondary)">egg</span>egg</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[32px]" style="color:var(--text-secondary)">fastfood</span>fastfood</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[32px]" style="color:var(--text-secondary)">water_drop</span>water_drop</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[32px]" style="color:var(--text-secondary)">local_cafe</span>local_cafe</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[32px]" style="color:var(--text-secondary)">liquor</span>liquor</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[32px]" style="color:var(--text-secondary)">bolt</span>bolt</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[32px]" style="color:var(--text-secondary)">stars</span>stars</div>
+            </div>
+
+            <h3 class="font-body text-xs font-bold uppercase tracking-widest mb-3" style="color:var(--text-muted)">Ícones de UI (24px)</h3>
+            <div class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-3">
+                <div class="icon-item"><span class="material-symbols-outlined text-[24px] text-primary">shopping_cart</span>cart</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[24px]" style="color:var(--text-secondary)">search</span>search</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[24px]" style="color:var(--text-secondary)">add</span>add</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[24px]" style="color:var(--text-secondary)">close</span>close</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[24px]" style="color:var(--text-secondary)">dark_mode</span>dark_mode</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[24px]" style="color:var(--text-secondary)">light_mode</span>light_mode</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[24px]" style="color:var(--text-secondary)">history</span>history</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[24px]" style="color:var(--text-secondary)">search_off</span>search_off</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[24px]" style="color:var(--text-secondary)">edit</span>edit</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[24px]" style="color:var(--text-secondary)">open_in_new</span>modal</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[24px]" style="color:var(--text-secondary)">check</span>check</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[24px]" style="color:var(--text-secondary)">arrow_back</span>back</div>
+                <div class="icon-item"><span class="material-symbols-outlined text-[56px]" style="color:var(--border-md)">shopping_basket</span>empty cart</div>
+            </div>
+        </section>
+
+        <!-- ════ ESPAÇAMENTO ════ -->
+        <section id="tokens-espacamento" class="ds-section">
+            <div class="sec-eyebrow">Tokens</div>
+            <h2 class="font-display font-bold text-[22px] uppercase mb-1" style="color:var(--text-primary)">Espaçamento &amp; Shape</h2>
+            <p class="font-body text-sm mb-6" style="color:var(--text-secondary)">Grid de 8px. Border-radius seguindo hierarquia de componente.</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="token-card">
+                    <p class="font-body font-bold text-xs uppercase tracking-widest mb-4" style="color:var(--text-muted)">Grid de Espaçamento (8px base)</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3"><div class="h-2 rounded bg-primary/60" style="width:8px;"></div><span class="font-mono text-xs" style="color:var(--text-muted)">4px — micro gap</span></div>
+                        <div class="flex items-center gap-3"><div class="h-2 rounded bg-primary/60" style="width:16px;"></div><span class="font-mono text-xs" style="color:var(--text-muted)">8px — small</span></div>
+                        <div class="flex items-center gap-3"><div class="h-2 rounded bg-primary/70" style="width:24px;"></div><span class="font-mono text-xs" style="color:var(--text-muted)">12px — card gap</span></div>
+                        <div class="flex items-center gap-3"><div class="h-2 rounded bg-primary/80" style="width:32px;"></div><span class="font-mono text-xs" style="color:var(--text-muted)">16px — medium</span></div>
+                        <div class="flex items-center gap-3"><div class="h-2 rounded bg-primary" style="width:48px;"></div><span class="font-mono text-xs" style="color:var(--text-muted)">24px — section gap</span></div>
+                        <div class="flex items-center gap-3"><div class="h-2 rounded bg-accent/80" style="width:64px;"></div><span class="font-mono text-xs" style="color:var(--text-muted)">32px — page padding</span></div>
+                    </div>
+                </div>
+                <div class="token-card">
+                    <p class="font-body font-bold text-xs uppercase tracking-widest mb-4" style="color:var(--text-muted)">Border Radius</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 border-2" style="border-radius:50%;background:var(--surface-alt);border-color:var(--border-md)"></div>
+                            <span class="font-mono text-xs" style="color:var(--text-muted)">50% / pill — chips, badges, qty btns</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-3xl border-2" style="background:var(--surface-alt);border-color:var(--border-md)"></div>
+                            <span class="font-mono text-xs" style="color:var(--text-muted)">24px — modal, cart drawer</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-2xl border-2" style="background:var(--surface-alt);border-color:var(--border-md)"></div>
+                            <span class="font-mono text-xs" style="color:var(--text-muted)">16px — product cards, buttons</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-xl border-2" style="background:var(--surface-alt);border-color:var(--border-md)"></div>
+                            <span class="font-mono text-xs" style="color:var(--text-muted)">12px — thumbnail, inputs</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-lg border-2" style="background:var(--surface-alt);border-color:var(--border-md)"></div>
+                            <span class="font-mono text-xs" style="color:var(--text-muted)">8px — cart item icon</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════ BOTÕES ════ -->
+        <section id="comp-botoes" class="ds-section">
+            <div class="sec-eyebrow">Componentes</div>
+            <h2 class="font-display font-bold text-[22px] uppercase mb-1" style="color:var(--text-primary)">Botões</h2>
+            <p class="font-body text-sm mb-6" style="color:var(--text-secondary)">Todos os tipos de botão usados na interface.</p>
+
+            <div class="component-frame space-y-8">
+                <!-- Category chips -->
+                <div>
+                    <p class="font-body text-xs uppercase tracking-widest mb-3" style="color:var(--text-muted)">Category Chips — Filtro</p>
+                    <div class="flex flex-wrap gap-3">
+                        <button class="chip-active h-10 shrink-0 flex items-center justify-center px-6 rounded-full text-sm font-body">Todos</button>
+                        <button class="chip-inactive h-10 shrink-0 flex items-center justify-center px-6 rounded-full text-sm font-body">Pastéis</button>
+                        <button class="chip-inactive h-10 shrink-0 flex items-center justify-center px-6 rounded-full text-sm font-body">Açaí &amp; Sorvetes</button>
+                        <button class="chip-inactive h-10 shrink-0 flex items-center justify-center px-6 rounded-full text-sm font-body">Bebidas</button>
+                    </div>
+                </div>
+
+                <!-- Add to cart -->
+                <div>
+                    <p class="font-body text-xs uppercase tracking-widest mb-3" style="color:var(--text-muted)">Add to Cart Button</p>
+                    <div class="flex gap-4 items-center">
+                        <button class="w-10 h-10 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-md shadow-primary/30 hover:brightness-110 transition-all active:scale-90">
+                            <span class="material-symbols-outlined text-[22px]">add</span>
+                        </button>
+                        <button class="w-10 h-10 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-md shadow-primary/30 hover:brightness-110 transition-all active:scale-90">
+                            <span class="material-symbols-outlined text-[22px]">open_in_new</span>
+                        </button>
+                        <div class="font-body text-xs" style="color:var(--text-muted)">
+                            <p><code class="font-mono text-primary">add</code> — produto simples</p>
+                            <p><code class="font-mono text-accent">open_in_new</code> — produto com modal</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cart actions -->
+                <div>
+                    <p class="font-body text-xs uppercase tracking-widest mb-3" style="color:var(--text-muted)">Cart Action Buttons</p>
+                    <div class="flex flex-wrap gap-4 items-center">
+                        <button class="w-full max-w-xs h-14 flex items-center justify-center gap-2 bg-green-500 text-white font-display font-bold uppercase text-base rounded-2xl shadow-lg shadow-green-900/30">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            Enviar via WhatsApp
+                        </button>
+                        <button class="h-14 px-6 bg-primary text-[#131313] font-display font-bold uppercase rounded-xl shadow-lg shadow-primary/20">
+                            Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Qty buttons -->
+                <div>
+                    <p class="font-body text-xs uppercase tracking-widest mb-3" style="color:var(--text-muted)">Qty Buttons</p>
+                    <div class="flex items-center gap-3">
+                        <button class="qty-btn-demo">−</button>
+                        <span class="font-body font-bold w-5 text-center" style="color:var(--text-primary)">2</span>
+                        <button class="qty-btn-demo">+</button>
+                        <span class="font-body text-xs ml-2" style="color:var(--text-muted)">w-28px · rounded-full · bg-surface-alt · color-primary</span>
+                    </div>
+                </div>
+
+                <!-- Icon buttons -->
+                <div>
+                    <p class="font-body text-xs uppercase tracking-widest mb-3" style="color:var(--text-muted)">Icon Buttons — Header</p>
+                    <div class="flex gap-3 items-center">
+                        <button class="w-10 h-10 flex items-center justify-center rounded-full hover:opacity-80 transition-colors" style="background:var(--surface-alt);color:var(--text-secondary)">
+                            <span class="material-symbols-outlined text-[20px]">close</span>
+                        </button>
+                        <button class="relative w-10 h-10 flex items-center justify-center rounded-full" style="background:var(--surface-alt);color:var(--text-secondary)">
+                            <span class="material-symbols-outlined text-[24px]">shopping_cart</span>
+                            <span class="cart-badge-demo">3</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════ INPUTS ════ -->
+        <section id="comp-inputs" class="ds-section">
+            <div class="sec-eyebrow">Componentes</div>
+            <h2 class="font-display font-bold text-[22px] uppercase mb-1" style="color:var(--text-primary)">Inputs</h2>
+            <p class="font-body text-sm mb-6" style="color:var(--text-secondary)">Search bar, campos de formulário e seleção de entrega.</p>
+
+            <div class="component-frame space-y-6 max-w-md">
+                <!-- Search bar -->
+                <div>
+                    <p class="font-body text-xs uppercase tracking-widest mb-2" style="color:var(--text-muted)">Search Bar</p>
+                    <div class="gc-search">
+                        <span class="material-symbols-outlined text-[20px]" style="color:var(--text-muted)">search</span>
+                        <input placeholder="O que você quer comer hoje?" type="text">
+                    </div>
+                    <p class="font-body text-xs mt-1" style="color:var(--text-muted)">h-48px · pill radius · focus → border-primary + glow</p>
+                </div>
+
+                <!-- Cart input -->
+                <div>
+                    <p class="font-body text-xs uppercase tracking-widest mb-2" style="color:var(--text-muted)">Cart Input</p>
+                    <input class="cart-input-demo" placeholder="Seu nome *" type="text">
+                    <p class="font-body text-xs mt-1" style="color:var(--text-muted)">rounded-xl · focus → border-primary</p>
+                </div>
+
+                <!-- Radio -->
+                <div>
+                    <p class="font-body text-xs uppercase tracking-widest mb-2" style="color:var(--text-muted)">Radio — Tipo de Entrega</p>
+                    <div class="flex gap-5">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="demo-delivery" value="retirada" checked style="accent-color:#edcd2c; width:16px; height:16px;">
+                            <span class="font-body text-sm" style="color:var(--text-primary)">Retirada</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="demo-delivery" value="delivery" style="accent-color:#edcd2c; width:16px; height:16px;">
+                            <span class="font-body text-sm" style="color:var(--text-primary)">Delivery</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════ CARDS (ORIGINAL) ════ -->
+        <section id="comp-cards" class="ds-section">
+            <div class="sec-eyebrow">Componentes</div>
+            <h2 class="font-display font-bold text-[22px] uppercase mb-1" style="color:var(--text-primary)">Cards de Produto — Original</h2>
+            <p class="font-body text-sm mb-6" style="color:var(--text-secondary)">Layout original do cardápio com ícone Material. Descrição sempre visível.</p>
+
+            <div class="component-frame space-y-4 max-w-sm">
+                <!-- Produto simples -->
+                <div>
+                    <p class="font-body text-xs uppercase tracking-widest mb-2" style="color:var(--text-muted)">Produto simples (preço fixo)</p>
+                    <div class="flex items-center gap-4 p-4 rounded-2xl border cursor-pointer shadow-sm transition-all hover:border-primary/40 hover:shadow-md" style="background:var(--surface);border-color:var(--border);">
+                        <div class="w-[72px] h-[72px] rounded-xl shrink-0 flex items-center justify-center" style="background:var(--surface-alt);">
+                            <span class="material-symbols-outlined text-[32px]" style="color:var(--text-muted)">bakery_dining</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-display font-semibold text-[15px] leading-tight mb-0.5" style="color:var(--text-primary)">Pastel Tudão</h4>
+                            <p class="font-body text-[12px] leading-snug" style="color:var(--text-secondary)">Queijo, presunto, frango, charque, bacon, calabresa e milho</p>
+                            <span class="font-display font-bold text-accent text-[16px] mt-1.5 block">R$ 20,00</span>
+                        </div>
+                        <button class="w-10 h-10 rounded-full bg-primary text-background-dark flex items-center justify-center shrink-0 shadow-md shadow-primary/30 active:scale-90 transition-all">
+                            <span class="material-symbols-outlined text-[22px]">add</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Produto com variante -->
+                <div>
+                    <p class="font-body text-xs uppercase tracking-widest mb-2" style="color:var(--text-muted)">Produto com variantes</p>
+                    <div class="flex items-center gap-4 p-4 rounded-2xl border cursor-pointer shadow-sm transition-all hover:border-primary/40 hover:shadow-md" style="background:var(--surface);border-color:var(--border);">
+                        <div class="w-[72px] h-[72px] rounded-xl shrink-0 flex items-center justify-center" style="background:var(--surface-alt);">
+                            <span class="material-symbols-outlined text-[32px]" style="color:var(--text-muted)">icecream</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-display font-semibold text-[15px] leading-tight mb-0.5" style="color:var(--text-primary)">Açaí na Tigela</h4>
+                            <p class="font-body text-[12px] leading-snug" style="color:var(--text-secondary)">Complementos, creme, fruta e cobertura inclusos</p>
+                            <span class="font-display font-bold text-accent text-[16px] mt-1.5 block">A partir de R$ 9,00</span>
+                        </div>
+                        <button class="w-10 h-10 rounded-full bg-primary text-background-dark flex items-center justify-center shrink-0 shadow-md shadow-primary/30 active:scale-90 transition-all">
+                            <span class="material-symbols-outlined text-[22px]">open_in_new</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════
+             GRANCARTY PATTERNS — BLOCO PRINCIPAL NOVO
+             ════════════════════════════════════════════════ -->
+        <section id="gc-patterns" class="ds-section">
+            <div class="sec-eyebrow">Grancarty Patterns — Novo</div>
+            <h2 class="font-display font-bold text-[28px] uppercase mb-1" style="color:var(--text-primary)">Padrões Visuais Grancarty</h2>
+            <p class="font-body text-sm mb-8" style="color:var(--text-secondary)">Conceito aplicado ao sistema Sabor de Mel. Tokens preservados; padrões de layout e componente inspirados no Grancarty.</p>
+
+            <!-- ── Hero Banners ── -->
+            <h3 class="font-body text-xs font-bold uppercase tracking-widest mb-4" style="color:var(--text-muted)">Hero Banners</h3>
+            <div class="space-y-4 mb-10">
+                <!-- Banner primário (amarelo) -->
+                <div class="hero-banner">
+                    <div style="position:relative;z-index:1;">
+                        <div class="font-display font-bold text-[10px] uppercase tracking-[.15em] opacity-60 mb-1">Sabor de Mel · Oferta</div>
+                        <div class="font-display font-bold text-[26px] uppercase leading-tight tracking-wide">Peça Agora,<br>Economize Mais!</div>
+                        <div class="font-body text-[13px] opacity-80 mt-1">Entrega grátis acima de R$ 40</div>
+                        <button class="mt-4 px-5 py-2 rounded-full font-display font-bold uppercase text-[13px] tracking-wider hover:opacity-90 transition-all" style="background:#131313;color:#edcd2c;">Ver Cardápio</button>
+                    </div>
+                    <div class="text-[64px] leading-none shrink-0" style="position:relative;z-index:1;">🥐</div>
+                </div>
+
+                <!-- Banner dark -->
+                <div class="hero-banner hero-banner-dark">
+                    <div style="position:relative;z-index:1;">
+                        <div class="font-display font-bold text-[10px] uppercase tracking-[.15em] mb-1 text-primary">Açaí &amp; Sorvetes</div>
+                        <div class="font-display font-bold text-[26px] uppercase leading-tight tracking-wide">Gelado &amp; Fresquinho<br>Todo Dia</div>
+                        <div class="font-body text-[13px] mt-1" style="color:var(--text-secondary)">Do produtor direto pra você</div>
+                        <button class="mt-4 px-5 py-2 rounded-full bg-primary font-display font-bold uppercase text-[13px] tracking-wider text-[#131313] hover:brightness-105 transition-all">Ver Promoções</button>
+                    </div>
+                    <div class="text-[64px] leading-none shrink-0" style="position:relative;z-index:1;">🍧</div>
+                </div>
+            </div>
+
+            <!-- ── Category Chips Grancarty ── -->
+            <h3 class="font-body text-xs font-bold uppercase tracking-widest mb-4" style="color:var(--text-muted)">Category Chips — Estilo Grancarty (com emoji)</h3>
+            <div class="component-frame mb-10">
+                <div class="flex gap-3 flex-wrap">
+                    <div class="cat-chip cat-active" onclick="toggleCat(this)">
+                        <span class="text-[22px] leading-none">🥐</span>
+                        <span class="cat-name">Pastéis</span>
+                    </div>
+                    <div class="cat-chip" onclick="toggleCat(this)">
+                        <span class="text-[22px] leading-none">🍧</span>
+                        <span class="cat-name">Açaí</span>
+                    </div>
+                    <div class="cat-chip" onclick="toggleCat(this)">
+                        <span class="text-[22px] leading-none">🥤</span>
+                        <span class="cat-name">Bebidas</span>
+                    </div>
+                    <div class="cat-chip" onclick="toggleCat(this)">
+                        <span class="text-[22px] leading-none">☕</span>
+                        <span class="cat-name">Café</span>
+                    </div>
+                    <div class="cat-chip" onclick="toggleCat(this)">
+                        <span class="text-[22px] leading-none">🍦</span>
+                        <span class="cat-name">Sorvetes</span>
+                    </div>
+                    <div class="cat-chip" onclick="toggleCat(this)">
+                        <span class="text-[22px] leading-none">🍺</span>
+                        <span class="cat-name">Bebidas</span>
+                    </div>
+                </div>
+                <p class="font-body text-xs mt-4" style="color:var(--text-muted)">Clique para alternar · border-radius: 14px · borda yellow no active · fundo rgba(primary, .12)</p>
+            </div>
+
+            <!-- ── Product Cards Grancarty ── -->
+            <h3 class="font-body text-xs font-bold uppercase tracking-widest mb-4" style="color:var(--text-muted)">Product Cards — Estilo Grancarty (imagem proeminente)</h3>
+            <div class="component-frame mb-10">
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    <div class="gc-product-card">
+                        <div class="gc-img-area">
+                            <span class="material-symbols-outlined text-[52px] text-primary">bakery_dining</span>
+                            <div class="gc-fav">♡</div>
+                        </div>
+                        <div class="gc-body">
+                            <div class="gc-category">Pastéis</div>
+                            <div class="gc-name">Pastel Tudão</div>
+                            <div class="flex gap-0.5 mb-2">
+                                <span class="star-rate">★★★★★</span>
+                                <span class="font-body text-[11px] ml-1" style="color:var(--text-muted)">4.9</span>
+                            </div>
+                            <div class="gc-footer">
+                                <div class="gc-price">R$ 20<span class="gc-price-unit">,00</span></div>
+                                <button class="gc-add-btn">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gc-product-card">
+                        <div class="gc-img-area">
+                            <span class="material-symbols-outlined text-[52px] text-primary">icecream</span>
+                            <div class="gc-fav" style="color:#f26522;">♥</div>
+                        </div>
+                        <div class="gc-body">
+                            <div class="gc-category">Açaí &amp; Sorvetes</div>
+                            <div class="gc-name">Açaí na Tigela</div>
+                            <div class="flex gap-0.5 mb-2">
+                                <span class="star-rate">★★★★</span><span class="star-off">★</span>
+                                <span class="font-body text-[11px] ml-1" style="color:var(--text-muted)">4.2</span>
+                            </div>
+                            <div class="gc-footer">
+                                <div class="gc-price">R$ 9<span class="gc-price-unit">,00+</span></div>
+                                <button class="gc-add-btn">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gc-product-card">
+                        <div class="gc-img-area">
+                            <span class="material-symbols-outlined text-[52px] text-primary">local_cafe</span>
+                            <div class="gc-fav">♡</div>
+                        </div>
+                        <div class="gc-body">
+                            <div class="gc-category">Bebidas</div>
+                            <div class="gc-name">Café Especial</div>
+                            <div class="flex gap-0.5 mb-2">
+                                <span class="star-rate">★★★★★</span>
+                                <span class="font-body text-[11px] ml-1" style="color:var(--text-muted)">5.0</span>
+                            </div>
+                            <div class="gc-footer">
+                                <div class="gc-price">R$ 8<span class="gc-price-unit">,50</span></div>
+                                <button class="gc-add-btn">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="font-body text-xs mt-4" style="color:var(--text-muted)">Área de imagem: height 120px · bg rgba(primary,.10) · border-radius 18px · hover: border-primary + shadow-primary</p>
+            </div>
+
+            <!-- ── Badges ── -->
+            <h3 class="font-body text-xs font-bold uppercase tracking-widest mb-4" style="color:var(--text-muted)">Badges &amp; Tags</h3>
+            <div class="component-frame mb-10">
+                <div class="flex flex-wrap gap-3">
+                    <span class="gc-badge badge-primary">🏷 Oferta</span>
+                    <span class="gc-badge badge-accent">Destaque</span>
+                    <span class="gc-badge badge-success">✓ Disponível</span>
+                    <span class="gc-badge badge-neutral">Pastéis</span>
+                    <span class="gc-badge badge-primary">20% OFF</span>
+                    <span class="gc-badge badge-neutral">Novo</span>
+                </div>
+                <p class="font-body text-xs mt-4" style="color:var(--text-muted)">Barlow Condensed · 700 · pill radius · bg rgba + border sutil em cada variante semântica</p>
+            </div>
+
+            <!-- ── Search Bar Grancarty ── -->
+            <h3 class="font-body text-xs font-bold uppercase tracking-widest mb-4" style="color:var(--text-muted)">Search Bar — Estilo Grancarty</h3>
+            <div class="component-frame mb-10 max-w-md">
+                <div class="gc-search">
+                    <span class="material-symbols-outlined text-[20px]" style="color:var(--text-muted)">search</span>
+                    <input placeholder="Buscar no cardápio...">
+                </div>
+                <div class="mt-4">
+                    <p class="font-body text-xs uppercase tracking-widest mb-2" style="color:var(--text-muted)">Buscas recentes</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="gc-badge badge-neutral" style="cursor:pointer;">Pastel de queijo</span>
+                        <span class="gc-badge badge-neutral" style="cursor:pointer;">Açaí 300ml</span>
+                        <span class="gc-badge badge-neutral" style="cursor:pointer;">Coca-cola</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Cupons ── -->
+            <h3 class="font-body text-xs font-bold uppercase tracking-widest mb-4" style="color:var(--text-muted)">Cupons — Borda Tracejada</h3>
+            <div class="component-frame mb-10 max-w-lg">
+                <div class="flex gap-3 mb-4">
+                    <span class="gc-badge badge-primary" style="cursor:pointer;">Disponíveis (3)</span>
+                    <span class="gc-badge badge-neutral" style="cursor:pointer;">Usados (1)</span>
+                    <span class="gc-badge badge-neutral" style="cursor:pointer;">Expirados (2)</span>
+                </div>
+                <div class="gc-coupon">
+                    <div>
+                        <div class="coupon-pct">20%</div>
+                        <div class="coupon-label">Pastéis em Dobro</div>
+                        <div class="coupon-exp">Válido até 30/04/2024</div>
+                    </div>
+                    <button class="coupon-btn">Usar</button>
+                </div>
+                <div class="gc-coupon">
+                    <div>
+                        <div class="coupon-pct">R$ 5</div>
+                        <div class="coupon-label">Açaí &amp; Sorvetes</div>
+                        <div class="coupon-exp">Válido até 28/04/2024</div>
+                    </div>
+                    <button class="coupon-btn">Usar</button>
+                </div>
+                <div class="gc-coupon">
+                    <div>
+                        <div class="coupon-pct">10%</div>
+                        <div class="coupon-label">Primeira Compra</div>
+                        <div class="coupon-exp">Válido até 15/04/2024</div>
+                    </div>
+                    <button class="coupon-btn">Usar</button>
+                </div>
+            </div>
+
+            <!-- ── Order Timeline ── -->
+            <h3 class="font-body text-xs font-bold uppercase tracking-widest mb-4" style="color:var(--text-muted)">Status do Pedido — Timeline</h3>
+            <div class="component-frame mb-10 max-w-sm">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="font-display font-semibold text-[15px] uppercase" style="color:var(--text-primary)">Pedido #SD-08351</span>
+                    <span class="gc-badge badge-accent">Em preparo</span>
+                </div>
+                <div class="timeline-step done">
+                    <div class="timeline-dot done">✓</div>
+                    <div class="pt-1">
+                        <div class="font-display font-semibold text-[13px]" style="color:var(--text-primary)">Pedido Confirmado</div>
+                        <div class="font-body text-[11px] mt-0.5" style="color:var(--text-muted)">12:30 · Via WhatsApp</div>
+                    </div>
+                </div>
+                <div class="timeline-step done">
+                    <div class="timeline-dot done">✓</div>
+                    <div class="pt-1">
+                        <div class="font-display font-semibold text-[13px]" style="color:var(--text-primary)">Em Preparação</div>
+                        <div class="font-body text-[11px] mt-0.5" style="color:var(--text-muted)">12:35 · Cozinha confirmou</div>
+                    </div>
+                </div>
+                <div class="timeline-step active">
+                    <div class="timeline-dot active">📍</div>
+                    <div class="pt-1">
+                        <div class="font-display font-semibold text-[13px] text-primary">Saiu para Entrega</div>
+                        <div class="font-body text-[11px] mt-0.5" style="color:var(--text-muted)">Previsão: 13:15</div>
+                    </div>
+                </div>
+                <div class="timeline-step">
+                    <div class="timeline-dot pending">○</div>
+                    <div class="pt-1">
+                        <div class="font-display font-semibold text-[13px]" style="color:var(--text-muted)">Entregue</div>
+                        <div class="font-body text-[11px] mt-0.5" style="color:var(--text-muted)">Aguardando…</div>
+                    </div>
+                </div>
+                <button class="w-full mt-6 h-12 bg-primary text-[#131313] font-display font-bold uppercase rounded-xl tracking-wider text-[15px] hover:brightness-105 transition-all">
+                    Rastrear Pedido
+                </button>
+            </div>
+
+        </section><!-- /gc-patterns -->
+
+        <!-- ════ CARRINHO ════ -->
+        <section id="comp-cart" class="ds-section">
+            <div class="sec-eyebrow">Componentes</div>
+            <h2 class="font-display font-bold text-[22px] uppercase mb-1" style="color:var(--text-primary)">Carrinho</h2>
+            <p class="font-body text-sm mb-6" style="color:var(--text-secondary)">Cart Drawer, Cart Item, Badge e Checkout.</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <p class="font-body text-xs uppercase tracking-widest mb-2" style="color:var(--text-muted)">Cart Item</p>
+                    <div class="component-frame space-y-1">
+                        <div class="flex items-center gap-3 py-3 border-b" style="border-color:var(--border);">
+                            <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background:var(--surface-alt);">
+                                <span class="material-symbols-outlined text-[20px]" style="color:var(--text-muted)">bakery_dining</span>
+                            </div>
+                            <div class="flex-1 min-w-0 pr-1">
+                                <div class="flex items-center gap-1.5">
+                                    <p class="font-body text-sm font-semibold truncate" style="color:var(--text-primary)">Pastel Tudão</p>
+                                    <span class="material-symbols-outlined text-[14px] rounded px-0.5" style="color:var(--text-muted);background:var(--surface-alt);">edit</span>
+                                </div>
+                                <p class="text-accent font-display font-bold text-sm mt-0.5">R$ 20,00</p>
+                            </div>
+                            <div class="flex items-center gap-2 shrink-0">
+                                <button class="qty-btn-demo">−</button>
+                                <span class="font-body font-bold text-sm w-5 text-center" style="color:var(--text-primary)">1</span>
+                                <button class="qty-btn-demo">+</button>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 py-3">
+                            <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background:var(--surface-alt);">
+                                <span class="material-symbols-outlined text-[20px]" style="color:var(--text-muted)">icecream</span>
+                            </div>
+                            <div class="flex-1 min-w-0 pr-1">
+                                <div class="flex items-center gap-1.5">
+                                    <p class="font-body text-sm font-semibold truncate" style="color:var(--text-primary)">Açaí na Tigela (300ml)</p>
+                                    <span class="material-symbols-outlined text-[14px] rounded px-0.5" style="color:var(--text-muted);background:var(--surface-alt);">edit</span>
+                                </div>
+                                <p class="text-[11px] mt-0.5 leading-tight" style="color:var(--text-muted)">Banana, Granola, Chocolate</p>
+                                <p class="text-accent font-display font-bold text-sm mt-0.5">R$ 12,00</p>
+                            </div>
+                            <div class="flex items-center gap-2 shrink-0">
+                                <button class="qty-btn-demo">−</button>
+                                <span class="font-body font-bold text-sm w-5 text-center" style="color:var(--text-primary)">2</span>
+                                <button class="qty-btn-demo">+</button>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between pt-3 mt-1 border-t" style="border-color:var(--border);">
+                            <span class="font-body text-sm font-semibold uppercase tracking-wider" style="color:var(--text-secondary)">Total</span>
+                            <span class="font-display font-bold text-2xl text-accent">R$ 44,00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="font-body text-xs uppercase tracking-widest mb-2" style="color:var(--text-muted)">Cart Drawer — Spec</p>
+                    <div class="component-frame space-y-3 font-body text-xs" style="color:var(--text-secondary)">
+                        <div class="flex justify-between"><span>Largura</span><span class="font-mono" style="color:var(--text-primary)">min(400px, 100vw)</span></div>
+                        <div class="flex justify-between"><span>Posição</span><span class="font-mono" style="color:var(--text-primary)">fixed · right: 0 · top: 0</span></div>
+                        <div class="flex justify-between"><span>Height</span><span class="font-mono" style="color:var(--text-primary)">100dvh</span></div>
+                        <div class="flex justify-between"><span>Transform (fechado)</span><span class="font-mono" style="color:var(--text-primary)">translateX(100%)</span></div>
+                        <div class="flex justify-between"><span>Transform (aberto)</span><span class="font-mono" style="color:var(--text-primary)">translateX(0)</span></div>
+                        <div class="flex justify-between"><span>Transition</span><span class="font-mono" style="color:var(--text-primary)">0.32s cubic-bezier(.4,0,.2,1)</span></div>
+                        <div class="flex justify-between"><span>Z-index</span><span class="font-mono" style="color:var(--text-primary)">200</span></div>
+                        <div class="flex justify-between"><span>Overlay z-index</span><span class="font-mono" style="color:var(--text-primary)">199 · backdrop-blur(3px)</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════ MODAL ════ -->
+        <section id="comp-modal" class="ds-section">
+            <div class="sec-eyebrow">Componentes</div>
+            <h2 class="font-display font-bold text-[22px] uppercase mb-1" style="color:var(--text-primary)">Modal de Produto</h2>
+            <p class="font-body text-sm mb-6" style="color:var(--text-secondary)">Personalização com tamanhos, sabores e complementos.</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <p class="font-body text-xs uppercase tracking-widest mb-2" style="color:var(--text-muted)">Size Selector</p>
+                    <div class="component-frame">
+                        <p class="text-[10px] font-bold uppercase tracking-widest mb-2" style="color:var(--text-muted)">Escolha o Tamanho</p>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button class="flex flex-col items-center justify-center p-3 rounded-xl border-2 border-primary bg-primary/10 text-primary scale-[1.02]">
+                                <span class="text-xs font-bold">300ml</span>
+                                <span class="text-[10px] opacity-80 mt-0.5">R$ 12,00</span>
+                            </button>
+                            <button class="flex flex-col items-center justify-center p-3 rounded-xl border-2 hover:border-primary/30 transition-colors" style="border-color:var(--border-md);background:var(--surface-alt);color:var(--text-muted);">
+                                <span class="text-xs font-bold">500ml</span>
+                                <span class="text-[10px] opacity-80 mt-0.5">R$ 16,00</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="font-body text-xs uppercase tracking-widest mb-2" style="color:var(--text-muted)">Complemento Selector</p>
+                    <div class="component-frame">
+                        <div class="flex justify-between items-end mb-2">
+                            <span class="text-[10px] font-bold uppercase tracking-widest" style="color:var(--text-muted)">Complementos</span>
+                            <span class="text-[10px] font-bold text-primary">3 / 4</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <label class="flex items-center gap-3 p-3 rounded-xl border cursor-pointer bg-primary/5 border-primary/30">
+                                <input type="checkbox" checked class="h-4 w-4" style="accent-color:#edcd2c;">
+                                <span class="text-xs font-semibold" style="color:var(--text-primary)">Granola</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 rounded-xl border cursor-pointer hover:bg-primary/5 transition-colors" style="background:var(--surface-alt);border-color:var(--border);">
+                                <input type="checkbox" class="h-4 w-4" style="accent-color:#edcd2c;">
+                                <span class="text-xs" style="color:var(--text-muted)">Amendoim</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sm:col-span-2">
+                    <p class="font-body text-xs uppercase tracking-widest mb-2" style="color:var(--text-muted)">Modal — Spec</p>
+                    <div class="component-frame font-body text-xs grid grid-cols-2 sm:grid-cols-3 gap-3" style="color:var(--text-secondary)">
+                        <div class="flex flex-col gap-1"><span style="color:var(--text-muted)">Max-width</span><span class="font-mono" style="color:var(--text-primary)">max-w-md</span></div>
+                        <div class="flex flex-col gap-1"><span style="color:var(--text-muted)">Border-radius</span><span class="font-mono" style="color:var(--text-primary)">rounded-3xl</span></div>
+                        <div class="flex flex-col gap-1"><span style="color:var(--text-muted)">Max-height</span><span class="font-mono" style="color:var(--text-primary)">90dvh + overflow-y-auto</span></div>
+                        <div class="flex flex-col gap-1"><span style="color:var(--text-muted)">Entrada</span><span class="font-mono" style="color:var(--text-primary)">opacity-0 + scale-95</span></div>
+                        <div class="flex flex-col gap-1"><span style="color:var(--text-muted)">Active</span><span class="font-mono" style="color:var(--text-primary)">opacity-1 + scale-100</span></div>
+                        <div class="flex flex-col gap-1"><span style="color:var(--text-muted)">Z-index</span><span class="font-mono" style="color:var(--text-primary)">100</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════ ESTADOS ════ -->
+        <section id="comp-estados" class="ds-section">
+            <div class="sec-eyebrow">Componentes</div>
+            <h2 class="font-display font-bold text-[22px] uppercase mb-1" style="color:var(--text-primary)">Estados</h2>
+            <p class="font-body text-sm mb-6" style="color:var(--text-secondary)">Empty states, animações e feedbacks.</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <p class="font-body text-xs uppercase tracking-widest mb-2" style="color:var(--text-muted)">Empty State — Busca</p>
+                    <div class="component-frame flex flex-col items-center justify-center py-10 text-center">
+                        <span class="material-symbols-outlined text-[64px] mb-4" style="color:var(--border-md)">search_off</span>
+                        <h3 class="font-display font-semibold text-lg" style="color:var(--text-secondary)">Ops! Nada encontrado</h3>
+                        <p class="font-body text-sm mt-2" style="color:var(--text-muted)">Tente buscar por outro termo.</p>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-body text-xs uppercase tracking-widest mb-2" style="color:var(--text-muted)">Empty State — Carrinho</p>
+                    <div class="component-frame flex flex-col items-center justify-center py-10 text-center">
+                        <span class="material-symbols-outlined text-[56px] mb-3" style="color:var(--border-md)">shopping_basket</span>
+                        <p class="font-display font-semibold text-base uppercase" style="color:var(--text-secondary)">Seu carrinho está vazio</p>
+                        <p class="font-body text-sm mt-1" style="color:var(--text-muted)">Adicione itens do cardápio</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <p class="font-body text-xs uppercase tracking-widest mb-3" style="color:var(--text-muted)">Animações</p>
+                <div class="component-frame font-body text-xs space-y-2" style="color:var(--text-secondary)">
+                    <div class="flex justify-between"><span>card-visible</span><span class="font-mono" style="color:var(--text-primary)">opacity: 1 · translateY(0) · scale(1)</span></div>
+                    <div class="flex justify-between"><span>cart-pop (badge)</span><span class="font-mono" style="color:var(--text-primary)">@keyframes pop · scale 1 → 1.35 → 1 · 0.25s</span></div>
+                    <div class="flex justify-between"><span>slideInRight (cart item)</span><span class="font-mono" style="color:var(--text-primary)">translateX(16px) → 0 · 0.2s ease</span></div>
+                    <div class="flex justify-between"><span>gc-card hover</span><span class="font-mono" style="color:var(--text-primary)">border-primary + shadow-primary · translateY(-2px)</span></div>
+                    <div class="flex justify-between"><span>gc-add-btn active</span><span class="font-mono" style="color:var(--text-primary)">scale(0.93) · hover: scale(1.1)</span></div>
+                    <div class="flex justify-between"><span>gc-coupon hover</span><span class="font-mono" style="color:var(--text-primary)">border-dashed → border-primary · bg rgba(primary,.05)</span></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // ── Theme toggle ──
+        function setTheme(mode) {
+            const html = document.documentElement;
+            if (mode === 'dark') {
+                html.classList.add('dark');
+            } else {
+                html.classList.remove('dark');
+            }
+            document.getElementById('btn-light').classList.toggle('active', mode === 'light');
+            document.getElementById('btn-dark').classList.toggle('active',  mode === 'dark');
+            localStorage.setItem('sm-theme', mode);
+        }
+
+        // Restore saved theme
+        const saved = localStorage.getItem('sm-theme') || 'dark';
+        setTheme(saved);
+
+        // ── Category chip toggle ──
+        function toggleCat(el) {
+            el.closest('.flex').querySelectorAll('.cat-chip').forEach(c => c.classList.remove('cat-active'));
+            el.classList.add('cat-active');
+        }
+
+        // ── Smooth scroll spy for nav ──
+        const sections = document.querySelectorAll('[id]');
+        const navLinks  = document.querySelectorAll('nav a[href^="#"]');
+        const observer  = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    navLinks.forEach(l => l.style.color = '');
+                    const link = document.querySelector(`nav a[href="#${e.target.id}"]`);
+                    if (link) link.style.color = '#edcd2c';
+                }
+            });
+        }, { threshold: 0.25, rootMargin: '-60px 0px -65% 0px' });
+        sections.forEach(s => observer.observe(s));
+    </script>
+</body>
+</html>
