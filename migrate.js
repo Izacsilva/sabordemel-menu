@@ -170,3 +170,16 @@ Object.values(grouped).forEach(g => {
 
 fs.writeFileSync('products.json', JSON.stringify(products, null, 4));
 console.log(`Finalizado! ${products.length} itens gerados no products.json.`);
+
+// Prepara arquivos para o Vercel (que tenta servir a pasta /public quando detecta um build)
+const path = require('path');
+const publicDir = path.join(__dirname, 'public');
+
+if (!fs.existsSync(publicDir)) {
+    fs.mkdirSync(publicDir);
+}
+
+// Copia o index.html e o products.json gerado para a pasta public
+fs.copyFileSync(path.join(__dirname, 'index.html'), path.join(publicDir, 'index.html'));
+fs.copyFileSync(path.join(__dirname, 'products.json'), path.join(publicDir, 'products.json'));
+console.log('✔ Arquivos preparados na pasta /public para o deploy no Vercel!');
