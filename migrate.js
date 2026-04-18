@@ -60,6 +60,114 @@ function getIcon(normCat) {
 const products = [];
 const grouped = {};
 
+const beverageMenu = {
+    titulo: 'Bebidas',
+    grupos: [
+        {
+            id: 'refrigerantes_ns',
+            nome: 'Refrigerantes NS',
+            produtos: [
+                { nome: 'Coca Cola NS', preco: 4.0 },
+                { nome: 'Fanta NS', preco: 4.0 }
+            ]
+        },
+        {
+            id: 'refrigerantes_mini_pet',
+            nome: 'Refrigerantes Mini Pet',
+            produtos: [
+                { nome: 'Coca Cola Mini Pet', preco: 4.5 },
+                { nome: 'Fanta Mini Pet', preco: 4.0 }
+            ]
+        },
+        {
+            id: 'refrigerantes_ks_290ml',
+            nome: 'Refrigerantes KS 290ml',
+            produtos: [
+                { nome: 'Coca Cola KS 290ml', preco: 6.0 },
+                { nome: 'Fanta KS 290ml', preco: 5.0 }
+            ]
+        },
+        {
+            id: 'bebidas_em_lata',
+            nome: 'Bebidas em Lata',
+            produtos: [
+                { nome: 'Coca Cola Lata 350ml', preco: 6.0 },
+                { nome: 'Fanta Lata 350ml', preco: 5.0 },
+                { nome: 'Kuat Lata 350ml', preco: 5.0 },
+                { nome: 'Sprite Lata 350ml', preco: 5.0 },
+                { nome: 'Coca Cola Zero Lata 350ml', preco: 6.0 },
+                { nome: 'Schweppes Citrus Lata 350ml', preco: 6.0 },
+                { nome: 'Monster Energy Lata 269ml', preco: 10.0 }
+            ]
+        },
+        {
+            id: 'refrigerantes_pet',
+            nome: 'Refrigerantes Pet',
+            produtos: [
+                { nome: 'Coca Cola 1 Litro Pet', preco: 11.0 },
+                { nome: 'Fanta 1 Litro Pet', preco: 9.0 },
+                { nome: 'Coca Cola 2 Litros Pet', preco: 15.0 },
+                { nome: 'Fanta 2 Litros Pet', preco: 13.0 },
+                { nome: 'Coca Cola 500ml', preco: 6.5 },
+                { nome: 'Sprite Fresh Limão 510ml', preco: 6.0 }
+            ]
+        },
+        {
+            id: 'refrigerantes_retornaveis_ls',
+            nome: 'Refrigerantes Retornáveis LS',
+            produtos: [
+                { nome: 'Coca Cola Retornável', preco: 7.5 },
+                { nome: 'Fanta Retornável', preco: 7.5 }
+            ]
+        },
+        {
+            id: 'agua_mineral',
+            nome: 'Água Mineral',
+            produtos: [
+                { nome: 'Água Mineral Sem Gás 350ml', preco: 4.0 },
+                { nome: 'Água Mineral Sem Gás 500ml', preco: 4.0 },
+                { nome: 'Água Mineral Com Gás 500ml', preco: 4.0 },
+                { nome: 'Água Mineral Sem Gás 1,5 Litro', preco: 4.0 }
+            ]
+        },
+        {
+            id: 'sucos_del_valle',
+            nome: 'Sucos Del Valle',
+            produtos: [
+                { nome: 'Suco Del Valle Uva 450ml', preco: 4.0 },
+                { nome: 'Suco Del Valle Laranja 450ml', preco: 4.0 },
+                { nome: 'Suco Del Valle Frutas Cítricas 450ml', preco: 4.0 }
+            ]
+        },
+        {
+            id: 'sucos_da_fruta',
+            nome: 'Sucos da Fruta',
+            produtos: [
+                { nome: 'Suco de Laranja', preco: 7.5 },
+                { nome: 'Suco de Limão', preco: 7.5 }
+            ]
+        },
+        {
+            id: 'sucos_de_polpas_400ml',
+            nome: 'Sucos de Polpas 400ml',
+            produtos: [
+                { nome: 'Acerola', preco: 4.0 },
+                { nome: 'Abacaxi com Hortelã', preco: 4.0 },
+                { nome: 'Graviola', preco: 4.0 },
+                { nome: 'Goiaba', preco: 4.0 },
+                { nome: 'Cajá', preco: 4.0 },
+                { nome: 'Maracujá', preco: 4.0 }
+            ]
+        }
+    ]
+};
+
+const beverageNames = new Set(beverageMenu.grupos.flatMap(function(grupo) {
+    return grupo.produtos.map(function(produto) {
+        return produto.nome;
+    });
+}));
+
 // Keywords to ignore when grouping (items that should always be independent)
 const independentKeywords = ['Misto Quente', 'Hamb\u00FArguer', 'Cuscuz'];
 
@@ -162,14 +270,38 @@ for (let i = 1; i < lines.length; i++) {
 
 // Merge grouped
 Object.values(grouped).forEach(g => {
-    // If a group only has 1 price, maybe it shouldn't have been a group? 
-    // Actually, keep it as prices object for UI consistency if needed, 
-    // but the original code handled it.
     products.push(g);
 });
 
-fs.writeFileSync('products.json', JSON.stringify(products, null, 4));
-console.log(`Finalizado! ${products.length} itens gerados no products.json.`);
+const filteredProducts = products.filter(function(product) {
+    // Remove ALL individual items and brand-level groupings from the 'bebidas' category.
+    // We will only show the top-level groups created below.
+    return product.category !== 'bebidas';
+});
+
+// Create a product for each drink group
+beverageMenu.grupos.forEach(function(grupo) {
+    const minPrice = Math.min(...grupo.produtos.map(p => p.preco));
+    
+    filteredProducts.push({
+        id: 'bebida-' + grupo.id,
+        category: 'bebidas',
+        name: grupo.nome,
+        description: 'Escolha a sua opção de ' + grupo.nome.toLowerCase(),
+        icon: 'liquor',
+        price: minPrice,
+        prices: {
+            "A partir de": minPrice
+        },
+        beverageMenu: {
+            titulo: grupo.nome,
+            grupos: [grupo]
+        }
+    });
+});
+
+fs.writeFileSync('products.json', JSON.stringify(filteredProducts, null, 4));
+console.log(`Finalizado! ${filteredProducts.length} itens gerados no products.json.`);
 
 // Prepara arquivos para o Vercel (que tenta servir a pasta /public quando detecta um build)
 const path = require('path');
