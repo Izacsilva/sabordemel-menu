@@ -704,7 +704,7 @@
 
         // ══════════════ MÓDULO DE CARRINHO ══════════════
         var WHATSAPP_NUMBER = '5582991915067';
-        var DELIVERY_FEE = 2.00; // Taxa de entrega (R$) — altere aqui para atualizar globalmente
+        // var DELIVERY_FEE = 2.00; // Taxa de entrega. Ocultada até implantação de perfis de bairro.
         var cartState = [];
         var historyState = [];
 
@@ -867,7 +867,8 @@
                 cartItemsList.appendChild(div);
             });
 
-            // Taxa de entrega
+            // Taxa de entrega (Ocultada temporariamente)
+            /*
             var deliveryFeeEl = document.getElementById('delivery-fee-line');
             if (isDeliverySelected()) {
                 if (!deliveryFeeEl) {
@@ -887,6 +888,8 @@
                 if (deliveryFeeEl) deliveryFeeEl.remove();
                 cartTotalEl.textContent = 'R$ ' + subtotal.toFixed(2).replace('.', ',');
             }
+            */
+            cartTotalEl.textContent = 'R$ ' + subtotal.toFixed(2).replace('.', ',');
         }
 
         window.changeQty = changeQty;
@@ -1019,11 +1022,13 @@
                 lines.push('');
             });
             lines.push('---------------------------');
+            /*
             if (deliveryType === 'delivery') {
                 lines.push('Subtotal: R$ ' + total.toFixed(2).replace('.', ','));
                 lines.push('Taxa de entrega: R$ ' + DELIVERY_FEE.toFixed(2).replace('.', ','));
                 total += DELIVERY_FEE;
             }
+            */
             lines.push('*Total do Pedido: R$ ' + total.toFixed(2).replace('.', ',') + '*');
             lines.push('---------------------------');
             lines.push('');
