@@ -395,9 +395,15 @@
         "id": "prod-x93911i",
         "category": "salgados-outros",
         "name": "Batata Frita G com Recheio",
-        "description": "Batata G com recheio de bacon ou calabresa e cheddar",
+        "description": "batata recheada com cheddar, bacon ou calabresa",
         "price": 23,
-        "icon": "flatware"
+        "icon": "flatware",
+        "hasCustomization": true,
+        "flavorsTitle": "Escolha o Recheio",
+        "flavors": [
+            "Calabresa",
+            "Bacon"
+        ]
     },
     {
         "id": "prod-4x1rl32",
