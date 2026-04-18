@@ -267,7 +267,7 @@
                 <input id="cart-name" class="cart-input" type="text" placeholder="Seu nome *" autocomplete="name">
                 <div class="flex gap-4 py-1">
                     <label class="delivery-option">
-                        <input type="radio" name="delivery-type" value="retirada" checked> <span class="text-sm dark:text-slate-300">Retirada</span>
+                        <input type="radio" name="delivery-type" value="retirada" checked> <span class="text-sm dark:text-slate-300">Retirada/lanchonete</span>
                     </label>
                     <label class="delivery-option">
                         <input type="radio" name="delivery-type" value="delivery"> <span class="text-sm dark:text-slate-300">Delivery</span>
@@ -704,6 +704,7 @@
 
         // ══════════════ MÓDULO DE CARRINHO ══════════════
         var WHATSAPP_NUMBER = '5582991915067';
+        var DELIVERY_FEE = 2.00; // Taxa de entrega (R$) — altere aqui para atualizar globalmente
         var cartState = [];
         var historyState = [];
 
@@ -822,6 +823,11 @@
         var cartCheckout = document.getElementById('cart-checkout-section');
         var cartTotalEl = document.getElementById('cart-total');
 
+        function isDeliverySelected() {
+            var checked = document.querySelector('input[name="delivery-type"]:checked');
+            return checked && checked.value === 'delivery';
+        }
+
         function renderCartItems() {
             cartItemsList.innerHTML = '';
             if (cartState.length === 0) {
@@ -833,9 +839,9 @@
             cartEmptyState.style.display = 'none';
             cartCheckout.classList.remove('hidden');
             cartItemsList.style.display = 'block';
-            var total = 0;
+            var subtotal = 0;
             cartState.forEach(function(item) {
-                total += item.unitPrice * item.qty;
+                subtotal += item.unitPrice * item.qty;
                 var div = document.createElement('div');
                 div.className = 'cart-item';
                 var extrasHtml = (item.extras && item.extras.length > 0)
@@ -860,7 +866,27 @@
                     '</div>';
                 cartItemsList.appendChild(div);
             });
-            cartTotalEl.textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
+
+            // Taxa de entrega
+            var deliveryFeeEl = document.getElementById('delivery-fee-line');
+            if (isDeliverySelected()) {
+                if (!deliveryFeeEl) {
+                    deliveryFeeEl = document.createElement('div');
+                    deliveryFeeEl.id = 'delivery-fee-line';
+                }
+                deliveryFeeEl.className = 'flex items-center justify-between py-3 border-t border-dashed border-slate-200 dark:border-[#2a2a2a] mt-1';
+                deliveryFeeEl.innerHTML =
+                    '<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">' +
+                        '<span class="material-symbols-outlined text-[18px]">delivery_dining</span>' +
+                        '<span class="font-body text-sm">Taxa de entrega</span>' +
+                    '</div>' +
+                    '<span class="font-display font-bold text-sm text-slate-600 dark:text-slate-300">R$ ' + DELIVERY_FEE.toFixed(2).replace('.', ',') + '</span>';
+                cartItemsList.appendChild(deliveryFeeEl);
+                cartTotalEl.textContent = 'R$ ' + (subtotal + DELIVERY_FEE).toFixed(2).replace('.', ',');
+            } else {
+                if (deliveryFeeEl) deliveryFeeEl.remove();
+                cartTotalEl.textContent = 'R$ ' + subtotal.toFixed(2).replace('.', ',');
+            }
         }
 
         window.changeQty = changeQty;
@@ -958,6 +984,7 @@
                 var addr = document.getElementById('address-fields');
                 if (this.value === 'delivery') { addr.classList.remove('hidden'); }
                 else { addr.classList.add('hidden'); }
+                renderCartItems(); // Atualiza total com/sem taxa de entrega
             });
         });
 
@@ -992,6 +1019,11 @@
                 lines.push('');
             });
             lines.push('---------------------------');
+            if (deliveryType === 'delivery') {
+                lines.push('Subtotal: R$ ' + total.toFixed(2).replace('.', ','));
+                lines.push('Taxa de entrega: R$ ' + DELIVERY_FEE.toFixed(2).replace('.', ','));
+                total += DELIVERY_FEE;
+            }
             lines.push('*Total do Pedido: R$ ' + total.toFixed(2).replace('.', ',') + '*');
             lines.push('---------------------------');
             lines.push('');
