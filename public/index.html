@@ -257,9 +257,19 @@
 
         <!-- Formulário e Checkout -->
         <div id="cart-checkout-section" class="hidden shrink-0 px-5 py-4 border-t border-border/40 dark:border-surface-dark-alt bg-white/50 dark:bg-[#161616]">
-            <div class="flex items-center justify-between mb-4">
-                <span class="font-body text-slate-500 dark:text-slate-400 text-sm font-semibold uppercase tracking-wider">Total</span>
-                <span id="cart-total" class="font-display font-bold text-2xl text-accent">R$ 0,00</span>
+            <div class="flex flex-col gap-1 mb-4">
+                <div class="flex items-center justify-between">
+                    <span class="font-body text-slate-500 dark:text-slate-400 text-sm font-semibold uppercase tracking-wider">Subtotal</span>
+                    <span id="cart-subtotal" class="font-display font-bold text-lg text-slate-700 dark:text-slate-300">R$ 0,00</span>
+                </div>
+                <div id="delivery-fee-row" class="hidden flex items-center justify-between">
+                    <span class="font-body text-slate-500 dark:text-slate-400 text-sm font-semibold uppercase tracking-wider">Entrega</span>
+                    <span id="cart-delivery-fee" class="font-display font-bold text-lg text-slate-700 dark:text-slate-300">R$ 0,00</span>
+                </div>
+                <div class="flex items-center justify-between pt-1 border-t border-slate-200 dark:border-[#2a2a2a] mt-1">
+                    <span class="font-body text-slate-500 dark:text-slate-400 text-sm font-semibold uppercase tracking-wider">Total</span>
+                    <span id="cart-total" class="font-display font-bold text-2xl text-accent">R$ 0,00</span>
+                </div>
             </div>
 
             <!-- Formulário -->
@@ -275,7 +285,17 @@
                 </div>
                 <div id="address-fields" class="hidden flex flex-col gap-3">
                     <input id="cart-street" class="cart-input" type="text" placeholder="Rua e número">
-                    <input id="cart-neighborhood" class="cart-input" type="text" placeholder="Bairro">
+                    <select id="cart-neighborhood" class="cart-input">
+                        <option value="">Selecione o bairro</option>
+                        <option value="Centro">Centro — R$ 1,00</option>
+                        <option value="Comandatuba">Comandatuba — R$ 2,00</option>
+                        <option value="Manganzala">Manganzala — R$ 2,00</option>
+                        <option value="Oscar Cunha">Oscar Cunha — R$ 2,00</option>
+                        <option value="Estrada D. Vassourinha">Estrada D. Vassourinha — R$ 3,00</option>
+                        <option value="Vassourinha">Vassourinha — R$ 4,00</option>
+                        <option value="Queda d'Água">Queda d'Água — R$ 5,00</option>
+                        <option value="Planalto Canaã">Planalto Canaã — R$ 5,00</option>
+                    </select>
                     <input id="cart-reference" class="cart-input" type="text" placeholder="Ponto de referência">
                 </div>
             </div>
@@ -711,6 +731,24 @@
 
         var WHATSAPP_NUMBER = '5582999999999'; // ← Troque pelo número real
 
+        var DELIVERY_FEES = {
+            'Centro': 1.00,
+            'Comandatuba': 2.00,
+            'Manganzala': 2.00,
+            'Oscar Cunha': 2.00,
+            'Estrada D. Vassourinha': 3.00,
+            'Vassourinha': 4.00,
+            "Queda d'Água": 5.00,
+            'Planalto Canaã': 5.00
+        };
+
+        function getDeliveryFee() {
+            var deliveryType = document.querySelector('input[name="delivery-type"]:checked');
+            if (!deliveryType || deliveryType.value !== 'delivery') return 0;
+            var bairro = document.getElementById('cart-neighborhood').value;
+            return DELIVERY_FEES[bairro] || 0;
+        }
+
         // --- Estado ---
         var cartState = [];
         var historyState = [];
@@ -883,7 +921,27 @@
                 });
                 cartItemsList.appendChild(div);
             });
-            cartTotalEl.textContent = 'R$ ' + total.toFixed(2);
+            var fee = getDeliveryFee();
+            var grandTotal = total + fee;
+
+            // Subtotal
+            var subtotalEl = document.getElementById('cart-subtotal');
+            if (subtotalEl) subtotalEl.textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
+
+            // Taxa de entrega
+            var feeRow = document.getElementById('delivery-fee-row');
+            var feeEl = document.getElementById('cart-delivery-fee');
+            if (feeRow && feeEl) {
+                if (fee > 0) {
+                    feeRow.classList.remove('hidden');
+                    feeEl.textContent = 'R$ ' + fee.toFixed(2).replace('.', ',');
+                } else {
+                    feeRow.classList.add('hidden');
+                }
+            }
+
+            // Total final
+            cartTotalEl.textContent = 'R$ ' + grandTotal.toFixed(2).replace('.', ',');
         }
 
         // --- Drawer ---
@@ -990,7 +1048,12 @@
                 var addr = document.getElementById('address-fields');
                 if (this.value === 'delivery') { addr.classList.remove('hidden'); }
                 else { addr.classList.add('hidden'); }
+                renderCartItems();
             });
+        });
+
+        document.getElementById('cart-neighborhood').addEventListener('change', function() {
+            renderCartItems();
         });
 
         // --- WhatsApp ---
@@ -1003,6 +1066,7 @@
             
             if (!name) { alert('Por favor, informe seu nome.'); return null; }
             if (deliveryType === 'delivery' && !street) { alert('Por favor, informe o endereço.'); return null; }
+            if (deliveryType === 'delivery' && !neighborhood) { alert('Por favor, selecione o bairro para calcular a taxa de entrega.'); return null; }
             
             var total = 0;
             var lines = ['*Novo Pedido - Sabor de Mel*', ''];
@@ -1033,12 +1097,19 @@
                 lines.push(''); // Espaço entre itens
             });
             
+            var fee = getDeliveryFee();
+            var grandTotal = total + fee;
+
             lines.push('---------------------------');
-            lines.push('*Total do Pedido: R$ ' + total.toFixed(2) + '*');
+            lines.push('Subtotal: R$ ' + total.toFixed(2).replace('.', ','));
+            if (fee > 0) {
+                lines.push('Taxa de entrega (' + neighborhood + '): R$ ' + fee.toFixed(2).replace('.', ','));
+            }
+            lines.push('*Total: R$ ' + grandTotal.toFixed(2).replace('.', ',') + '*');
             lines.push('---------------------------');
             lines.push('');
             lines.push('Cliente: ' + name);
-            
+
             if (deliveryType === 'delivery') {
                 lines.push('Entrega: Delivery');
                 lines.push('Endereço: ' + street + (neighborhood ? ', ' + neighborhood : ''));
@@ -1056,10 +1127,11 @@
             
             // Salvar no Histórico
             var total = cartState.reduce(function(s, i) { return s + i.unitPrice * i.qty; }, 0);
+            var fee = getDeliveryFee();
             historyState.push({
                 date: new Date().toISOString(),
                 items: JSON.parse(JSON.stringify(cartState)),
-                total: total
+                total: total + fee
             });
             saveHistory();
             
